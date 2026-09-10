@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-  min-height: 95vh;
+  min-height: 90vh;
   margin: 0 2rem;
   padding: 0 2rem;
   background-image: url("../assets/hero-bg-img.jpg");
@@ -98,9 +98,20 @@ body {
       transparent calc(35% + 0.5px)
     );
   }
-  .title {
-    font-size: 1.2rem;
+  .eyebrow-title {
+    font-size: 1.90rem;
+    font-weight: 600;
+    letter-spacing:-0.2px;
     line-height: 1.75rem;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 40px;
+      height: 4px;
+      background-color: #67ff83;
+      margin-top: 0.5rem;
+    }
   }
   .home-intro-content {
     margin: 0 auto;
@@ -123,4 +134,31 @@ body {
       cursor: pointer;
     }
   }
+}
+
+.home-video-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-container {
+  background-color: #000;
+  border: 5px solid #67ff83;
+  width: 1300px;
+  height: 650px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  corner-shape: round($number: 12);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
