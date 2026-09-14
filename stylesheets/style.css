@@ -340,6 +340,11 @@ body {
 }
 
 .what-we-do-cards {
+  /* JS shortens this on a fast flick so a hard swipe lands harder */
+  --slide-duration: 680ms;
+  /* a real ease-in-out: winds up, travels, then settles */
+  --slide-ease: cubic-bezier(0.62, 0.02, 0.18, 1);
+  --slide-dir: 0;
   display: flex;
   align-items: flex-start;
   gap: var(--card-gap);
@@ -348,7 +353,7 @@ body {
   list-style: none;
   will-change: transform;
   transform: translate3d(0, 0, 0);
-  transition: transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: transform var(--slide-duration) var(--slide-ease);
 }
 
 /* while the finger/pointer is down the track must track 1:1, not ease */
@@ -358,9 +363,41 @@ body {
 }
 
 .what-we-do-card {
+  --card-scale: 1;
+  --stagger: 0ms;
+  --travel-duration: 720ms;
   flex: 0 0 calc((100% - (var(--cards-per-view) - 1) * var(--card-gap)) / var(--cards-per-view));
   max-width: calc((100% - (var(--cards-per-view) - 1) * var(--card-gap)) / var(--cards-per-view));
   text-align: left;
+  transform: scale(var(--card-scale));
+  transition: transform 240ms ease;
+}
+
+/*
+ * Each card drags behind the track, dips back in depth, then catches up —
+ * staggered so the row arrives as a wave rather than a single block.
+ */
+.what-we-do-cards.is-sliding .what-we-do-card {
+  animation: card-travel var(--travel-duration) cubic-bezier(0.45, 0, 0.18, 1) var(--stagger) backwards;
+}
+
+@keyframes card-travel {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  42% {
+    transform: translate3d(calc(var(--slide-dir) * 34px), 0, 0) scale(0.93);
+    opacity: 0.86;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+.what-we-do-viewport.is-dragging .what-we-do-card {
+  --card-scale: 0.985;
+  animation: none;
 }
 
 .what-we-do-card .card-link {
@@ -416,6 +453,11 @@ body {
   line-height: 1.35;
 }
 
+.what-we-do-card .card-note {
+  color: #8a93a0;
+  white-space: nowrap;
+}
+
 .what-we-do-card .card-icon {
   flex: 0 0 auto;
   width: 28px;
@@ -457,7 +499,11 @@ body {
   min-width: 96px;
   border-radius: 999px;
   cursor: pointer;
-  transition: background 220ms ease, color 220ms ease, border-color 220ms ease;
+  transition: background 220ms ease, color 220ms ease, border-color 220ms ease, transform 120ms ease;
+}
+
+.what-we-do-controls button:not(:disabled):active {
+  transform: scale(0.94);
 }
 
 .what-we-do-controls button:not(:disabled) {
@@ -490,9 +536,14 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .what-we-do-cards,
+  .what-we-do-card,
   .what-we-do-card img,
   .what-we-do-card .card-icon {
     transition-duration: 1ms;
+    transition-delay: 0ms;
+  }
+  .what-we-do-cards.is-sliding .what-we-do-card {
+    animation: none;
   }
 }
 

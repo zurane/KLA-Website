@@ -9,8 +9,12 @@
     const cards = Array.from(track.querySelectorAll('.what-we-do-card'));
     if (!cards.length) return;
 
-    const DRAG_THRESHOLD = 8;   // px before a press counts as a drag, not a click
+    const DRAG_THRESHOLD = 8;    // px before a press counts as a drag, not a click
     const FLICK_VELOCITY = 0.45; // px/ms that advances a slide regardless of distance
+    const BASE_DURATION = 680;   // ms for a button press
+    const MIN_DURATION = 460;    // ms floor for a hard flick
+    const STAGGER_STEP = 70;     // ms between each card entering the move
+    const TRAVEL_DURATION = 720; // ms, must match --travel-duration in the CSS
 
     let index = 0;
     let offset = 0;      // the committed translate for the current index
@@ -23,6 +27,7 @@
     let lastTime = 0;
     let velocity = 0;
     let axisLocked = null;
+    let lagTimer = null;
 
     // Distance from the first card's left edge — works with any gap/width,
     // so nothing has to be kept in sync with the CSS.
@@ -46,9 +51,42 @@
         track.style.transform = `translate3d(${-value}px, 0, 0)`;
     }
 
-    function render({ animate = true } = {}) {
+    // Run the card-travel keyframes over the visible cards, offset from each
+    // other so the row lands as a wave instead of one rigid block.
+    function playLag(direction, visible) {
+        if (!direction || !visible.length) return;
+
+        // drop the class and flush, or the keyframes won't restart on a
+        // second press while the first wave is still running
+        track.classList.remove('is-sliding');
+        void track.offsetWidth;
+
+        const last = visible.length - 1;
+        let maxStagger = 0;
+
+        visible.forEach((i, position) => {
+            // the card the row is travelling towards leads, the rest follow
+            const order = direction > 0 ? position : last - position;
+            const delay = order * STAGGER_STEP;
+            maxStagger = Math.max(maxStagger, delay);
+            cards[i].style.setProperty('--stagger', `${delay}ms`);
+        });
+
+        track.style.setProperty('--slide-dir', String(direction));
+        track.classList.add('is-sliding');
+
+        clearTimeout(lagTimer);
+        lagTimer = setTimeout(
+            () => track.classList.remove('is-sliding'),
+            TRAVEL_DURATION + maxStagger + 60
+        );
+    }
+
+    function render({ animate = true, duration = BASE_DURATION, direction = 0 } = {}) {
         index = Math.max(0, Math.min(index, lastIndex()));
         offset = targetOffset(index);
+
+        track.style.setProperty('--slide-duration', `${duration}ms`);
 
         if (!animate) {
             track.classList.add('no-transition');
@@ -62,17 +100,22 @@
         prev.disabled = index <= 0;
         next.disabled = index >= lastIndex();
 
+        const visible = [];
         cards.forEach((card, i) => {
-            const visible = i >= index && cardOffset(i) < offset + viewport.clientWidth - 1;
-            card.setAttribute('aria-hidden', visible ? 'false' : 'true');
+            const onScreen = i >= index && cardOffset(i) < offset + viewport.clientWidth - 1;
+            if (onScreen) visible.push(i);
+            card.setAttribute('aria-hidden', onScreen ? 'false' : 'true');
             const link = card.querySelector('.card-link');
-            if (link) link.tabIndex = visible ? 0 : -1;
+            if (link) link.tabIndex = onScreen ? 0 : -1;
         });
+
+        if (animate) playLag(direction, visible);
     }
 
-    function goTo(i, options) {
+    function goTo(i, options = {}) {
+        const from = index;
         index = i;
-        render(options);
+        render({ direction: Math.sign(index - from), ...options });
     }
 
     prev.addEventListener('click', () => goTo(index - 1));
@@ -163,7 +206,13 @@
             }
         }
 
-        goTo(nearest);
+        // a harder flick lands in less time
+        const duration = Math.max(
+            MIN_DURATION,
+            Math.min(BASE_DURATION, BASE_DURATION - Math.abs(velocity) * 180)
+        );
+
+        goTo(nearest, { duration });
     }
 
     viewport.addEventListener('pointerdown', onPointerDown);
