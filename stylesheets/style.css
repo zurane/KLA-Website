@@ -149,22 +149,15 @@ body {
 .video-container video {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
 }
 
 .home-slider-section {
-  padding: 5rem 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.home-slider-section {
-  padding: 40px 20px;
+  padding: 5rem 1.5rem 4.5rem;
+  background: #fff;
   position: relative;
 }
 
@@ -187,7 +180,6 @@ body {
   align-items: center;
   gap: 20px;
   min-height: 500px;
-  width: -moz-max-content;
   width: max-content;
   transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -225,8 +217,7 @@ body {
 .slide-image-wrap img {
   width: 100%;
   height: 720px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   border-radius: 8px;
 }
@@ -304,11 +295,6 @@ body {
   content: "→";
 }
 
-.home-slider-section {
-  padding: 40px 20px 70px;
-  background: #fff;
-}
-
 .what-we-do-wrap {
   max-width: 1200px;
   margin: 0 auto;
@@ -336,100 +322,178 @@ body {
   text-align: center;
 }
 
+/* ---------- What we do / slider ---------- */
+.what-we-do-viewport {
+  --cards-per-view: 3;
+  --card-gap: 16px;
+  margin-top: 28px;
+  overflow: hidden;
+  /* let the focus ring of a focused card breathe without clipping */
+  padding: 4px;
+  margin-inline: -4px;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.what-we-do-viewport.is-dragging {
+  cursor: grabbing;
+}
+
 .what-we-do-cards {
   display: flex;
-  align-items: stretch;
-  gap: 30px;
-  margin: 25px auto 0;
-  max-width: 1180px;
-  overflow: hidden;
-  transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
-  min-height: 420px;
-  justify-content: center;
+  align-items: flex-start;
+  gap: var(--card-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* while the finger/pointer is down the track must track 1:1, not ease */
+.what-we-do-viewport.is-dragging .what-we-do-cards,
+.what-we-do-cards.no-transition {
+  transition: none;
 }
 
 .what-we-do-card {
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e8e1d7;
-  min-height: 420px;
-  width: 330px;
-  flex: 0 0 330px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  flex: 0 0 calc((100% - (var(--cards-per-view) - 1) * var(--card-gap)) / var(--cards-per-view));
+  max-width: calc((100% - (var(--cards-per-view) - 1) * var(--card-gap)) / var(--cards-per-view));
   text-align: left;
+}
+
+.what-we-do-card .card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 8px;
+}
+
+.what-we-do-card .card-link:focus-visible {
+  outline: 2px solid #1c594c;
+  outline-offset: 4px;
+}
+
+.what-we-do-card .card-media {
+  display: block;
   position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  aspect-ratio: 1/1;
+  background: #ece7e0;
+  box-shadow: 0 6px 18px rgba(16, 26, 37, 0.1);
 }
 
 .what-we-do-card img {
   width: 100%;
-  height: 330px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  border-radius: 8px 8px 0 0;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform: scale(1);
+  transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.what-we-do-card .card-link:hover img,
+.what-we-do-card .card-link:focus-visible img {
+  transform: scale(1.04);
 }
 
 .what-we-do-card .card-content {
-  background: #fff;
-  padding: 16px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 90px;
-  position: relative;
-  z-index: 2;
-  border-top: 1px solid #e8e1d7;
+  gap: 14px;
+  padding: 14px 2px 0;
 }
 
 .what-we-do-card .card-title {
-  color: #1c594c;
-  font-size: 1.025rem;
-  font-weight: 500;
-  line-height: 1.4;
-  flex: 1;
-  margin-right: 14px;
+  color: #2d8ccd;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.35;
 }
 
 .what-we-do-card .card-icon {
-  width: 36px;
-  height: 36px;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: #8bb49f;
-  color: #fff;
-  font-size: 30px;
-  display: flex;
+  border: 1px solid #101a25;
+  color: #101a25;
+  background: transparent;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
-  flex: 0 0 auto;
+  transition: background 220ms ease, color 220ms ease, transform 220ms ease;
+}
+
+.what-we-do-card .card-link:hover .card-icon,
+.what-we-do-card .card-link:focus-visible .card-icon {
+  background: #101a25;
+  color: #fff;
+  transform: translateX(2px);
 }
 
 .what-we-do-controls {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
-  margin-top: 28px;
+  margin-top: 34px;
 }
 
 .what-we-do-controls button {
-  border: none;
+  border: 1px solid transparent;
   background: #e3e3e3;
   color: #46515d;
-  font-size: 16px;
-  font-weight: 700;
-  padding: 12px 30px;
-  min-width: 120px;
-  border-radius: 32px;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 9px 22px;
+  min-width: 96px;
+  border-radius: 999px;
   cursor: pointer;
-  transition: background 260ms ease, color 260ms ease;
+  transition: background 220ms ease, color 220ms ease, border-color 220ms ease;
 }
 
-.what-we-do-controls button:hover {
-  background: #1c594c;
+.what-we-do-controls button:not(:disabled) {
+  background: #fff;
+  border-color: #101a25;
+  color: #101a25;
+}
+
+.what-we-do-controls button:not(:disabled):hover {
+  background: #101a25;
   color: #fff;
-}/*# sourceMappingURL=style.css.map */
+}
+
+.what-we-do-controls button:disabled {
+  background: #e3e3e3;
+  border-color: transparent;
+  color: #9b9b9b;
+  cursor: default;
+}
+
+@media (max-width: 900px) {
+  .what-we-do-viewport {
+    --cards-per-view: 2;
+  }
+}
+@media (max-width: 600px) {
+  .what-we-do-viewport {
+    --cards-per-view: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .what-we-do-cards,
+  .what-we-do-card img,
+  .what-we-do-card .card-icon {
+    transition-duration: 1ms;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
