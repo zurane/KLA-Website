@@ -10,14 +10,14 @@
     if (!cards.length) return;
 
     const DRAG_THRESHOLD = 8;    // px before a press counts as a drag, not a click
-    const FLICK_VELOCITY = 0.45; // px/ms that advances a slide regardless of distance
+    const FLICK_VELOCITY = 0.45; // px/ms that advances a page regardless of distance
     const BASE_DURATION = 680;   // ms for a button press
     const MIN_DURATION = 460;    // ms floor for a hard flick
     const STAGGER_STEP = 70;     // ms between each card entering the move
     const TRAVEL_DURATION = 720; // ms, must match --travel-duration in the CSS
 
-    let index = 0;
-    let offset = 0;      // the committed translate for the current index
+    let page = 0;
+    let offset = 0;      // the committed translate for the current page
     let dragOffset = 0;  // live translate while dragging
     let dragging = false;
     let pointerId = null;
@@ -28,23 +28,32 @@
     let velocity = 0;
     let axisLocked = null;
     let lagTimer = null;
+    let anchorCard = 0;  // the card we're parked on, so a resize keeps its place
+
+    // The media queries own how many cards a page holds; read it back from the
+    // custom property rather than duplicating the breakpoints here.
+    function perPage() {
+        const raw = parseInt(
+            getComputedStyle(viewport).getPropertyValue('--cards-per-view'),
+            10
+        );
+        return raw > 0 ? raw : 1;
+    }
+
+    const pageCount = () => Math.ceil(cards.length / perPage());
 
     // Distance from the first card's left edge — works with any gap/width,
     // so nothing has to be kept in sync with the CSS.
     const cardOffset = (i) => cards[i].offsetLeft - cards[0].offsetLeft;
 
-    const maxScroll = () => Math.max(track.scrollWidth - viewport.clientWidth, 0);
+    // Measured on the track itself so the viewport's padding can't skew it.
+    const maxScroll = () => Math.max(track.scrollWidth - track.clientWidth, 0);
 
-    function lastIndex() {
-        const limit = maxScroll();
-        for (let i = 0; i < cards.length; i++) {
-            if (cardOffset(i) >= limit - 1) return i;
-        }
-        return cards.length - 1;
-    }
-
-    function targetOffset(i) {
-        return Math.min(cardOffset(i), maxScroll());
+    // A short last page is pulled flush with the right edge instead of
+    // leaving a gap, so no card is ever half off-screen at rest.
+    function pageOffset(p) {
+        const first = Math.min(p * perPage(), cards.length - 1);
+        return Math.min(cardOffset(first), maxScroll());
     }
 
     function setTranslate(value) {
@@ -65,7 +74,7 @@
         let maxStagger = 0;
 
         visible.forEach((i, position) => {
-            // the card the row is travelling towards leads, the rest follow
+            // the card the row is heading towards leads, the rest follow
             const order = direction > 0 ? position : last - position;
             const delay = order * STAGGER_STEP;
             maxStagger = Math.max(maxStagger, delay);
@@ -83,8 +92,9 @@
     }
 
     function render({ animate = true, duration = BASE_DURATION, direction = 0 } = {}) {
-        index = Math.max(0, Math.min(index, lastIndex()));
-        offset = targetOffset(index);
+        page = Math.max(0, Math.min(page, pageCount() - 1));
+        offset = pageOffset(page);
+        anchorCard = page * perPage();
 
         track.style.setProperty('--slide-duration', `${duration}ms`);
 
@@ -97,12 +107,15 @@
             setTranslate(offset);
         }
 
-        prev.disabled = index <= 0;
-        next.disabled = index >= lastIndex();
+        prev.disabled = page <= 0;
+        next.disabled = page >= pageCount() - 1;
 
+        const rightEdge = offset + track.clientWidth;
         const visible = [];
+
         cards.forEach((card, i) => {
-            const onScreen = i >= index && cardOffset(i) < offset + viewport.clientWidth - 1;
+            const start = cardOffset(i);
+            const onScreen = start >= offset - 1 && start + card.offsetWidth <= rightEdge + 1;
             if (onScreen) visible.push(i);
             card.setAttribute('aria-hidden', onScreen ? 'false' : 'true');
             const link = card.querySelector('.card-link');
@@ -112,22 +125,22 @@
         if (animate) playLag(direction, visible);
     }
 
-    function goTo(i, options = {}) {
-        const from = index;
-        index = i;
-        render({ direction: Math.sign(index - from), ...options });
+    function goTo(p, options = {}) {
+        const from = page;
+        page = Math.max(0, Math.min(p, pageCount() - 1));
+        render({ direction: Math.sign(page - from), ...options });
     }
 
-    prev.addEventListener('click', () => goTo(index - 1));
-    next.addEventListener('click', () => goTo(index + 1));
+    prev.addEventListener('click', () => goTo(page - 1));
+    next.addEventListener('click', () => goTo(page + 1));
 
     viewport.addEventListener('keydown', (event) => {
         if (event.key === 'ArrowLeft') {
             event.preventDefault();
-            goTo(index - 1);
+            goTo(page - 1);
         } else if (event.key === 'ArrowRight') {
             event.preventDefault();
-            goTo(index + 1);
+            goTo(page + 1);
         }
     });
 
@@ -188,21 +201,19 @@
         dragging = false;
         viewport.classList.remove('is-dragging');
 
-        const step = cardOffset(1) || viewport.clientWidth;
         let landing = dragOffset;
-
         if (Math.abs(velocity) > FLICK_VELOCITY) {
-            landing = dragOffset - velocity * step * 0.5;
+            landing = dragOffset - velocity * track.clientWidth * 0.5;
         }
 
-        // snap to the nearest card boundary
+        // snap to the nearest page, never to a loose card
         let nearest = 0;
         let best = Infinity;
-        for (let i = 0; i <= lastIndex(); i++) {
-            const distance = Math.abs(targetOffset(i) - landing);
+        for (let p = 0; p < pageCount(); p++) {
+            const distance = Math.abs(pageOffset(p) - landing);
             if (distance < best) {
                 best = distance;
-                nearest = i;
+                nearest = p;
             }
         }
 
@@ -233,9 +244,13 @@
     // ---- keep geometry correct as the layout changes ----
 
     let resizeFrame = null;
+
     const onResize = () => {
         if (resizeFrame) cancelAnimationFrame(resizeFrame);
-        resizeFrame = requestAnimationFrame(() => render({ animate: false }));
+        resizeFrame = requestAnimationFrame(() => {
+            page = Math.floor(anchorCard / perPage());
+            render({ animate: false });
+        });
     };
 
     if ('ResizeObserver' in window) {
