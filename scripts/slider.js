@@ -117,6 +117,11 @@
             const start = cardOffset(i);
             const onScreen = start >= offset - 1 && start + card.offsetWidth <= rightEdge + 1;
             if (onScreen) visible.push(i);
+            // a card that scrolls away while its link has focus must drop that
+            // focus first, or it becomes aria-hidden with focus still inside it
+            if (!onScreen && card.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
             card.setAttribute('aria-hidden', onScreen ? 'false' : 'true');
             const link = card.querySelector('.card-link');
             if (link) link.tabIndex = onScreen ? 0 : -1;

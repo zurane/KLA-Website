@@ -18,14 +18,9 @@
                 </div>
                 <div class="menu-buttons">
                     <a class="btn-primary" href="">Contact us</a>
-                    <button class="btn-menu-toggle" href="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="#000000" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-chart-no-axes-gantt">
-                            <path d="M6 5h12" />
-                            <path d="M4 12h10" />
-                            <path d="M12 19h8" />
-                        </svg>
+                    <button class="btn-menu-toggle" type="button" aria-label="Open menu"
+                        aria-controls="site-menu" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-align-justify"><path d="M3 5h18"/><path d="M3 12h18"/><path d="M3 19h18"/></svg>
                     </button>
                 </div>
             </nav>
@@ -217,9 +212,105 @@
                 </div>
             </div>
         </section>
+
+        <section class="why-choose-section" aria-labelledby="why-choose-title">
+            <div class="why-choose-head">
+                <span class="eyebrow-title">Why Choose Us</span>
+                <h2 class="why-choose-title" id="why-choose-title">Learn. Experience. Apply.</h2>
+            </div>
+
+            <div class="why-choose-stage">
+                <!-- the ring of values that turns behind the students -->
+                <div class="why-ring" aria-hidden="true">
+                    <img class="why-ring-art" src="assets/images/wrapped-text.svg" alt="" draggable="false">
+                </div>
+                <ul class="sr-only">
+                    <li>Practical Learning</li>
+                    <li>Values-driven</li>
+                    <li>Tailor made solutions</li>
+                    <li>Industry-relevant</li>
+                </ul>
+
+                <img class="why-students" src="assets/images/students-img.png"
+                    alt="Four smiling students in school uniform cheering with their arms raised" draggable="false">
+            </div>
+        </section>
+        
     </main>
 
+    <div class="menu-overlay" id="site-menu" aria-hidden="true" inert>
+        <svg class="menu-defs" aria-hidden="true" focusable="false" width="0" height="0">
+            <defs>
+                <!-- userSpaceOnUse: the arrow's shaft is a flat line, and a
+                     zero-height bounding box makes an objectBoundingBox
+                     gradient degenerate, so the shaft would not paint -->
+                <linearGradient id="menu-arrow-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="56"
+                    y2="0">
+                    <stop offset="0%" stop-color="#18aded" />
+                    <stop offset="100%" stop-color="#09ac66" />
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <div class="menu-panel" role="dialog" aria-modal="true" aria-label="Site menu" data-lenis-prevent>
+            <div class="menu-top">
+                <a class="menu-contact" href="">Contact us</a>
+                <button class="btn-menu-close" type="button" aria-label="Close menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="menu-nav" aria-label="Main menu">
+                <ul class="menu-list">
+                    <li class="menu-item" style="--i: 0">
+                        <a class="menu-link" href="" aria-current="page">
+                            <span class="menu-label">Home</span>
+                            <svg class="menu-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <path d="M2 12h48" />
+                                <path d="m40 2 10 10-10 10" />
+                            </svg>
+                        </a>
+                    </li>
+
+                    <li class="menu-item" style="--i: 1">
+                        <a class="menu-link" href="">
+                            <span class="menu-label">About</span>
+                            <svg class="menu-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <path d="M2 12h48" />
+                                <path d="m40 2 10 10-10 10" />
+                            </svg>
+                        </a>
+                    </li>
+
+                    <li class="menu-item" style="--i: 2">
+                        <a class="menu-link" href="">
+                            <span class="menu-label">Programmes</span>
+                            <svg class="menu-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <path d="M2 12h48" />
+                                <path d="m40 2 10 10-10 10" />
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <script src="./scripts/vendor/lenis.min.js"></script>
+    <script src="./scripts/smooth-scroll.js"></script>
     <script src="./scripts/slider.js"></script>
+    <script src="./scripts/menu.js"></script>
+    <script src="./scripts/why-choose.js"></script>
 </body>
 
 </html>
