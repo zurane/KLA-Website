@@ -11,6 +11,7 @@
 
 <body>
     <div class="container">
+        <div class="hero-bg" aria-hidden="true"></div>
         <header>
             <nav class="nav-bar">
                 <div class="brand-logo">
@@ -54,7 +55,7 @@
                 <p>Founded in 1996 by Tsitsi and Strive Masiyiwa during Zimbabwe’s HIV/AIDS epidemic, the foundation was
                     established with a clear purpose: to uplift the most vulnerable and help spark hope where it was
                     needed most.</p>
-                <a class="btn-simple" href="">Learn more
+                <a class="btn-simple" href="">Learn more about the academy
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#050505" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-arrow-right">
@@ -66,20 +67,24 @@
         </section>
 
         <section class="home-video-section">
-            <div class="video-container">
-                <video autoplay muted loop>
-                    <source src="assets/video/7186769_Man_Portrait_1280x720.mp4" type="video/mp4">
-                </video>
+            <!-- the track is taller than the screen; the panel inside stays pinned
+                 while the page scrolls through it, and that scroll grows the video -->
+            <div class="video-track">
+                <div class="video-sticky">
+                    <div class="video-container">
+                        <video autoplay muted loop playsinline>
+                            <source src="assets/video/7186769_Man_Portrait_1280x720.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="home-slider-section">
             <div class="what-we-do-wrap">
-                <span class="eyebrow-title">What we do</span>
-                <h2 class="what-we-do-title">
-                    We Don't Just Deliver Training.<br>
-                    We Develop People.
-                </h2>
+                <span class="eyebrow-title">View some of our CGA Verified members and the work they’ve produced.
+</span>
+           
 
                 <div class="what-we-do-viewport">
                     <ul class="what-we-do-cards">
@@ -111,7 +116,7 @@
                                 </span>
                                 <span class="card-content">
                                     <span class="card-title">Accredited Qualifications
-                                        <span class="card-note">(Coming Soon)</span></span>
+                                       </span>
                                     <span class="card-icon" aria-hidden="true">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -214,25 +219,67 @@
         </section>
 
         <section class="why-choose-section" aria-labelledby="why-choose-title">
-            <div class="why-choose-head">
-                <span class="eyebrow-title">Why Choose Us</span>
-                <h2 class="why-choose-title" id="why-choose-title">Learn. Experience. Apply.</h2>
-            </div>
+            <!-- the track is taller than the screen; the panel inside stays pinned
+                 while the page scrolls through it, and that scroll picks the item -->
+            <div class="why-choose-track">
+                <div class="why-choose-sticky">
+                    <div class="why-choose-inner">
+                        <div class="why-choose-copy">
+                            <h2 class="why-choose-title" id="why-choose-title">Why choose us</h2>
+                            <p class="why-choose-statement">We deliver innovative learning experiences that develop
+                                leadership, build practical skills and create opportunities.</p>
+                            <ul class="why-choose-list">
+                                <li class="why-choose-item is-active">
+                                    <button class="why-choose-toggle" type="button" id="why-tab-0"
+                                        aria-expanded="true" aria-controls="why-panel-0">Practical learning</button>
+                                    <div class="why-choose-panel" id="why-panel-0" role="region" aria-labelledby="why-tab-0">
+                                        <div>
+                                            <p>Every programme is built around doing: real scenarios, real tools and real feedback, so what you learn on the day is what you use the next.</p>
+                                        </div>
+                                    </div>
+                                    <span class="why-choose-progress" aria-hidden="true"></span>
+                                </li>
+                                <li class="why-choose-item">
+                                    <button class="why-choose-toggle" type="button" id="why-tab-1"
+                                        aria-expanded="false" aria-controls="why-panel-1">Values-driven</button>
+                                    <div class="why-choose-panel" id="why-panel-1" role="region" aria-labelledby="why-tab-1">
+                                        <div>
+                                            <p>Integrity, service and accountability sit underneath everything we teach. We develop leaders that people trust.</p>
+                                        </div>
+                                    </div>
+                                    <span class="why-choose-progress" aria-hidden="true"></span>
+                                </li>
+                                <li class="why-choose-item">
+                                    <button class="why-choose-toggle" type="button" id="why-tab-2"
+                                        aria-expanded="false" aria-controls="why-panel-2">Tailor made solutions</button>
+                                    <div class="why-choose-panel" id="why-panel-2" role="region" aria-labelledby="why-tab-2">
+                                        <div>
+                                            <p>No two schools, teams or communities are the same. We shape content, pace and delivery around your context and your goals.</p>
+                                        </div>
+                                    </div>
+                                    <span class="why-choose-progress" aria-hidden="true"></span>
+                                </li>
+                                <li class="why-choose-item">
+                                    <button class="why-choose-toggle" type="button" id="why-tab-3"
+                                        aria-expanded="false" aria-controls="why-panel-3">Industry-relevant</button>
+                                    <div class="why-choose-panel" id="why-panel-3" role="region" aria-labelledby="why-tab-3">
+                                        <div>
+                                            <p>Our curricula are shaped with practitioners and employers, so the skills you build track what the workplace actually needs.</p>
+                                        </div>
+                                    </div>
+                                    <span class="why-choose-progress" aria-hidden="true"></span>
+                                </li>
+                            </ul>
+                        </div>
 
-            <div class="why-choose-stage">
-                <!-- the ring of values that turns behind the students -->
-                <div class="why-ring" aria-hidden="true">
-                    <img class="why-ring-art" src="assets/images/wrapped-text.svg" alt="" draggable="false">
+                        <div class="why-choose-media" aria-hidden="true">
+                            <img class="is-active" src="assets/images/Rectangle 23.png" alt="" draggable="false">
+                            <img src="assets/hero-bg-img.jpg" alt="" draggable="false">
+                            <img src="assets/images/students-img.png" alt="" draggable="false">
+                            <img src="assets/images/Rectangle 23.png" alt="" draggable="false">
+                        </div>
+                    </div>
                 </div>
-                <ul class="sr-only">
-                    <li>Practical Learning</li>
-                    <li>Values-driven</li>
-                    <li>Tailor made solutions</li>
-                    <li>Industry-relevant</li>
-                </ul>
-
-                <img class="why-students" src="assets/images/students-img.png"
-                    alt="Four smiling students in school uniform cheering with their arms raised" draggable="false">
             </div>
         </section>
         
@@ -308,6 +355,9 @@
 
     <script src="./scripts/vendor/lenis.min.js"></script>
     <script src="./scripts/smooth-scroll.js"></script>
+    <script src="./scripts/hero-parallax.js"></script>
+    <script src="./scripts/intro-reveal.js"></script>
+    <script src="./scripts/video-grow.js"></script>
     <script src="./scripts/slider.js"></script>
     <script src="./scripts/menu.js"></script>
     <script src="./scripts/why-choose.js"></script>
