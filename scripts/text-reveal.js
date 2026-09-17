@@ -60,6 +60,31 @@
         return true;
     }
 
+    // A gradient clipped to text on the element can't reach words that sit on
+    // their own compositor layers (the transform does that), so the words
+    // would paint transparent. Give each word the same gradient, sized to the
+    // whole element and shifted by the word's offset, so together they still
+    // read as one continuous ramp.
+    function paintGradient(el) {
+        const cs = getComputedStyle(el);
+        if (!/gradient\(/.test(cs.backgroundImage) && !el.dataset.trGradient) return;
+        if (!el.dataset.trGradient) {
+            el.dataset.trGradient = cs.backgroundImage;
+            el.style.backgroundImage = 'none';
+        }
+        const image = el.dataset.trGradient;
+        const base = el.getBoundingClientRect();
+        el.querySelectorAll('.tr-inner').forEach((inner) => {
+            const r = inner.getBoundingClientRect();
+            inner.style.backgroundImage = image;
+            inner.style.backgroundSize = `${Math.round(base.width)}px 100%`;
+            inner.style.backgroundPosition = `${Math.round(base.left - r.left)}px 0`;
+            inner.style.webkitBackgroundClip = 'text';
+            inner.style.backgroundClip = 'text';
+            inner.style.webkitTextFillColor = 'transparent';
+        });
+    }
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
@@ -77,8 +102,12 @@
         const step = parseInt(el.getAttribute('data-text-reveal'), 10);
         el.style.setProperty('--tr-step', `${step > 0 ? step : 40}ms`);
         el.classList.add('tr-ready');
+        paintGradient(el);
         return true;
     });
+
+    // word offsets change when lines rewrap
+    window.addEventListener('resize', () => ready.forEach(paintGradient));
 
     // ...but only start watching once the preloader's curtain is lifting,
     // so the hero headline rises behind it instead of before it.

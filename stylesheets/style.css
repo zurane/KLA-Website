@@ -1035,10 +1035,48 @@ body.menu-open {
   box-sizing: border-box;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  padding: 4rem var(--section-gutter);
+  /* content sits near the top of the pinned panel rather than floating
+     in the middle, so the heading isn't left with a big gap above it */
+  align-items: flex-start;
+  padding: 4rem var(--section-gutter) 3rem;
 }
 
+.why-choose-frame {
+  width: 100%;
+  max-width: var(--section-width);
+  margin: 0 auto;
+}
+
+/* the section label with a hairline running on to the right edge, the
+   same treatment as the "What We Do" heading on the slider */
+.why-choose-heading {
+  display: flex;
+  align-items: center;
+  margin: 0 0 3.25rem;
+  gap: 1.25rem;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.why-choose-heading::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: rgba(19, 18, 18, 0.12);
+}
+
+/* keep the pinned panel inside shorter screens now it carries a heading */
+@media (max-height: 820px) and (min-width: 901px) {
+  .why-choose-sticky {
+    padding-block: 2rem;
+  }
+  .why-choose-heading {
+    margin-bottom: 1.75rem;
+    font-size: 1.85rem;
+  }
+}
 .why-choose-inner {
   width: 100%;
   /* same width as the slider and the video, so the edges line up */
@@ -1206,6 +1244,10 @@ body.menu-open {
   .why-choose-inner {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 2.5rem;
+  }
+  .why-choose-heading {
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
   }
   .why-choose-media {
     justify-self: start;
@@ -1402,6 +1444,40 @@ body.menu-open {
   }
   .team-bio {
     padding: 1.25rem 0 1.75rem;
+  }
+}
+/* ---------- Text reveal ---------- */
+/* Each word sits inside a clipping box and rises into it once the element
+   is on screen. The box carries padding pulled back out with negative
+   margins: the layout is unchanged, but glyphs that overhang a tight
+   line-height (ascenders, descenders, the big intro heading) aren't cut. */
+.tr-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.25em 0.06em;
+  margin: -0.25em -0.06em;
+}
+
+.tr-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+.tr-ready .tr-inner {
+  transform: translateY(160%);
+}
+
+.tr-ready.is-in .tr-inner {
+  transform: translateY(0);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.3, 1);
+  transition-delay: calc(var(--i) * var(--tr-step, 40ms));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-ready .tr-inner {
+    transform: none;
+    transition: none;
   }
 }
 /* ---------- Preloader ---------- */
