@@ -118,7 +118,7 @@ body {
     background: linear-gradient(
       to right,
       transparent calc(30% - 0.5px),
-      rgba(0, 0, 0, 0.055) calc(30% - 0.5px),
+      rgba(0, 0, 0, 0.116) calc(30% - 0.5px),
       rgba(255, 255, 255, 0.055) calc(30% + 0.5px),
       transparent calc(35% + 0.5px)
     );
@@ -199,7 +199,7 @@ body {
   }
 
   .eyebrow-title {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     font-weight: 600;
     letter-spacing: -0.2px;
     line-height: 1.75rem;
@@ -245,7 +245,7 @@ body {
       text-decoration: none;
       color: #000;
       padding: 0.35rem 0;
-      margin-top: 10px;
+      margin-top: 2rem;
       cursor: pointer;
 
       /* the underline is a pseudo so it can sweep rather than sit still */
@@ -337,7 +337,7 @@ body {
 
 .home-video-section {
   /* how much scrolling the grow takes once the panel is pinned */
-  border-top: 1px solid #f3f3f3;
+  border-top: 1px solid #e0e0e0;
   --video-grow-len: 70vh;
 }
 
