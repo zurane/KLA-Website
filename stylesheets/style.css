@@ -47,9 +47,7 @@ body {
   padding: 1rem;
 }
 .container .nav-bar .brand-logo {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: yellow;
+  font-size: 3.5rem;
 }
 .container .menu-buttons {
   display: inline-flex;
@@ -1598,6 +1596,7 @@ html.is-preloading {
   }
   .container .nav-bar .brand-logo {
     font-size: 2rem;
+    letter-spacing: -0.04em;
   }
   .container .btn-primary {
     padding: 0.8rem 1.25rem;
