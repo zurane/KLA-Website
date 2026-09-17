@@ -4,12 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.classList.add("js");</script>
     <link rel="stylesheet" href="stylesheets/style.css">
     <title>Khuphuka Leadership Academy</title>
 
 </head>
 
 <body>
+    <div class="preloader" aria-hidden="true">
+        <div class="preloader-inner">
+            <div class="preloader-count">
+                <span class="pl-digit"><span class="pl-strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>0</span></span></span>
+                <span class="pl-digit"><span class="pl-strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>0</span></span></span>
+                <span class="pl-digit"><span class="pl-strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>0</span></span></span>
+                <span class="pl-pct">%</span>
+            </div>
+            <p class="preloader-tagline">Empowering Africa's future. One student, one community, one vision at a
+                time.</p>
+        </div>
+    </div>
+
     <div class="container">
         <div class="hero-bg" aria-hidden="true"></div>
         <header>
@@ -54,7 +68,7 @@
                 <span class="title"></span>
             </div>
             <div class="home-intro-content">
-                <span class="eyebrow-title" data-text-reveal="70">Khuphuka<br /> Leadership <br /> Academy</span>
+                <span class="eyebrow-title" data-text-reveal="70">About the Academy</span>
                 <p data-text-reveal="16">Khuphuka Leadership Academy is a leadership, education and skills development academy dedicated to
                     developing confident leaders, skilled professionals and empowered communities through transformative
                     learning experiences.</p>
@@ -95,7 +109,7 @@
         <section class="home-slider-section">
             <div class="what-we-do-wrap">
              
-                <span class="eyebrow-title">View some of our selected programmes and training solutions
+                <span class="what-we-do-label"> What we offer
                 </span>
 
 
@@ -307,28 +321,38 @@
 
         <section class="team-section" aria-labelledby="team-title">
             <div class="team-wrap">
-                <span class="eyebrow-title">Our Leadership</span>
-                <h2 class="team-title" id="team-title" data-text-reveal="70">Meet the Coaches</h2>
+                <h2 class="team-title" id="team-title"><span class="team-title-text" data-text-reveal="70">Meet the
+                    Leadership</span></h2>
 
-                <ul class="team-grid">
-                    <li class="team-card">
-                        <div class="team-media">
-                            <img src="assets/images/Rectangle 23.png"
-                                alt="Jennifer Mahloko, co-founder of Khuphuka Leadership Academy" loading="lazy"
-                                draggable="false">
+                <!-- each card sticks below the top of the screen; the next one
+                     scrolls up over it, so the coaches stack as you go -->
+                <ul class="team-stack">
+                <li class="team-card" style="--i: 0">
+                    <div class="team-media">
+                        <img src="assets/images/Rectangle 23.png" alt="Jennifer Mahloko, founder / director of Khuphuka Leadership Academy" loading="lazy" draggable="false">
+                    </div>
+                    <div class="team-panel">
+                        <span class="team-eyebrow">Our Leadership</span>
+                        <p class="team-bio">Jennifer has a background in education and training spanning over half a decade and she co-founded Khuphuka Leadership Academy alongside with partner Mthobisi.</p>
+                        <div class="team-meta">
+                            <h3 class="team-name">Jennifer Mahloko</h3>
+                            <p class="team-role">Founder / Director</p>
                         </div>
-                        <h3 class="team-name">Jennifer Mahloko</h3>
-                        <p class="team-role">Co-founder</p>
-                    </li>
-                    <li class="team-card">
-                        <div class="team-media">
-                            <img src="assets/images/Rectangle 23.png"
-                                alt="Mthobisi Masondo, co-founder of Khuphuka Leadership Academy" loading="lazy"
-                                draggable="false">
+                    </div>
+                </li>
+                <li class="team-card" style="--i: 1">
+                    <div class="team-media">
+                        <img src="assets/images/Rectangle 23.png" alt="Mthobisi Masondo, co-founder / director of Khuphuka Leadership Academy" loading="lazy" draggable="false">
+                    </div>
+                    <div class="team-panel">
+                        <span class="team-eyebrow">Our Leadership</span>
+                        <p class="team-bio">Mthobisi brings experience in youth development and community programmes, and co-founded Khuphuka Leadership Academy alongside Jennifer to build leaders from the ground up.</p>
+                        <div class="team-meta">
+                            <h3 class="team-name">Mthobisi Masondo</h3>
+                            <p class="team-role">Co-founder / Operations</p>
                         </div>
-                        <h3 class="team-name">Mthobisi Masondo</h3>
-                        <p class="team-role">Co-founder</p>
-                    </li>
+                    </div>
+                </li>
                 </ul>
             </div>
         </section>
@@ -404,6 +428,7 @@
 
     <script src="./scripts/vendor/lenis.min.js"></script>
     <script src="./scripts/smooth-scroll.js"></script>
+    <script src="./scripts/preloader.js"></script>
     <script src="./scripts/hero-parallax.js"></script>
     <script src="./scripts/intro-reveal.js"></script>
     <script src="./scripts/text-reveal.js"></script>
@@ -411,6 +436,7 @@
     <script src="./scripts/slider.js"></script>
     <script src="./scripts/menu.js"></script>
     <script src="./scripts/why-choose.js"></script>
+    <script src="./scripts/team-stack.js"></script>
 </body>
 
 </html>

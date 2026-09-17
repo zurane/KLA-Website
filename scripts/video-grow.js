@@ -9,7 +9,18 @@
     // Reduced motion: leave the section as a plain framed video.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    section.classList.add('is-ready');
+    // On a phone the scale needed to cover a tall viewport is enormous and
+    // the video turns to mush, so the grow is desktop-only. The class is
+    // what switches the tall track and pinning on (see the CSS).
+    const wide = window.matchMedia('(min-width: 901px)');
+    const applyMode = () => {
+        section.classList.toggle('is-ready', wide.matches);
+        if (!wide.matches) {
+            box.style.transform = '';
+            box.style.removeProperty('--grow');
+            last = -1;
+        }
+    };
 
     // The scale that makes the box cover the pinned panel in both directions;
     // the panel's overflow: hidden crops whatever spills out.
@@ -30,6 +41,7 @@
     let last = -1;
 
     function update() {
+        if (!wide.matches) return;
         const range = track.offsetHeight - sticky.offsetHeight;
         if (range <= 0) return;
 
@@ -53,5 +65,7 @@
         }, { passive: true });
     }
 
+    wide.addEventListener('change', () => { applyMode(); full = coverScale(); update(); });
+    applyMode();
     update();
 })();

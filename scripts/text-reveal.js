@@ -68,14 +68,25 @@
         });
     }, { threshold: 0.15 });
 
-    targets.forEach((el) => {
-        if (!split(el)) return;
+    // Split straight away so nothing is visible before its cue...
+    const ready = targets.filter((el) => {
+        if (!split(el)) return false;
 
         // ms between one word starting and the next; headings can afford
         // a wider gap than a paragraph
         const step = parseInt(el.getAttribute('data-text-reveal'), 10);
         el.style.setProperty('--tr-step', `${step > 0 ? step : 40}ms`);
         el.classList.add('tr-ready');
-        observer.observe(el);
+        return true;
     });
+
+    // ...but only start watching once the preloader's curtain is lifting,
+    // so the hero headline rises behind it instead of before it.
+    const watch = () => ready.forEach((el) => observer.observe(el));
+
+    if (document.documentElement.classList.contains('is-preloading')) {
+        window.addEventListener('site:revealed', watch, { once: true });
+    } else {
+        watch();
+    }
 })();
