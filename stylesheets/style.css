@@ -171,11 +171,8 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  object-fit: cover;
+  user-select: none;
   -webkit-user-drag: none;
 }
 .home-intro-section .eyebrow-title {
@@ -347,10 +344,8 @@ body {
   padding: 5px;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
   opacity: calc(1 - var(--grow));
   pointer-events: none;
 }
@@ -358,8 +353,7 @@ body {
 .video-container video {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
@@ -393,7 +387,6 @@ body {
   align-items: center;
   gap: 20px;
   min-height: 500px;
-  width: -moz-max-content;
   width: max-content;
   transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -431,8 +424,7 @@ body {
 .slide-image-wrap img {
   width: 100%;
   height: 720px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   border-radius: 8px;
 }
@@ -653,12 +645,9 @@ body {
 .what-we-do-card img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
   -webkit-user-drag: none;
   transform: scale(1);
   transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -1082,8 +1071,7 @@ body.menu-open {
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--why-media-w);
-  -moz-column-gap: clamp(2rem, 8vw, 9rem);
-       column-gap: clamp(2rem, 8vw, 9rem);
+  column-gap: clamp(2rem, 8vw, 9rem);
   align-items: start;
 }
 
@@ -1217,8 +1205,7 @@ body.menu-open {
   inset: 0;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   opacity: 0;
   transform: scale(1.04);
   transition: opacity 520ms ease, transform 900ms cubic-bezier(0.22, 1, 0.3, 1);
@@ -1264,18 +1251,13 @@ body.menu-open {
 }
 /* ---------- Team ---------- */
 .team-section {
-  /* where a card pins, and how much of the card beneath stays visible
-     above the one on top */
-  --stack-top: 12vh;
-  --stack-offset: 18px;
-  --card-h: 425px; /* the portrait's height, which sets the card's */
-  padding: 8rem var(--section-gutter) 5rem;
-  background: var(--background-dark);
+  padding: 8rem var(--section-gutter);
+  background: #0b0b0b;
   color: #131212;
 }
 
 .team-wrap {
-  max-width: 1140px;
+  max-width: var(--section-width);
   margin: 0 auto;
 }
 
@@ -1284,8 +1266,8 @@ body.menu-open {
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  margin: 0 0 4.5rem;
-  font-size: clamp(1.5rem, 2.3vw, 1rem);
+  margin: 0 0 4rem;
+  font-size: clamp(1.5rem, 2.3vw, 2rem);
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -1310,64 +1292,48 @@ body.menu-open {
   -webkit-text-fill-color: transparent;
 }
 
-.team-stack {
+/* two cards to a row; each is a portrait beside a cream panel */
+.team-grid {
   list-style: none;
   margin: 0;
   padding: 0;
-  /* Exactly the scroll the last card needs to climb to its pin before the
-     page runs out, so the stack always completes. It has to be in-flow
-     content: sticky boxes are held inside their parent's content box, so
-     padding here would give them nothing. */
-}
-.team-stack::after {
-  content: "";
-  display: block;
-  height: calc(100vh - var(--stack-top) - var(--card-h) - var(--stack-offset));
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
 }
 
 .team-card {
-  position: sticky;
-  top: calc(var(--stack-top) + var(--i, 0) * var(--stack-offset));
   display: grid;
-  grid-template-columns: 390px minmax(0, 1fr);
+  grid-template-columns: 45% minmax(0, 1fr);
   gap: 3px;
-  margin-bottom: 4rem;
-  transform-origin: center top;
-  will-change: transform;
-}
-
-/* room for the last card to slide fully over the one before it */
-.team-card:last-child {
-  margin-bottom: 0;
 }
 
 .team-media {
   overflow: hidden;
   border-radius: 8px;
   background: #ebebeb;
-  aspect-ratio: 390/425;
+  /* the aspect ratio sets the row's height; if the panel's text needs
+     more, the portrait stretches to match rather than leaving a step */
+  aspect-ratio: 4/5;
+  height: 100%;
 }
 
 .team-media img {
   display: block;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center top;
-     object-position: center top;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  object-fit: cover;
+  object-position: center top;
+  user-select: none;
   -webkit-user-drag: none;
 }
 
 .team-panel {
   display: flex;
   flex-direction: column;
-  padding: 2.5rem 3.5rem 2.25rem 4rem;
+  padding: 2rem 1.75rem 1.75rem;
   border-radius: 8px;
-  background: var(--background-ghost-white);
+  background: #fbfff1;
 }
 
 .team-eyebrow {
@@ -1380,17 +1346,16 @@ body.menu-open {
 
 .team-bio {
   margin: auto 0;
-  padding: 2rem 0;
-  max-width: 620px;
-  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+  padding: 1.5rem 0;
+  font-size: clamp(1rem, 1.25vw, 1.125rem);
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.35;
   letter-spacing: -0.01em;
   color: #444;
 }
 
 .team-meta {
-  padding-top: 1.5rem;
+  padding-top: 1.25rem;
   border-top: 1px solid #eaeee0;
 }
 
@@ -1405,7 +1370,6 @@ body.menu-open {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  width: -moz-fit-content;
   width: fit-content;
 }
 
@@ -1416,6 +1380,15 @@ body.menu-open {
   color: #131212;
 }
 
+/* one to a row when two would squeeze the panels */
+@media (max-width: 1100px) {
+  .team-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .team-card {
+    max-width: 780px;
+  }
+}
 @media (max-width: 900px) {
   .team-section {
     padding: 4rem var(--section-gutter) 5rem;
@@ -1423,25 +1396,17 @@ body.menu-open {
   .team-title {
     margin-bottom: 2.5rem;
   }
-  .team-stack::after {
-    height: 0;
-  }
-  /* no stacking on a phone: cards would be taller than the screen */
+}
+/* phones: portrait above the panel */
+@media (max-width: 600px) {
   .team-card {
-    position: static;
     grid-template-columns: minmax(0, 1fr);
-    margin-bottom: 1.5rem;
-    transform: none !important;
-    filter: none !important;
   }
   .team-media {
     aspect-ratio: 4/3;
   }
   .team-panel {
-    padding: 1.75rem 1.5rem 1.5rem;
-  }
-  .team-bio {
-    padding: 1.25rem 0 1.75rem;
+    padding: 1.5rem 1.25rem 1.25rem;
   }
 }
 /* ---------- Text reveal ---------- */
@@ -1595,6 +1560,7 @@ html.is-preloading {
     padding: 1rem 0.5rem;
   }
   .container .nav-bar .brand-logo {
+    padding-top: 2rem;
     font-size: 2rem;
     letter-spacing: -0.04em;
   }
@@ -1675,4 +1641,6 @@ html.lenis body {
 
 .lenis.lenis-smooth iframe {
   pointer-events: none;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/*# sourceMappingURL=style.css.map */
