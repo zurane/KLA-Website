@@ -1,5 +1,5 @@
 (function initHeroParallax() {
-    const hero = document.querySelector('.container');
+    const hero = document.querySelector('.hero-visual');
     const layer = hero && hero.querySelector('.hero-bg');
     const lenis = window.siteLenis;
 

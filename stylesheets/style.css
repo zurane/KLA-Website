@@ -19,16 +19,26 @@ body {
 }
 
 .container {
+  --hero-split: 53.5%;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  padding: 0 2rem;
   position: relative;
   overflow: hidden;
-  /* keeps the background layer's negative z-index inside this box */
   isolation: isolate;
+  /* ---- the photo ---- */
+}
+.container .hero-visual {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 62vh;
+  padding: 0 2rem;
+}
+.container {
   /* The hero image lives on its own layer so it can drift slower than the
-     page (see scripts/hero-parallax.js). It starts 30% taller than the
-     hero, hanging above the top edge, which is exactly the distance it
-     travels down by the time the hero has scrolled away. */
+     page (see scripts/hero-parallax.js). It starts 30% taller than its box,
+     hanging above the top edge, which is exactly the distance it travels
+     down by the time the photo has scrolled away. */
 }
 .container .hero-bg {
   position: absolute;
@@ -84,34 +94,72 @@ body {
 }
 .container {
   /* a lime panel anchored to the bottom-right corner, the copy inside it */
+  /* ---- the band ---- */
+}
+.container .hero-band {
+  display: grid;
+  grid-template-columns: var(--hero-split) minmax(0, 1fr);
+  min-height: 38vh;
 }
 .container .hero-content {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  /* the sections below split at 36%, so the panel's left edge sits on
-     their rule and its text on their copy */
-  width: 64%;
   box-sizing: border-box;
-  padding: 2.75rem 2.5rem 3rem 2.75rem;
-  background: #ffffff;
+  padding: 4rem 3rem 4rem 4.5rem;
+  background: #67ff83;
   color: #131212;
 }
 .container .hero-content .hero-eyebrow {
-  margin: 0 0 1rem;
-  font-size: 1.25rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.4;
 }
 .container .hero-content h1 {
   width: 100%;
-  margin: 0 0 1.5rem;
+  max-width: 740px;
+  margin: 0;
   padding: 0;
   font-size: clamp(2rem, 3.1vw, 2.75rem);
   font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
   color: #131212;
+}
+.container .hero-content .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 1.75rem;
+}
+.container .hero-content .hero-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  background: #131212;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.3, 1), background 220ms ease;
+}
+.container .hero-content .hero-btn:hover, .container .hero-content .hero-btn:focus-visible {
+  background: #fff;
+  color: #131212;
+  transform: translateY(-2px);
+}
+.container .hero-content {
+  /* the actions settle in after the headline's words, once the preloader
+     has lifted; without the js flag they simply show */
+}
+html.js .container .hero-content .hero-actions {
+  opacity: 0;
+  transform: translateY(12px);
+}
+html.is-loaded .container .hero-content .hero-actions {
+  animation: hero-settle 720ms cubic-bezier(0.22, 1, 0.3, 1) 950ms forwards;
+}
+.container .hero-pattern {
+  background: #2b790e url("../assets/images/hero-pattern.svg") center/cover no-repeat;
 }
 
 .home-intro-section {
@@ -252,6 +300,12 @@ body {
     transform-origin: left center;
   }
 }
+@keyframes hero-settle {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* leaves to the right, comes back in from the left */
 @keyframes intro-arrow-swap {
   0% {
@@ -272,6 +326,11 @@ body {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .container .hero-content .hero-actions {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
   .home-intro-section .home-intro-content .btn-simple:hover::after,
   .home-intro-section .home-intro-content .btn-simple:hover svg {
     animation: none;
@@ -279,6 +338,7 @@ body {
 }
 .home-video-section {
   /* how much scrolling the grow takes once the panel is pinned */
+  background: #fcfdff;
   border-top: 1px solid #e0e0e0;
   --video-grow-len: 70vh;
 }
@@ -328,8 +388,10 @@ body {
   padding: 5px;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
   opacity: calc(1 - var(--grow));
   pointer-events: none;
 }
@@ -337,7 +399,8 @@ body {
 .video-container video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
@@ -370,6 +433,7 @@ body {
   align-items: center;
   gap: 20px;
   min-height: 500px;
+  width: -moz-max-content;
   width: max-content;
   transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -407,7 +471,8 @@ body {
 .slide-image-wrap img {
   width: 100%;
   height: 720px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   display: block;
   border-radius: 8px;
 }
@@ -628,9 +693,12 @@ body {
 .what-we-do-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   display: block;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   -webkit-user-drag: none;
   transform: scale(1);
   transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -1184,7 +1252,8 @@ body.menu-open {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   opacity: 0;
   transform: scale(1.04);
   transition: opacity 520ms ease, transform 900ms cubic-bezier(0.22, 1, 0.3, 1);
@@ -1306,9 +1375,13 @@ body.menu-open {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  user-select: none;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center top;
+     object-position: center top;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   -webkit-user-drag: none;
   transition: transform 700ms cubic-bezier(0.22, 1, 0.3, 1);
 }
@@ -1328,6 +1401,7 @@ body.menu-open {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  width: -moz-fit-content;
   width: fit-content;
 }
 
@@ -1515,7 +1589,8 @@ html.is-preloading {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 3fr);
   grid-template-rows: auto 1fr;
-  column-gap: 2rem;
+  -moz-column-gap: 2rem;
+       column-gap: 2rem;
   padding: 3rem 0 2.75rem;
 }
 
@@ -1603,6 +1678,9 @@ html.is-preloading {
   font-size: 1rem;
   line-height: 1.3;
   transition: border-color 200ms ease;
+}
+.footer-field input::-moz-placeholder, .footer-field textarea::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.85);
 }
 .footer-field input::placeholder,
 .footer-field textarea::placeholder {
@@ -1709,11 +1787,7 @@ html.is-preloading {
 }
 /* ---------- Mobile ---------- */
 @media (max-width: 900px) {
-  /* hero: the heading takes the full width so no word is wider than its
-     box, and the nav loses the desktop-scale padding */
-  .container {
-    padding: 0 1rem;
-  }
+  /* hero: the nav loses the desktop-scale padding */
   .container .nav-bar {
     padding: 1rem 0.5rem;
   }
@@ -1726,14 +1800,23 @@ html.is-preloading {
     padding: 0.8rem 1.25rem;
     white-space: nowrap;
   }
-  .container .hero-content {
-    left: 0;
-    right: 0;
-    width: 100%;
-    padding: 1.75rem 1.5rem 2rem;
+  .container .hero-visual {
+    min-height: 56vh;
+    padding: 0 1rem;
   }
-  .container .hero-content .hero-eyebrow {
-    font-size: 1rem;
+  .container .hero-band {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .container .hero-content {
+    padding: 2rem 1.5rem 2.25rem;
+  }
+  .container .hero-content h1 {
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
+    line-height: 1.15;
+  }
+  .container .hero-pattern {
+    min-height: 120px;
   }
   .container .hero-content h1 {
     width: 100%;
@@ -1798,6 +1881,4 @@ html.lenis body {
 
 .lenis.lenis-smooth iframe {
   pointer-events: none;
-}
-
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */
