@@ -338,7 +338,6 @@ html.is-loaded .container .hero-content .hero-actions {
 }
 .home-video-section {
   /* how much scrolling the grow takes once the panel is pinned */
-  background: #fcfdff;
   border-top: 1px solid #e0e0e0;
   --video-grow-len: 70vh;
 }
