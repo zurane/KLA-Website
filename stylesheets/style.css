@@ -39,14 +39,6 @@ body {
   background-position: center;
   will-change: transform;
   pointer-events: none;
-  /* a dark wash over the photo, heavier towards the bottom where the
-     headline sits; it rides on the same layer so it moves with the image */
-}
-.container .hero-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.3) 45%, rgba(0, 0, 0, 0.6) 100%);
 }
 .container .nav-bar {
   display: flex;
@@ -67,8 +59,8 @@ body {
   align-items: center;
   gap: 1rem;
   text-decoration: none;
-  color: #fff;
-  border-bottom: 1px solid #fff;
+  color: #131212;
+  border-bottom: 1px solid #131212;
   padding: 0.35rem 0;
   cursor: pointer;
 }
@@ -90,17 +82,36 @@ body {
   padding: 12px;
   border-radius: 50%;
 }
+.container {
+  /* a lime panel anchored to the bottom-right corner, the copy inside it */
+}
 .container .hero-content {
   position: absolute;
-  bottom: 10%;
-  padding: 0 2rem;
+  right: 0;
+  bottom: 0;
+  /* the sections below split at 36%, so the panel's left edge sits on
+     their rule and its text on their copy */
+  width: 64%;
+  box-sizing: border-box;
+  padding: 2.75rem 2.5rem 3rem 2.75rem;
+  background: #ffffff;
+  color: #131212;
+}
+.container .hero-content .hero-eyebrow {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.4;
 }
 .container .hero-content h1 {
-  width: 60%;
-  padding: 0.25rem 0;
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: #fff;
+  width: 100%;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  font-size: clamp(2rem, 3.1vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #131212;
 }
 
 .home-intro-section {
@@ -1486,200 +1497,214 @@ html.is-preloading {
 }
 /* ---------- Footer ---------- */
 .site-footer {
-  background: #e6e5da;
-  color: #131212;
-  padding: 3rem 2.25rem 1.75rem;
-  overflow: hidden;
+  background: #0b0b0b;
+  color: #fff;
+  padding: 0 var(--section-gutter) 2rem;
+  /* on the footer itself so it runs the full width of the page */
+  border-top: 1px solid #2a2a2a;
 }
 
-/* Three columns: the left half carries the statement and the initialism,
-   the two quarter columns line up the invitations, details and small
-   print underneath one another. */
+.footer-inner {
+  max-width: var(--section-width);
+  margin: 0 auto;
+}
+
+/* links in two narrow columns, the form on the right; the socials sit
+   under the links, on the same baseline as the form's button */
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-rows: auto 1fr auto;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 3fr);
+  grid-template-rows: auto 1fr;
   column-gap: 2rem;
-  min-height: 78vh;
+  padding: 3rem 0 2.75rem;
 }
 
-.footer-statement {
+.footer-col:nth-of-type(1) {
   grid-column: 1;
   grid-row: 1;
-  margin: 0;
-  max-width: 580px;
-  font-size: 1.125rem;
-  line-height: 1.4;
 }
 
-.footer-invite {
+.footer-col:nth-of-type(2) {
+  grid-column: 2;
   grid-row: 1;
-  display: grid;
-  gap: 0.15rem;
-  font-size: 1.125rem;
+}
+
+.footer-heading {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 500;
   line-height: 1.3;
 }
-.footer-invite a {
-  color: #131212;
-  text-decoration: none;
-  width: fit-content;
-  transition: opacity 200ms ease;
-}
-.footer-invite a:hover, .footer-invite a:focus-visible {
-  opacity: 0.6;
-}
 
-.footer-label {
-  color: #7a8560;
-}
-
-/* the initialism fills the left column and sits on the bottom row's line */
-.footer-wordmark {
-  grid-column: 1;
-  grid-row: 2/4;
-  align-self: end;
-  margin: 5rem 0 -0.06em -0.04em;
-  font-size: clamp(6rem, 21vw, 26rem);
-  font-weight: 900;
-  line-height: 0.78;
-  letter-spacing: -0.04em;
-  user-select: none;
-  pointer-events: none;
-}
-
-.footer-details,
-.footer-socials {
-  grid-row: 2;
-  align-self: end;
-  font-style: normal;
-  font-size: 0.9375rem;
-  line-height: 1.45;
-}
-
-.footer-details p {
-  margin: 0 0 1.1rem;
-}
-
-.footer-details p:last-child {
-  margin-bottom: 0;
-}
-
-.footer-socials ul {
+.footer-col ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.4rem;
+  font-size: 1.25rem;
 }
 
-.footer-details a,
-.footer-socials a,
-.footer-legal a {
-  color: #131212;
+.footer-col a {
+  color: #fff;
   text-decoration: none;
   transition: opacity 200ms ease;
 }
-.footer-details a:hover, .footer-details a:focus-visible,
-.footer-socials a:hover,
-.footer-socials a:focus-visible,
-.footer-legal a:hover,
-.footer-legal a:focus-visible {
+.footer-col a:hover, .footer-col a:focus-visible {
   opacity: 0.6;
 }
 
-.footer-copy,
-.footer-legal {
-  grid-row: 3;
+.footer-socials {
+  grid-column: 1/3;
+  grid-row: 2;
   align-self: end;
-  margin: 3.5rem 0 0;
-  font-size: 0.9375rem;
-}
-
-.footer-copy {
-  grid-column: 2;
-}
-
-.footer-legal {
-  grid-column: 3;
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 0;
   display: flex;
+  gap: 1.75rem;
+}
+.footer-socials a {
+  display: inline-flex;
+  color: #fff;
+  transition: opacity 200ms ease;
+}
+.footer-socials a:hover, .footer-socials a:focus-visible {
+  opacity: 0.6;
+}
+
+/* ---- contact form ---- */
+.footer-form {
+  grid-column: 3;
+  grid-row: 1/3;
+  margin: 0;
+}
+
+.footer-fields {
+  display: grid;
+  gap: 1rem;
+}
+
+.footer-field {
+  margin: 0;
+}
+
+.footer-field input,
+.footer-field textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.45rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.3;
+  transition: border-color 200ms ease;
+}
+.footer-field input::placeholder,
+.footer-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.85);
+}
+.footer-field input:focus,
+.footer-field textarea:focus {
+  outline: none;
+  border-color: #67ff83;
+}
+
+.footer-field textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.footer-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1.1rem 1.7rem 1.1rem 1.9rem;
+  border: 0;
+  border-radius: 8px;
+  background: #f4f2ee;
+  color: #0b0b0b;
+  font: inherit;
+  font-size: 1.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+.footer-submit:hover, .footer-submit:focus-visible {
+  background: #67ff83;
+}
+
+.footer-submit-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0b0b0b;
+  color: #fff;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.3, 1);
+}
+
+.footer-submit:hover .footer-submit-icon {
+  transform: translateX(4px);
+}
+
+/* ---- bottom row ---- */
+.footer-bottom {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid #2a2a2a;
+  font-size: 1rem;
 }
 
-@media (max-width: 1100px) {
+.footer-copy,
+.footer-credit {
+  margin: 0;
+}
+
+@media (max-width: 1000px) {
   .footer-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: auto auto 1fr auto;
-    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto auto;
   }
-  .footer-statement {
+  .footer-form {
     grid-column: 1/-1;
-    margin-bottom: 2.5rem;
-  }
-  .footer-invite {
     grid-row: 2;
+    margin-top: 2.5rem;
   }
-  .footer-wordmark {
+  .footer-socials {
     grid-column: 1/-1;
     grid-row: 3;
-    margin-top: 3rem;
-    font-size: clamp(6rem, 28vw, 20rem);
-  }
-  .footer-details,
-  .footer-socials {
-    grid-row: 4;
-    margin-top: 2.5rem;
-  }
-  .footer-copy,
-  .footer-legal {
-    grid-row: 5;
-    margin-top: 2.5rem;
-  }
-  .footer-copy {
-    grid-column: 1;
-  }
-  .footer-legal {
-    grid-column: 2;
   }
 }
 @media (max-width: 600px) {
-  .site-footer {
-    padding: 2.5rem var(--section-gutter) 1.5rem;
-  }
   .footer-grid {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: none;
-    row-gap: 0;
   }
-  .footer-statement,
-  .footer-invite,
-  .footer-wordmark,
-  .footer-details,
-  .footer-socials,
-  .footer-copy,
-  .footer-legal {
+  .footer-col:nth-of-type(1),
+  .footer-col:nth-of-type(2),
+  .footer-form,
+  .footer-socials {
     grid-column: 1;
     grid-row: auto;
   }
-  .footer-invite {
-    margin-bottom: 1.5rem;
+  .footer-col:nth-of-type(2) {
+    margin-top: 2rem;
   }
-  .footer-wordmark {
-    font-size: 34vw;
-    margin: 1.5rem 0 1.5rem -0.04em;
-  }
-  .footer-details {
-    margin-top: 0;
-  }
-  .footer-socials {
-    margin-top: 1.5rem;
-  }
-  .footer-copy {
-    margin-top: 2.5rem;
-  }
-  .footer-legal {
-    margin-top: 0.75rem;
-    justify-content: flex-start;
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 /* ---------- Mobile ---------- */
@@ -1693,7 +1718,7 @@ html.is-preloading {
     padding: 1rem 0.5rem;
   }
   .container .nav-bar .brand-logo {
-    padding-top: 2rem;
+    padding-top: 1rem;
     font-size: 2rem;
     letter-spacing: -0.04em;
   }
@@ -1704,8 +1729,11 @@ html.is-preloading {
   .container .hero-content {
     left: 0;
     right: 0;
-    padding: 0 1.5rem;
-    bottom: 8%;
+    width: 100%;
+    padding: 1.75rem 1.5rem 2rem;
+  }
+  .container .hero-content .hero-eyebrow {
+    font-size: 1rem;
   }
   .container .hero-content h1 {
     width: 100%;
