@@ -58,16 +58,11 @@
     </div>
     <main>
         <section class="home-intro-section" id="about">
-            <figure class="home-intro-figure">
-                <img src="assets/images/Rectangle 23.png"
-                    alt="Participants seated outdoors at a Khuphuka Leadership Academy session" loading="lazy"
-                    draggable="false">
-            </figure>
-            <div>
-                <span class="title"></span>
+            <div class="home-intro-aside">
+                <span class="eyebrow-title" data-text-reveal="70">About Us</span>
             </div>
+
             <div class="home-intro-content">
-                <span class="eyebrow-title" data-text-reveal="70">About the Academy</span>
                 <p data-text-reveal="16">Khuphuka Leadership Academy is a leadership, education and skills development academy dedicated to
                     developing confident leaders, skilled professionals and empowered communities through transformative
                     learning experiences.</p>
@@ -107,12 +102,12 @@
 
         <section class="home-slider-section" id="programmes">
             <div class="what-we-do-wrap">
-             
-                <span class="what-we-do-label"> What we offer
-                </span>
+                <div class="what-we-do-aside">
+                    <span class="what-we-do-label">What we offer</span>
+                </div>
 
-
-                <div class="what-we-do-viewport">
+                <div class="what-we-do-main">
+<div class="what-we-do-viewport">
                     <ul class="what-we-do-cards">
                         <li class="what-we-do-card">
                             <a class="card-link" href="#">
@@ -241,6 +236,7 @@
                     <button class="previous" type="button">Previous</button>
                     <button class="next" type="button">Next</button>
                 </div>
+                </div>
             </div>
         </section>
 
@@ -249,10 +245,17 @@
                  while the page scrolls through it, and that scroll picks the item -->
             <div class="why-choose-track">
                 <div class="why-choose-sticky">
-                    <div class="why-choose-frame">
-                        <h2 class="why-choose-heading" id="why-choose-heading" data-text-reveal="70">Why Choose Us</h2>
-
                     <div class="why-choose-inner">
+                        <div class="why-choose-aside">
+                            <h2 class="why-choose-heading" id="why-choose-heading" data-text-reveal="70">Why choose us</h2>
+                            <div class="why-choose-media" aria-hidden="true">
+                                <img class="is-active" src="assets/icons/practical-learning.jpg" alt="" draggable="false">
+                                <img src="assets/icons/values-driven.jpg" alt="" draggable="false">
+                                <img src="assets/icons/tailor-made-solutions.jpg" alt="" draggable="false">
+                                <img src="assets/icons/industry-relevant.jpg" alt="" draggable="false">
+                            </div>
+                        </div>
+
                         <div class="why-choose-copy">
                             
                             <p class="why-choose-statement">We deliver innovative learning experiences that develop
@@ -309,14 +312,6 @@
                                 </li>
                             </ul>
                         </div>
-
-                        <div class="why-choose-media" aria-hidden="true">
-                            <img class="is-active" src="assets/icons/practical-learning.jpg" alt="" draggable="false">
-                            <img src="assets/icons/values-driven.jpg" alt="" draggable="false">
-                            <img src="assets/icons/tailor-made-solutions.jpg" alt="" draggable="false">
-                            <img src="assets/icons/industry-relevant.jpg" alt="" draggable="false">
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -324,8 +319,11 @@
 
         <section class="team-section" id="leadership" aria-labelledby="team-title">
             <div class="team-wrap">
-                <h2 class="team-title" id="team-title"><span class="team-title-text" data-text-reveal="70">Meet the Founders</span></h2>
+                <div class="team-aside">
+                    <h2 class="team-title" id="team-title"><span class="team-title-text" data-text-reveal="70">Meet the Founders</span></h2>
+                </div>
 
+                <div class="team-main">
                 <ul class="team-grid">
                     <li class="team-card">
                         <div class="team-media">
@@ -342,6 +340,7 @@
                         <p class="team-role">Co-founder / Operations Manager</p>
                     </li>
                 </ul>
+                </div>
             </div>
         </section>
 
