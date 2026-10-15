@@ -39,10 +39,11 @@ body {
   /* ---- the photo ---- */
 }
 .container .hero-visual {
+  --hero-side: 1.75rem;
   position: relative;
   flex: 1 1 auto;
   overflow: hidden; /* keeps the drifting image inside the frame */
-  padding: 0 1.75rem;
+  padding: 0 var(--hero-side);
 }
 .container {
   /* The hero image lives on its own layer so it can drift slower than the
@@ -71,59 +72,70 @@ body {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.42) 45%, rgba(0, 0, 0, 0.62) 100%);
 }
 .container {
-  /* logo left, links centred, contact right */
+  /* a transparent bar over the photo: the green logo block on the left, a
+     floating white pill on the right holding the links and Contact */
 }
 .container .nav-bar {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  --nav-height: 64px;
+  display: flex;
   align-items: center;
-  padding: 1rem;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  padding: 1rem 0;
+  /* the logo's own green behind it: the png has a transparent corner */
 }
 .container .nav-bar .brand-logo {
-  font-size: 3.5rem;
-  justify-self: start;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  background: transparent;
+  line-height: 0;
 }
-.container .nav-contact {
-  justify-self: end;
-  padding: 0.65rem 1.9rem;
-  border-radius: var(--btn-radius);
-  background: #000;
-  color: #fff;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 220ms ease, color 220ms ease;
-}
-.container .nav-contact:hover, .container .nav-contact:focus-visible {
-  background: var(--btn-bg);
-  color: var(--btn-ink);
+.container .nav-bar .brand-logo img {
+  display: block;
+  width: auto;
+  height: var(--nav-height);
 }
 .container {
-  /* desktop: plain links; the pill and menu button take over on phones */
+  /* the pill: links on the left, Contact in its own cell behind a hairline */
+}
+.container .nav-pill {
+  display: flex;
+  align-items: stretch;
+  height: var(--nav-height);
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
 }
 .container .nav-links {
   display: flex;
-  align-items: center;
-  gap: 5.5rem;
+  align-items: stretch;
   margin: 0;
-  padding: 0;
+  padding: 0 1rem;
   list-style: none;
+}
+.container .nav-links li {
+  display: flex;
 }
 .container .nav-links a {
   position: relative;
-  color: #fff;
-  font-size: 0.9899rem;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  color: #111;
+  font-size: 1rem;
+  font-weight: 500;
   text-decoration: none;
 }
 .container .nav-links a::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 3px;
-  background: #ffffff;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 1.1rem;
+  height: 2px;
+  background: #2bb673;
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 320ms cubic-bezier(0.22, 1, 0.3, 1);
@@ -131,10 +143,72 @@ body {
 .container .nav-links a:hover::after, .container .nav-links a:focus-visible::after {
   transform: scaleX(1);
 }
+.container .nav-contact {
+  display: flex;
+  align-items: center;
+  padding: 0 2.25rem;
+  border-left: 1px solid #e2e2e2;
+  color: #111;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 220ms ease, color 220ms ease;
+}
+.container .nav-contact:hover, .container .nav-contact:focus-visible {
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+}
+.container {
+  /* phones: the pill gives way to Contact and the menu button */
+}
 .container .menu-buttons {
   display: none;
+  align-items: stretch;
+  gap: 0;
+  height: var(--nav-height);
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.container .btn-primary {
+  display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  padding: 0 1.5rem;
+  border: 0;
+  border-right: 1px solid #e2e2e2;
+  border-radius: 0;
+  background: transparent;
+  color: #111;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 220ms ease, color 220ms ease;
+}
+.container .btn-primary:hover, .container .btn-primary:focus-visible {
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+}
+.container .btn-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--nav-height);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #111;
+  cursor: pointer;
+  transition: background 220ms ease;
+}
+.container .btn-menu-toggle svg {
+  display: block;
+}
+.container .btn-menu-toggle:hover, .container .btn-menu-toggle:focus-visible {
+  background: #f2f2f2;
 }
 .container .btn-simple {
   display: inline-flex;
@@ -146,27 +220,7 @@ body {
   padding: 0.35rem 0;
   cursor: pointer;
 }
-.container .btn-primary {
-  text-decoration: none;
-  background-color: var(--btn-bg);
-  color: var(--btn-ink);
-  font-weight: 500;
-  border: none;
-  padding: var(--btn-pad);
-  border-radius: var(--btn-radius);
-  cursor: pointer;
-}
-.container .btn-menu-toggle {
-  align-items: center;
-  border: none;
-  text-decoration: none;
-  background-color: var(--btn-bg);
-  color: var(--btn-ink);
-  padding: 12px;
-  border-radius: 50%;
-}
 .container {
-  /* a lime panel anchored to the bottom-right corner, the copy inside it */
   /* ---- the band ---- */
   /* the copy sits over the bottom of the photo */
 }
@@ -1878,10 +1932,6 @@ html.is-preloading {
   min-height: 74vh;
 }
 
-.container--sub .brand-logo {
-  display: inline-flex;
-}
-
 .programme-items {
   padding: 3.5rem 3.5rem 5.5rem;
   border-top: 1px solid #ececec;
@@ -2058,32 +2108,23 @@ html.is-preloading {
 @media (max-width: 900px) {
   /* hero: the nav loses the desktop-scale padding */
   .container .nav-bar {
-    padding: 1rem 0.5rem;
+    --nav-height: 52px;
+    padding: 0.5rem 0;
   }
-  .container .nav-bar .brand-logo {
-    font-size: 2rem;
-    letter-spacing: -0.04em;
+  .container .nav-pill {
+    display: none;
+  }
+  .container .menu-buttons {
+    display: inline-flex;
   }
   .container .btn-primary {
-    padding: 0.8rem 1.25rem;
-    white-space: nowrap;
+    padding: 0 1.25rem;
   }
   .container {
     --hero-frame: 0.6rem;
   }
   .container .hero-visual {
-    padding: 0 0.5rem;
-  }
-  .container .nav-bar {
-    display: flex;
-    justify-content: space-between;
-  }
-  .container .nav-links,
-  .container .nav-contact {
-    display: none;
-  }
-  .container .menu-buttons {
-    display: inline-flex;
+    --hero-side: 0.5rem;
   }
   .container .hero-content {
     padding: 1.5rem 1.25rem 2.5rem;
