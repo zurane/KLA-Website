@@ -5,8 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>document.documentElement.classList.add("js");</script>
-    <link rel="stylesheet" href="stylesheets/style.css">
     <title>Khuphuka Leadership Academy</title>
+    <!-- fonts come from Google: open the connections now so the font
+         css and the woff2 behind it don't each pay for a new handshake -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- the hero photo is only named in CSS, so start it before the
+         stylesheet has arrived -->
+    <link rel="preload" as="image" href="assets/images/Subtle-leadership-workshop-notes-on-whiteboard.avif" type="image/avif" fetchpriority="high">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap">
 
 </head>
 
@@ -96,16 +104,11 @@
         </section>
 
         <section class="home-video-section">
-            <!-- the track is taller than the screen; the panel inside stays pinned
-                 while the page scrolls through it, and that scroll grows the video -->
-            <div class="video-track">
-                <div class="video-sticky">
-                    <div class="video-container">
-                        <video autoplay muted loop playsinline>
-                            <source src="assets/video/7186769_Man_Portrait_1280x720.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
+            <!-- a full-width band; the clip starts once it scrolls near (see lazy-video.js) -->
+            <div class="video-container">
+                <video muted loop playsinline preload="none" data-lazy>
+                    <source src="assets/video/7186769_Man_Portrait_1280x720.mp4" type="video/mp4">
+                </video>
             </div>
         </section>
 
@@ -116,7 +119,7 @@
                      right of the screen -->
                 <div class="what-we-do-head">
                     <div class="what-we-do-heading">
-                        <span class="what-we-do-eyebrow">Programmes</span>
+                     
                         <h2 class="what-we-do-label section-title" data-text-reveal="70">What we offer</h2>
                         <p class="what-we-do-intro section-intro" data-text-reveal="16">Programmes for learners, educators,
                         professionals and organisations.</p>
@@ -145,7 +148,7 @@
                         <li class="what-we-do-card">
                             <a class="card-link" href="programme/school-leadership.html">
                                 <span class="card-media">
-                                    <img src="assets/images/Rectangle 23.png" alt="School Leadership &amp; Development"
+                                    <img loading="lazy" decoding="async" src="assets/images/Rectangle 23.avif" alt="School Leadership &amp; Development"
                                         draggable="false">
                                 </span>
                                 <span class="card-content">
@@ -165,7 +168,7 @@
                         <li class="what-we-do-card">
                             <a class="card-link" href="programme/accredited-qualifications.html">
                                 <span class="card-media">
-                                    <img src="assets/images/accredited-q.jpg" alt="Accredited Qualifications"
+                                    <img loading="lazy" decoding="async" src="assets/images/accredited-q.avif" alt="Accredited Qualifications"
                                         draggable="false">
                                 </span>
                                 <span class="card-content">
@@ -186,7 +189,7 @@
                         <li class="what-we-do-card">
                             <a class="card-link" href="programme/short-courses.html">
                                 <span class="card-media">
-                                    <img src="assets/images/Working & Meeting.jpg" alt="Short Courses &amp; Workshops"
+                                    <img loading="lazy" decoding="async" src="assets/images/Working & Meeting.avif" alt="Short Courses &amp; Workshops"
                                         draggable="false">
                                 </span>
                                 <span class="card-content">
@@ -206,7 +209,7 @@
                         <li class="what-we-do-card">
                             <a class="card-link" href="programme/re5-preparation.html">
                                 <span class="card-media">
-                                    <img src="assets/images/rep-5.jpg" alt="RE5 Preparation Workshops"
+                                    <img loading="lazy" decoding="async" src="assets/images/rep-5.avif" alt="RE5 Preparation Workshops"
                                         draggable="false">
                                 </span>
                                 <span class="card-content">
@@ -226,7 +229,7 @@
                         <li class="what-we-do-card">
                             <a class="card-link" href="programme/corporate-training.html">
                                 <span class="card-media">
-                                    <img src="assets/images/corporate.jpg" alt="Corporate Training"
+                                    <img loading="lazy" decoding="async" src="assets/images/corporate.avif" alt="Corporate Training"
                                         draggable="false">
                                 </span>
                                 <span class="card-content">
@@ -242,11 +245,11 @@
                                 </span>
                             </a>
                         </li>
-
+<!-- 
                         <li class="what-we-do-card">
                             <a class="card-link" href="#">
                                 <span class="card-media">
-                                    <img src="assets/images/youth.jpg" alt="Youth Development Initiatives"
+                                    <img loading="lazy" decoding="async" src="assets/images/youth.avif" alt="Youth Development Initiatives"
                                         draggable="false">
                                 </span>
                                 <span class="card-content">
@@ -261,7 +264,7 @@
                                     </span>
                                 </span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -276,10 +279,10 @@
                         <div class="why-choose-aside">
                             <h2 class="why-choose-heading" id="why-choose-heading" data-text-reveal="70">Why choose us</h2>
                             <div class="why-choose-media" aria-hidden="true">
-                                <img class="is-active" src="assets/icons/practical-learning.jpg" alt="" draggable="false">
-                                <img src="assets/icons/values-driven.jpg" alt="" draggable="false">
-                                <img src="assets/icons/tailor-made-solutions.jpg" alt="" draggable="false">
-                                <img src="assets/icons/industry-relevant.jpg" alt="" draggable="false">
+                                <img loading="lazy" decoding="async" class="is-active" src="assets/icons/practical-learning.avif" alt="" draggable="false">
+                                <img loading="lazy" decoding="async" src="assets/icons/values-driven.avif" alt="" draggable="false">
+                                <img loading="lazy" decoding="async" src="assets/icons/tailor-made-solutions.avif" alt="" draggable="false">
+                                <img loading="lazy" decoding="async" src="assets/icons/industry-relevant.avif" alt="" draggable="false">
                             </div>
                         </div>
 
@@ -356,14 +359,14 @@
                 <ul class="team-grid">
                     <li class="team-card">
                         <div class="team-media">
-                            <img src="assets/images/woman.jpg" alt="Jennifer Mahloko, founder / director of Khuphuka Leadership Academy" loading="lazy" draggable="false">
+                            <img src="assets/images/woman.avif" alt="Jennifer Mahloko, founder / director of Khuphuka Leadership Academy" loading="lazy" draggable="false">
                         </div>
                         <h3 class="team-name">Jennifer Mahloko</h3>
                         <p class="team-role">Founder / Director</p>
                     </li>
                     <li class="team-card">
                         <div class="team-media">
-                            <img src="assets/images/men.jpg" alt="Mthobisi Masondo, co-founder / director of Khuphuka Leadership Academy" loading="lazy" draggable="false">
+                            <img src="assets/images/men.avif" alt="Mthobisi Masondo, co-founder / director of Khuphuka Leadership Academy" loading="lazy" draggable="false">
                         </div>
                         <h3 class="team-name">Mthobisi Masondo</h3>
                         <p class="team-role">Co-founder / Operations Manager</p>
@@ -437,7 +440,7 @@
 
             <div class="footer-bottom">
                 <p class="footer-copy">&copy; Khuphuka Leadership Academy. All rights reserved.</p>
-                <p class="footer-credit">Website by Zegn</p>
+                <p class="footer-credit">Website by zegn studio</p>
             </div>
         </div>
     </footer>
@@ -511,16 +514,16 @@
         </div>
     </div>
 
-    <script src="./scripts/vendor/lenis.min.js"></script>
-    <script src="./scripts/smooth-scroll.js"></script>
-    <script src="./scripts/preloader.js"></script>
-    <script src="./scripts/hero-parallax.js"></script>
-    <script src="./scripts/intro-reveal.js"></script>
-    <script src="./scripts/text-reveal.js"></script>
-    <script src="./scripts/video-grow.js"></script>
-    <script src="./scripts/slider.js"></script>
-    <script src="./scripts/menu.js"></script>
-    <script src="./scripts/why-choose.js"></script>
+    <script src="./scripts/vendor/lenis.min.js" defer></script>
+    <script src="./scripts/smooth-scroll.js" defer></script>
+    <script src="./scripts/preloader.js" defer></script>
+    <script src="./scripts/hero-parallax.js" defer></script>
+    <script src="./scripts/intro-reveal.js" defer></script>
+    <script src="./scripts/text-reveal.js" defer></script>
+    <script src="./scripts/lazy-video.js" defer></script>
+    <script src="./scripts/slider.js" defer></script>
+    <script src="./scripts/menu.js" defer></script>
+    <script src="./scripts/why-choose.js" defer></script>
 </body>
 
 </html>

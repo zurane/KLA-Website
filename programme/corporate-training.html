@@ -8,14 +8,22 @@
     <!-- no preloader on inner pages: mark the page as loaded straight away so
          the hero's entrance animations run -->
     <script>document.documentElement.classList.add("js", "is-loaded");</script>
-    <link rel="stylesheet" href="../stylesheets/style.css">
     <title>Corporate Training | Khuphuka Leadership Academy</title>
+    <!-- fonts come from Google: open the connections now so the font
+         css and the woff2 behind it don't each pay for a new handshake -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- the hero photo is only named in CSS, so start it before the
+         stylesheet has arrived -->
+    <link rel="preload" as="image" href="../assets/images/corporate.avif" type="image/avif" fetchpriority="high">
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap">
 </head>
 
 <body>
     <div class="container container--sub">
         <div class="hero-visual">
-            <div class="hero-bg" aria-hidden="true" style="background-image: url('../assets/images/corporate.jpg')"></div>
+            <div class="hero-bg" aria-hidden="true" style="background-image: url('../assets/images/corporate.avif')"></div>
             <header>
                     <nav class="nav-bar">
                      <a class="brand-logo" href="../index.html" aria-label="Khuphuka Leadership Academy, home">
@@ -231,11 +239,11 @@
             </nav>
         </div>
     </div>
-    <script src="../scripts/vendor/lenis.min.js"></script>
-    <script src="../scripts/smooth-scroll.js"></script>
-    <script src="../scripts/hero-parallax.js"></script>
-    <script src="../scripts/text-reveal.js"></script>
-    <script src="../scripts/menu.js"></script>
+    <script src="../scripts/vendor/lenis.min.js" defer></script>
+    <script src="../scripts/smooth-scroll.js" defer></script>
+    <script src="../scripts/hero-parallax.js" defer></script>
+    <script src="../scripts/text-reveal.js" defer></script>
+    <script src="../scripts/menu.js" defer></script>
 </body>
 
 </html>

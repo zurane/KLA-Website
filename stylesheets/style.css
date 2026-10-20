@@ -1,5 +1,7 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap");
+/* The webfont is linked from each page's <head> (with a preconnect) rather
+   than imported here, so the browser can fetch it alongside this file
+   instead of only after it. */
 :root {
   /* one content width shared by the video and the slider so their
      left and right edges line up down the page */
@@ -14,6 +16,9 @@
   --btn-ink: #131212;
   --btn-radius: 10px;
   --btn-pad: 0.8rem 1.6rem;
+  /* the black frame around the hero photo; the video band below uses the
+     same inset so its edges line up with the photo's */
+  --hero-frame: 1.6rem;
 }
 
 body {
@@ -25,8 +30,6 @@ body {
 }
 
 .container {
-  /* the black frame around the photo */
-  --hero-frame: 1.6rem;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -57,7 +60,7 @@ body {
      of the photo and cuts off heads */
   inset: -16px 0 0 0;
   z-index: -1;
-  background-image: url("../assets/images/Subtle-leadership-workshop-notes-on-whiteboard.jpg");
+  background-image: url("../assets/images/Subtle-leadership-workshop-notes-on-whiteboard.avif");
   background-size: cover;
   background-position: center top;
   will-change: transform;
@@ -295,7 +298,7 @@ html.is-loaded .container .hero-content .hero-actions {
   display: inline-block;
   margin: 0;
   /* 27px to 31px: the earlier 24px to 28px range plus 3px */
-  font-size: clamp(1.6875rem, 1.9vw + 3px, 1.9375rem);
+  font-size: clamp(2.6875rem, 1.9vw + 3px, 3.9375rem);
   font-weight: 600;
   line-height: 1.2;
   /* -5% in the Figma file */
@@ -304,7 +307,7 @@ html.is-loaded .container .hero-content .hero-actions {
 }
 
 .section-intro {
-  margin: 0.9rem 0 0;
+  margin: 0.2rem 0 0;
   max-width: 340px;
   font-size: 0.9375rem;
   font-weight: 400;
@@ -491,74 +494,29 @@ html.is-loaded .container .hero-content .hero-actions {
     animation: none;
   }
 }
+/* the video fills its section at a fixed band height, inset from the
+   sides by the hero's frame so its edges sit under the hero photo's */
 .home-video-section {
-  /* how much scrolling the grow takes once the panel is pinned */
-  border-top: 1px solid #e0e0e0;
-  --video-grow-len: 70vh;
-}
-
-.video-sticky {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 4rem var(--section-gutter);
-}
-
-/* the script adds is-ready once it's driving the effect; without it (no
-   JS, reduced motion) this is an ordinary section with the framed video */
-.home-video-section.is-ready .video-track {
-  height: calc(100vh + var(--video-grow-len));
-}
-
-.home-video-section.is-ready .video-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden; /* crops the scaled video like object-fit: cover */
+  padding: 0 var(--hero-frame);
 }
 
 .video-container {
-  --grow: 0;
   position: relative;
-  box-sizing: border-box;
-  width: min(100%, var(--section-width));
-  /* never taller than the pinned panel can show */
-  height: min(650px, 100vh - 8rem);
+  width: 100%;
+  background: #000;
+  height: clamp(360px, 72vh, 760px);
   overflow: hidden;
-  background-color: #000;
-  border-radius: calc(12px * (1 - var(--grow)));
-  transform-origin: center center;
-  will-change: transform;
-}
-
-/* the gradient frame is a masked ring so it can fade out as the video grows */
-.video-container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
-  padding: 5px;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: calc(1 - var(--grow));
-  pointer-events: none;
 }
 
 .video-container video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .home-slider-section {
-  border-top: 1px solid #f3f3f3;
   background-color: var(--background-ghost-white);
   position: relative;
 }
@@ -755,7 +713,7 @@ html.is-loaded .container .hero-content .hero-actions {
   --cards-per-view: 2;
   /* ... and how many fit the column, so the next one always peeks in
      from the right edge the way the row is meant to read */
-  --cards-visible: 2.9;
+  --cards-visible: 2.6;
   --card-gap: 16px;
   /* clipped flush on the left edge of the column, open on the right so
      the overflowing cards stay visible out to the edge of the screen */
@@ -973,7 +931,7 @@ html.is-loaded .container .hero-content .hero-actions {
   }
   .what-we-do-viewport {
     --cards-per-view: 1;
-    --cards-visible: 1.8;
+    --cards-visible: 1.6;
   }
 }
 @media (max-width: 600px) {
@@ -990,7 +948,7 @@ html.is-loaded .container .hero-content .hero-actions {
   }
   .what-we-do-viewport {
     --cards-per-view: 1;
-    --cards-visible: 1.12;
+    --cards-visible: 1.08;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2132,7 +2090,7 @@ html.is-preloading {
   .container .btn-primary {
     padding: 0 1.25rem;
   }
-  .container {
+  :root {
     --hero-frame: 0.6rem;
   }
   .container .hero-visual {
@@ -2168,16 +2126,9 @@ html.is-preloading {
     font-size: 1.125rem;
     line-height: 1.6;
   }
-  /* video: keep the clip's own shape instead of a fixed height, which
-     turned a landscape video into a tall crop */
-  .video-sticky {
-    padding: 3rem 0.75rem;
-  }
-  /* a squarer frame and a narrower gutter, so the video reads as the
-     feature of the section rather than a thumbnail */
+  /* video: a shorter band on a phone so it stays a landscape crop */
   .video-container {
-    height: auto;
-    aspect-ratio: 4/3;
+    height: clamp(240px, 56vw, 420px);
   }
 }
 @media (max-width: 600px) {
