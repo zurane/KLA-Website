@@ -74,9 +74,19 @@
     });
 
     // a menu link that goes somewhere should not leave the overlay open behind it
-    overlay.querySelectorAll('.menu-link').forEach((link) => {
+    overlay.querySelectorAll('.menu-link, .menu-sublink').forEach((link) => {
         link.addEventListener('click', () => {
             if (link.getAttribute('href')) closeMenu();
+        });
+    });
+
+    // the Programmes row folds its list open and shut
+    overlay.querySelectorAll('.menu-group-toggle').forEach((button) => {
+        const group = button.closest('.menu-group');
+        button.addEventListener('click', () => {
+            const open = !group.classList.contains('is-open');
+            group.classList.toggle('is-open', open);
+            button.setAttribute('aria-expanded', String(open));
         });
     });
 })();
