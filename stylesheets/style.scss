@@ -1068,6 +1068,80 @@ h4,
   }
 }
 
+/* the closing call to action: a photo under a light wash, everything
+   centred, the pill button beside a plain bold link */
+.cta-section {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  /* 490px tall at 1440, padding included */
+  min-height: clamp(320px, 34vw, 500px);
+  padding: clamp(3rem, 5vw, 5rem) var(--page-gutter);
+  text-align: center;
+  color: #000;
+  /* a stand-in photo until a dedicated one is chosen */
+  background-image: url("../assets/images/Working%20%26%20Meeting.avif");
+  background-size: cover;
+  background-position: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(238, 238, 238, 0.78);
+  }
+}
+
+.cta-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.cta-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.08vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+
+  .btn-pill {
+    margin-top: 0;
+  }
+}
+
+.cta-link {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 220ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-bottom-color: #000;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #09ac66;
+    outline-offset: 4px;
+  }
+}
+
 /* ---------- Section headings ---------- */
 
 /* One title for the About, offer and founders columns: a bold sentence-case
