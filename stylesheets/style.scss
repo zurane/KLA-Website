@@ -10,6 +10,8 @@
   --background-dark: #131516;
   --text-color-dark: #000000;
   --background-ghost-white: #fffaff;
+  /* the page colour behind every section between the hero and the footer */
+  --background-page: #d0fdfc;
 
   /* one button look for the whole site: mint, softly squared, dark label */
   --btn-bg: #7dffbe;
@@ -45,7 +47,7 @@ body {
   font-family: var(--font-body);
   /* -1%: body copy sits a touch tighter everywhere */
   letter-spacing: -0.01em;
-  background-color: var(--background-ghost-white);
+  background-color: var(--background-page);
 }
 
 .container {
@@ -574,7 +576,9 @@ h4,
   grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
   /* 512px at 1440 */
   min-height: clamp(420px, 35.56vw, 720px);
-  background: #fafafa;
+  /* the band runs on under the photo by one page gutter, in the page
+     colour that shows through from the body */
+  padding-bottom: var(--page-gutter);
 
   /* the copy sits in the lower part of the panel: 41px above its bottom
      edge at 1440, with 90px between the headline and the link */
@@ -588,7 +592,6 @@ h4,
     /* a narrower right padding: the photo is the boundary on that side,
        and the headline needs the room on smaller desktops */
     padding: clamp(3rem, 6vw, 6rem) clamp(1.5rem, 3vw, 4rem) clamp(2rem, 2.85vw, 3rem) var(--page-gutter);
-    background: #fafafa;
   }
 
   /* 30px on a 38px line at 1440, wrapping to three lines */
@@ -672,52 +675,396 @@ h4,
 /* ---------- Home: about ---------- */
 
 /* one large statement and an outlined button, full width */
-/* one gradient runs down the page behind every section between the hero
-   and the footer: pale green at the top, pale cyan at the bottom. The
-   sections themselves are transparent so it reads as a single wash. */
-main {
-  background: linear-gradient(180deg, #eafeed 0%, #cdfdfe 100%);
+/* the sections between the hero and the footer are transparent, so the
+   body's page colour shows through all of them */
+
+/* a photo filling the 42% column on the left, with the title, copy and
+   button centred beside it on the right */
+.about-statement {
+  display: grid;
+  grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
+  align-items: center;
+  /* about 72px above the photo and 77px below it at 1440 */
+  padding: clamp(3rem, 5vw, 5rem) 0 clamp(3rem, 5.3vw, 5.5rem);
 }
 
-.about-statement {
-  /* 122px above the copy and 110px below the button at 1440 */
-  padding: clamp(4rem, 8.5vw, 8rem) var(--page-gutter) clamp(4rem, 7.6vw, 7.5rem);
+/* the photo runs from the gutter to the column's edge */
+.about-media {
+  padding: 0 0 0 var(--page-gutter);
+
+  img {
+    display: block;
+    width: 100%;
+    /* about 540 by 462 at 1440 */
+    aspect-ratio: 7 / 6;
+    object-fit: cover;
+    background: #dcdcdc;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+.about-copy {
+  min-width: 0;
+  /* 70px in from the split line at 1440 */
+  padding: 0 var(--page-gutter) 0 clamp(2rem, 4.9vw, 5rem);
+}
+
+/* a short title above the copy, smaller than the section titles */
+.about-title {
+  margin: 0 0 1.25rem;
+  /* 30px at 1440 */
+  font-size: clamp(1.5rem, 2.08vw, 2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #000;
 }
 
 .about-text {
   margin: 0;
-  /* the measure runs to 1280px at 1440 */
-  max-width: min(100%, 84.4vw);
-  font-size: clamp(1.25rem, 2.01vw, 2rem);
+  /* 22px on a 32px line at 1440, a measure of about 550px */
+  max-width: 25em;
+  font-size: clamp(1.0625rem, 1.53vw, 1.5rem);
   font-weight: 400;
-  line-height: 1.55;
+  line-height: 1.45;
   color: #000;
 }
 
-.btn-outline {
+/* a pill with a round arrow beside it; both fill on hover */
+.btn-pill {
+  --pill-h: 48px;
+
   display: inline-flex;
   align-items: center;
-  margin-top: clamp(1.25rem, 2.15vw, 2rem);
-  padding: 0 1.5rem;
-  min-height: clamp(2.75rem, 3.9vw, 3.75rem);
-  border: 1px solid #000;
-  background: transparent;
+  gap: 6px;
+  /* 36px under the copy at 1440 */
+  margin-top: clamp(1.5rem, 2.5vw, 2.5rem);
   color: #000;
-  font-size: clamp(1rem, 1.32vw, 1.25rem);
   text-decoration: none;
-  transition:
-    background 220ms ease,
-    color 220ms ease;
+
+  .btn-pill-label,
+  .btn-pill-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    border-radius: 999px;
+    background: transparent;
+    transition:
+      background 220ms ease,
+      color 220ms ease;
+  }
+
+  .btn-pill-label {
+    height: var(--pill-h);
+    padding: 0 1.5rem;
+    font-size: clamp(1rem, 1.25vw, 1.125rem);
+    line-height: 1;
+  }
+
+  .btn-pill-icon {
+    width: 44px;
+    height: 44px;
+
+    svg {
+      display: block;
+      transition: transform 260ms cubic-bezier(0.22, 1, 0.3, 1);
+    }
+  }
 
   &:hover,
   &:focus-visible {
-    background: #000;
-    color: #fff;
+    .btn-pill-label,
+    .btn-pill-icon {
+      background: #000;
+      color: #fff;
+    }
+
+    .btn-pill-icon svg {
+      transform: translateX(3px);
+    }
   }
 
   &:focus-visible {
     outline: 2px solid #09ac66;
     outline-offset: 4px;
+    border-radius: 999px;
+  }
+}
+
+/* ---------- About page ---------- */
+
+/* the About hero keeps its link closer under a two-line headline */
+.hero-split--about .hero-panel {
+  gap: clamp(1.25rem, 1.75vw, 1.75rem);
+}
+
+/* the vision and mission: a photo behind a dark wash, a rule down the
+   left of the copy, two small uppercase tabs and one very large statement
+   in white */
+.vision-section {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(3.5rem, 5.3vw, 6rem) var(--page-gutter);
+  color: #fff;
+  /* a stand-in photo until a dedicated one is chosen */
+  background-image: url("../assets/images/Subtle-leadership-workshop-notes-on-whiteboard.avif");
+  background-size: cover;
+  background-position: center;
+
+  /* the overlay */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(5, 14, 12, 0.66);
+  }
+}
+
+.vision-inner {
+  /* the rule sits 82px in from the gutter at 1440 */
+  margin-left: clamp(0rem, 5.7vw, 6rem);
+  padding: 1.25rem 0 1.25rem clamp(1.25rem, 1.7vw, 1.75rem);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* the two small uppercase tabs; the active one carries a line beneath it
+   that fills as its time runs (--p is written by vision.js) */
+.vision-tabs {
+  display: flex;
+  gap: 1.75rem;
+  margin: 0 0 1.5rem;
+}
+
+.vision-tab {
+  position: relative;
+  padding: 0 0 0.4rem;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 320ms ease;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+  }
+
+  &::before {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  &::after {
+    background: #fff;
+    transform: scaleX(var(--p, 0));
+    transform-origin: left center;
+  }
+
+  &.is-active {
+    opacity: 1;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #7dffbe;
+    outline-offset: 4px;
+  }
+}
+
+/* both statements share one cell; the inactive one fades and drifts out */
+.vision-slides {
+  display: grid;
+}
+
+.vision-statement {
+  grid-area: 1 / 1;
+  margin: 0;
+  max-width: 14em;
+  font-family: var(--font-heading);
+  /* 85px at 1440, on a line barely taller than the type */
+  font-size: clamp(2.5rem, 5.9vw, 6rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: #fff;
+  font-synthesis: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition:
+    opacity 520ms ease,
+    transform 720ms cubic-bezier(0.22, 1, 0.3, 1),
+    visibility 0s linear 520ms;
+}
+
+.vision-statement.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity 520ms ease 160ms,
+    transform 720ms cubic-bezier(0.22, 1, 0.3, 1) 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vision-statement,
+  .vision-statement.is-active,
+  .vision-tab {
+    transition: none;
+  }
+
+  .vision-tab::after {
+    display: none;
+  }
+}
+
+/* the values: a white band, a title, then four pastel cards with the name
+   at the top and the line at the foot */
+.values-section {
+  background: #fff;
+  border-top: 1px solid var(--hairline);
+  padding: clamp(3rem, 4.5vw, 5rem) var(--page-gutter) clamp(3.5rem, 5.5vw, 6rem);
+}
+
+/* scoped so it outranks the shared title rule's zero margin */
+.values-section .values-title {
+  display: block;
+  margin: 0 0 clamp(2rem, 4.4vw, 4.5rem);
+}
+
+.values-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* 20px between cards at 1440 */
+  gap: clamp(0.75rem, 1.4vw, 1.5rem);
+}
+
+.values-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: clamp(260px, 24.3vw, 380px);
+  padding: 1.5rem;
+
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #333;
+  }
+}
+
+/* entrance: once the row scrolls into view each card rises and fades in a
+   beat after the one before it (reveal.js adds is-in) */
+.values-grid.reveal-pending .values-item {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.values-grid.is-in .values-item {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 640ms ease,
+    transform 820ms cubic-bezier(0.22, 1, 0.3, 1);
+}
+
+.values-grid.is-in .values-item:nth-child(2) {
+  transition-delay: 110ms;
+}
+
+.values-grid.is-in .values-item:nth-child(3) {
+  transition-delay: 220ms;
+}
+
+.values-grid.is-in .values-item:nth-child(4) {
+  transition-delay: 330ms;
+}
+
+/* a gentle lift under the pointer, once the entrance has played; scoped
+   to outrank the entrance rules above */
+@media (hover: hover) {
+  .values-grid.is-in .values-item {
+    transition:
+      opacity 640ms ease,
+      transform 360ms cubic-bezier(0.22, 1, 0.3, 1),
+      box-shadow 360ms ease;
+  }
+
+  .values-grid.is-in .values-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 36px rgba(8, 44, 36, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .values-grid .values-item,
+  .values-grid.is-in .values-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.values-item--integrity {
+  background: #e4ffdb;
+}
+
+.values-item--excellence {
+  background: #f3ff94;
+}
+
+.values-item--growth {
+  background: #d4e5ff;
+}
+
+.values-item--innovation {
+  background: #ffedcf;
+}
+
+.values-name {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #000;
+}
+
+@media (max-width: 900px) {
+  .vision-inner {
+    margin-left: 0;
+  }
+
+  .values-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .values-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -738,13 +1085,14 @@ main {
   color: var(--text-color-dark);
 }
 
+/* one size for every intro under a section title */
 .section-intro {
   margin: 0.2rem 0 0;
-  max-width: 340px;
-  font-size: 0.9375rem;
+  max-width: 400px;
+  font-size: 1.25rem;
   font-weight: 400;
-  line-height: 1.5;
-  color: #333;
+  line-height: 1.35;
+  color: #111;
 }
 
 .home-intro-section {
@@ -1159,11 +1507,6 @@ main {
   display: block;
 }
 
-.what-we-do-intro {
-  max-width: 400px;
-  font-size: 1.25rem;
-  line-height: 1.35;
-}
 
 /* ---------- What we do / slider ---------- */
 
@@ -2723,6 +3066,24 @@ html.is-preloading {
 
   .hero-split .hero-visual {
     aspect-ratio: 4 / 3;
+  }
+
+  /* about: the photo above the copy */
+  .about-statement {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 2.5rem 0 3.5rem;
+  }
+
+  .about-media {
+    padding: 0 var(--page-gutter) 2rem;
+  }
+
+  .about-copy {
+    padding: 0 var(--page-gutter);
+  }
+
+  .about-text {
+    max-width: none;
   }
 }
 
