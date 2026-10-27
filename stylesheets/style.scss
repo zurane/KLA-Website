@@ -106,7 +106,6 @@ body {
      floating white pill on the right holding the links and Contact */
   .nav-bar {
     --nav-height: 64px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -371,7 +370,6 @@ h4,
   --topbar-h: clamp(64px, 6.53vw, 104px);
   --nav-height: clamp(40px, 3.6vw, 54px);
 
-  position: relative;
   z-index: 20;
   display: grid;
   /* the logo cell is the hero panel's width, so the links begin exactly
@@ -380,7 +378,13 @@ h4,
   align-items: center;
   min-height: var(--topbar-h);
   padding: 0;
-  background: #fff;
+  /* frosted glass: the page shows through, softened, as it scrolls under */
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  /* stays at the top of the screen as the page scrolls */
+  position: sticky;
+  top: 0;
   border-bottom: 1px solid var(--hairline);
 
   .brand-logo {
@@ -669,6 +673,81 @@ h4,
     background-size: cover;
     background-position: center;
     will-change: transform;
+  }
+}
+
+/* the homepage hero: the photo across the full width and height of the
+   screen, the copy in white over a darkening wash, and the top bar laid
+   transparently over the top of it */
+.topbar.topbar--overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition:
+    background-color 280ms ease,
+    border-color 280ms ease,
+    backdrop-filter 280ms ease;
+
+  /* see-through over the photo until the page scrolls (topbar.js adds
+     is-scrolled), then the usual frosted bar */
+  &:not(.is-scrolled) {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+
+    .topbar-link {
+      color: #fff;
+    }
+
+    .topbar-toggle {
+      border-color: #fff;
+      color: #fff;
+
+      &:hover,
+      &:focus-visible {
+        background: #fff;
+        color: #111;
+      }
+    }
+  }
+}
+
+.hero-split.hero-split--cover {
+  position: relative;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-bottom: 0;
+
+  .hero-panel {
+    position: relative;
+    z-index: 1;
+    /* clear the top bar laid over the photo */
+    padding-top: calc(clamp(64px, 6.53vw, 104px) + 3rem);
+    padding-bottom: clamp(3rem, 6vw, 6rem);
+  }
+
+  h1,
+  .hero-link {
+    color: #fff;
+  }
+
+  .hero-visual {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+
+    /* darker toward the lower left, where the copy sits */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 55%, rgba(0, 0, 0, 0.45) 100%),
+        linear-gradient(to right, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 60%);
+    }
   }
 }
 
@@ -1120,25 +1199,6 @@ h4,
 
   .btn-pill {
     margin-top: 0;
-  }
-}
-
-.cta-link {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #000;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 220ms ease;
-
-  &:hover,
-  &:focus-visible {
-    border-bottom-color: #000;
-  }
-
-  &:focus-visible {
-    outline: 2px solid #09ac66;
-    outline-offset: 4px;
   }
 }
 
@@ -1817,10 +1877,12 @@ h4,
     outline-offset: 3px;
   }
 
+  /* faded from the ink colour rather than a flat grey, so it still reads
+     against the pale page colour */
   &:disabled {
-    border-color: #d9d9d9;
-    color: #b8b8b8;
-    cursor: default;
+    border-color: rgba(16, 26, 37, 0.4);
+    color: rgba(16, 26, 37, 0.5);
+    cursor: not-allowed;
   }
 }
 
@@ -1852,6 +1914,17 @@ h4,
   .what-we-do-viewport {
     --cards-per-view: 1;
     --cards-visible: 1.08;
+  }
+
+  /* the number and title sit above the photo instead of under it */
+  .what-we-do-card .card-link {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .what-we-do-card .card-content {
+    order: -1;
+    padding: 0 0 0.85rem;
   }
 }
 
@@ -2335,21 +2408,33 @@ body.menu-open {
 }
 
 @media (max-width: 900px) {
+  /* one column: the two halves open up so their pieces can be reordered,
+     putting the statement between the title and the picture */
   .why-choose-inner {
     grid-template-columns: minmax(0, 1fr);
+    padding: 3rem var(--page-gutter);
   }
 
-  .why-choose-aside {
-    padding: 3rem var(--page-gutter) 1.5rem;
+  .why-choose-aside,
+  .why-choose-copy {
+    display: contents;
   }
 
   .why-choose-heading {
     margin-bottom: 1.25rem;
   }
 
-  .why-choose-copy {
-    padding: 0.5rem var(--page-gutter) 3rem;
-    border-left: 0;
+  .why-choose-statement {
+    order: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .why-choose-media {
+    order: 2;
+  }
+
+  .why-choose-list {
+    order: 3;
   }
 }
 

@@ -1,3 +1,14 @@
+(function initTopbarScroll() {
+    // The homepage bar sits see-through over the hero photo; once the page
+    // scrolls it turns into the usual white bar (see .topbar--overlay).
+    const bar = document.querySelector('.topbar--overlay');
+    if (!bar) return;
+
+    const update = () => bar.classList.toggle('is-scrolled', window.scrollY > 10);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+})();
+
 (function initTopbar() {
     // The Programmes dropdown. Hover opens it through the CSS; this handles
     // click and keyboard, and closes it when focus or a click lands elsewhere.
