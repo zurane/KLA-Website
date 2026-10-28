@@ -3064,6 +3064,34 @@ html.is-preloading {
   outline: 2px solid #fff;
   outline-offset: 3px;
 }
+.footer-submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* the spam trap: off screen, out of the tab order */
+.footer-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* "sending", "sent" or the error, under the fields */
+.footer-form-status {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.75);
+}
+.footer-form[data-state=sent] .footer-form-status {
+  color: var(--btn-bg);
+}
+.footer-form[data-state=error] .footer-form-status {
+  color: #ff9b9b;
+}
 
 /* ---- bottom band ---- */
 .footer-bottom {
