@@ -11,7 +11,7 @@
   --text-color-dark: #000000;
   --background-ghost-white: #fffaff;
   /* the page colour behind every section between the hero and the footer */
-  --background-page: #8affd3;
+  --background-page: #f8f8f8;
 
   /* one button look for the whole site: mint, softly squared, dark label */
   --btn-bg: #7dffbe;
@@ -466,8 +466,9 @@ h4,
   }
 }
 
-/* the Programmes list: a full-width white panel hanging under the bar's
-   hairline, its entries starting on the same 42% line as the links */
+/* the Programmes mega menu: a full-width white panel hanging under the
+   bar's hairline, holding a three-column grid of cards, each a photo
+   beside the programme's name */
 .topbar-links > li.has-menu {
   position: static;
 }
@@ -477,15 +478,18 @@ h4,
   top: 100%;
   left: 0;
   right: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.6vw, 1.5rem) clamp(0.625rem, 1vw, 1rem);
   margin: 0;
-  /* 40px above the first entry at 1440 */
-  padding: clamp(1.5rem, 2.8vw, 2.75rem) var(--page-gutter) clamp(1.5rem, 2.8vw, 2.75rem) 42%;
+  padding: clamp(1.75rem, 2.8vw, 2.75rem) var(--page-gutter) clamp(2.25rem, 3.5vw, 3.5rem);
   list-style: none;
   background: #fff;
   /* the panel sits over the bar's bottom hairline, so it draws its own in
      the same place; the divider stays visible while the list is open */
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
+  box-shadow: 0 24px 40px rgba(8, 44, 36, 0.08);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
@@ -495,37 +499,58 @@ h4,
     visibility 0s linear 220ms;
 
   a {
-    position: relative;
-    display: inline-block;
-    /* 37px from one entry to the next at 1440 */
-    padding: 0.5rem 0;
-    font-size: clamp(0.875rem, 1.11vw, 1.125rem);
-    line-height: 1.3;
+    display: grid;
+    grid-template-columns: clamp(88px, 8vw, 120px) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(1rem, 1.6vw, 1.5rem);
+    /* a set height, so the photos fill it rather than size it */
+    height: clamp(76px, 6.6vw, 96px);
+    padding-right: 1.25rem;
+    border-radius: 6px;
+    background: #f5f5f5;
     color: #000;
     text-decoration: none;
+    transition: background 220ms ease;
 
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0.35rem;
-      height: 1px;
-      background: currentColor;
-      transform: scaleX(0);
-      transform-origin: left center;
-      transition: transform 320ms cubic-bezier(0.22, 1, 0.3, 1);
-    }
-
-    &:hover::after,
-    &:focus-visible::after {
-      transform: scaleX(1);
+    &:hover,
+    &:focus-visible {
+      /* a pale tint of the mint button colour */
+      background: #e2fff0;
     }
 
     &:focus-visible {
       outline: 2px solid #09ac66;
-      outline-offset: 4px;
+      outline-offset: 3px;
     }
+  }
+}
+
+/* the photo fills the card's left end, rounded on the outer corners */
+.topbar-menu-thumb {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  border-radius: 6px 0 0 6px;
+}
+
+.topbar-menu-name {
+  font-size: clamp(0.875rem, 1.05vw, 1.0625rem);
+  line-height: 1.3;
+}
+
+/* the chevron slides in from the left on hover */
+.topbar-menu-arrow {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 220ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.3, 1);
+
+  a:hover &,
+  a:focus-visible & {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -676,7 +701,7 @@ h4,
   }
 }
 
-/* the homepage hero: the photo across the full width and height of the
+/* the full-screen hero (home and About): the photo across the full width and height of the
    screen, the copy in white over a darkening wash, and the top bar laid
    transparently over the top of it */
 .topbar.topbar--overlay {
@@ -690,8 +715,8 @@ h4,
     backdrop-filter 280ms ease;
 
   /* see-through over the photo until the page scrolls (topbar.js adds
-     is-scrolled), then the usual frosted bar */
-  &:not(.is-scrolled) {
+     is-scrolled) or the Programmes menu opens, then the usual frosted bar */
+  &:not(.is-scrolled):not(:has(.has-menu:hover, .has-menu.is-open)) {
     background: transparent;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -781,6 +806,15 @@ h4,
     user-select: none;
     -webkit-user-drag: none;
   }
+
+  /* the About page's video, a little taller than widescreen to suit the column */
+  video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: #000;
+  }
 }
 
 .about-copy {
@@ -788,6 +822,319 @@ h4,
   /* 70px in from the split line at 1440 */
   padding: 0 var(--page-gutter) 0 clamp(2rem, 4.9vw, 5rem);
 }
+
+/* the card version (home and About): two cards side by side, the media on the
+   left and the copy on a white card, both the same height */
+.about-statement--cards {
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(0.75rem, 1.2vw, 1rem);
+  padding-left: var(--page-gutter);
+  padding-right: var(--page-gutter);
+
+  .about-media {
+    position: relative;
+    min-height: clamp(320px, 35vw, 540px);
+    padding: 0;
+
+    /* the card sets the height; the video fills it rather than sizing it */
+    .video-player {
+      height: 100%;
+      min-height: clamp(320px, 35vw, 540px);
+    }
+
+    video {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    /* the home page's photo in place of the video: rounded, filling the card */
+    img {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      aspect-ratio: auto;
+      border-radius: 8px;
+    }
+  }
+
+  .about-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* left-aligned, so a button inside keeps its own width */
+    align-items: flex-start;
+    padding: clamp(2rem, 4vw, 4rem);
+    border-radius: 8px;
+    background: #fff;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-statement.about-statement--cards {
+    grid-template-columns: minmax(0, 1fr);
+    /* the page's mobile rule clears the sides; the cards keep the gutter */
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
+
+    .about-media,
+    .about-media .video-player {
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+    }
+  }
+}
+
+/* ---------- Video player ---------- */
+
+/* our own controls over the video (scripts/video-player.js): a frosted
+   play button on the poster, then a slim bar along the bottom
+   while it plays */
+.video-player {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #000;
+  box-shadow: 0 18px 50px rgba(8, 44, 36, 0.18);
+
+  video {
+    cursor: pointer;
+  }
+
+  /* a soft shade over the poster so the button reads; it lifts once the
+     video starts */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%);
+    transition: opacity 400ms ease;
+  }
+
+  &.is-started::before {
+    opacity: 0;
+  }
+}
+
+/* a frosted dark disc with a thin light ring and a white triangle */
+.video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: clamp(56px, 4.4vw, 68px);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.45);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.3, 1),
+    background 220ms ease,
+    opacity 300ms ease,
+    visibility 0s linear 0s;
+
+  svg {
+    /* the triangle's visual centre sits a little right of its box */
+    margin-left: 3px;
+    width: 34%;
+    height: auto;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(20, 20, 20, 0.65);
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+  }
+
+  .is-started & {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.85);
+    transition:
+      transform 320ms cubic-bezier(0.22, 1, 0.3, 1),
+      opacity 300ms ease,
+      visibility 0s linear 300ms;
+  }
+}
+
+.video-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2.5rem 1rem 0.85rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease,
+    visibility 0s linear 260ms;
+
+  /* shown once started, while paused or while the pointer moves */
+  .is-started:not(.is-playing) &,
+  .is-started.is-active & {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity 260ms ease,
+      transform 260ms ease;
+  }
+}
+
+.video-btn {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background 200ms ease;
+
+  svg {
+    display: block;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #09ac66;
+    outline-offset: 2px;
+  }
+}
+
+/* one icon of each pair at a time */
+.video-toggle .icon-play,
+.video-mute .icon-muted {
+  display: none;
+}
+
+.video-player:not(.is-playing) .video-toggle {
+  .icon-pause {
+    display: none;
+  }
+
+  .icon-play {
+    display: block;
+  }
+}
+
+.video-player.is-muted .video-mute {
+  .icon-sound {
+    display: none;
+  }
+
+  .icon-muted {
+    display: block;
+  }
+}
+
+/* the seek bar: a thin track that fills with the brand gradient */
+.video-seek {
+  --progress: 0%;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 4px;
+  margin: 0;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, #18aded, #09ac66) 0 0 / var(--progress) 100% no-repeat,
+    rgba(255, 255, 255, 0.3);
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    transition: transform 160ms ease;
+  }
+
+  &::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  &:hover::-webkit-slider-thumb {
+    transform: scale(1.2);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #09ac66;
+    outline-offset: 6px;
+  }
+}
+
+.video-time {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* full screen: the video fits the screen rather than cropping */
+.video-player:fullscreen {
+  border-radius: 0;
+
+  video {
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 600px) {
+  .video-controls {
+    gap: 0.35rem;
+    padding: 2rem 0.5rem 0.5rem;
+  }
+
+  .video-time {
+    display: none;
+  }
+}
+
 
 /* a short title above the copy, smaller than the section titles */
 .about-title {
@@ -880,34 +1227,22 @@ h4,
   gap: clamp(1.25rem, 1.75vw, 1.75rem);
 }
 
-/* the vision and mission: a photo behind a dark wash, a rule down the
+/* the vision and mission: a white band, a rule down the
    left of the copy, two small uppercase tabs and one very large statement
-   in white */
+   in black */
 .vision-section {
   position: relative;
   isolation: isolate;
   padding: clamp(3.5rem, 5.3vw, 6rem) var(--page-gutter);
-  color: #fff;
-  /* a stand-in photo until a dedicated one is chosen */
-  background-image: url("../assets/images/Subtle-leadership-workshop-notes-on-whiteboard.avif");
-  background-size: cover;
-  background-position: center;
-
-  /* the overlay */
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: rgba(5, 14, 12, 0.66);
-  }
+  color: #111;
+  background: #fff;
 }
 
 .vision-inner {
   /* the rule sits 82px in from the gutter at 1440 */
   margin-left: clamp(0rem, 5.7vw, 6rem);
   padding: 1.25rem 0 1.25rem clamp(1.25rem, 1.7vw, 1.75rem);
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 /* the two small uppercase tabs; the active one carries a line beneath it
@@ -928,7 +1263,7 @@ h4,
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #fff;
+  color: #000;
   opacity: 0.55;
   cursor: pointer;
   transition: opacity 320ms ease;
@@ -944,11 +1279,11 @@ h4,
   }
 
   &::before {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.2);
   }
 
   &::after {
-    background: #fff;
+    background: #000;
     transform: scaleX(var(--p, 0));
     transform-origin: left center;
   }
@@ -962,7 +1297,7 @@ h4,
   }
 
   &:focus-visible {
-    outline: 2px solid #7dffbe;
+    outline: 2px solid #09ac66;
     outline-offset: 4px;
   }
 }
@@ -982,7 +1317,7 @@ h4,
   font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.03em;
-  color: #fff;
+  color: #000;
   font-synthesis: none;
   opacity: 0;
   visibility: hidden;
@@ -1014,7 +1349,7 @@ h4,
   }
 }
 
-/* the values: a white band, a title, then four pastel cards with the name
+/* the values: a white band, a title, then four coloured cards with the name
    at the top and the line at the foot */
 .values-section {
   background: #fff;
@@ -1025,7 +1360,9 @@ h4,
 /* scoped so it outranks the shared title rule's zero margin */
 .values-section .values-title {
   display: block;
-  margin: 0 0 clamp(2rem, 4.4vw, 4.5rem);
+  margin: 0 0 clamp(1.5rem, 2.8vw, 3rem);
+  /* starts on the vision section's rule line, the same indent as .vision-inner */
+  margin-left: clamp(0rem, 5.7vw, 6rem);
 }
 
 .values-grid {
@@ -1034,8 +1371,8 @@ h4,
   padding: 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  /* 20px between cards at 1440 */
-  gap: clamp(0.75rem, 1.4vw, 1.5rem);
+  /* 10px between cards at 1440 */
+  gap: clamp(0.5rem, 0.7vw, 0.75rem);
 }
 
 .values-item {
@@ -1045,12 +1382,14 @@ h4,
   gap: 2rem;
   min-height: clamp(260px, 24.3vw, 380px);
   padding: 1.5rem;
+  /* rounded, each in its own colour (below) */
+  border-radius: 12px;
 
   p {
     margin: 0;
     font-size: 0.875rem;
     line-height: 1.5;
-    color: #333;
+    color: #1a1a1a;
   }
 }
 
@@ -1106,6 +1445,10 @@ h4,
   }
 }
 
+
+
+
+
 .values-item--integrity {
   background: #e4ffdb;
 }
@@ -1136,6 +1479,10 @@ h4,
     margin-left: 0;
   }
 
+  .values-section .values-title {
+    margin-left: 0;
+  }
+
   .values-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1147,58 +1494,138 @@ h4,
   }
 }
 
-/* the closing call to action: a photo under a light wash, everything
-   centred, the pill button beside a plain bold link */
+/* the closing call to action: a rounded photo card inset from the page
+   edges, frosted fluted-glass strips over its left side, the copy in white
+   at the bottom left and the button at the bottom right */
 .cta-section {
+  padding: clamp(2rem, 4vw, 4rem) var(--page-gutter);
+}
+
+.cta-card {
   position: relative;
   isolation: isolate;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
   box-sizing: border-box;
-  /* 490px tall at 1440, padding included */
-  min-height: clamp(320px, 34vw, 500px);
-  padding: clamp(3rem, 5vw, 5rem) var(--page-gutter);
-  text-align: center;
-  color: #000;
+  min-height: clamp(380px, 34vw, 600px);
+  padding: clamp(2rem, 3.5vw, 3.5rem);
+  border-radius: 20px;
+  overflow: hidden;
+  color: #fff;
   /* a stand-in photo until a dedicated one is chosen */
-  background-image: url("../assets/images/Working%20%26%20Meeting.avif");
-  background-size: cover;
-  background-position: center;
+  background: #1a1a1a url("../assets/images/Working%20%26%20Meeting.avif") center 30% / cover no-repeat;
 
+  /* darker towards the bottom left, where the copy sits */
   &::before {
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
-    background: rgba(238, 238, 238, 0.78);
+    z-index: -2;
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 45%, rgba(0, 0, 0, 0) 75%),
+      linear-gradient(0deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 55%);
   }
 }
 
-.cta-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.75rem;
+/* reeded glass: the photo blurred behind vertical strips, each lit on one
+   edge and shaded on the other, fading out towards the middle */
+.cta-flutes {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: -1;
+  width: 50%;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.14) 0,
+    rgba(255, 255, 255, 0.02) 18px,
+    rgba(0, 0, 0, 0.06) 42px,
+    rgba(0, 0, 0, 0.16) 60px
+  );
+  -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent);
+  mask-image: linear-gradient(90deg, #000 55%, transparent);
+}
+
+.cta-copy {
+  max-width: 36rem;
 }
 
 .cta-title {
   margin: 0;
-  font-size: clamp(1.5rem, 2.08vw, 2rem);
+  /* 72px at 1440 */
+  font-size: clamp(2.5rem, 5vw, 5rem);
   font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: #fff;
 }
 
-.cta-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
+.cta-text {
+  max-width: 30rem;
+  margin: 1.25rem 0 0;
+  font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+}
 
-  .btn-pill {
-    margin-top: 0;
+/* the site's pill button, in white for the photo */
+.cta-card .btn-pill {
+  flex: 0 0 auto;
+  margin-top: 0;
+  color: #fff;
+
+  .btn-pill-label,
+  .btn-pill-icon {
+    border-color: #fff;
+  }
+
+  &:hover,
+  &:focus-visible {
+    .btn-pill-label,
+    .btn-pill-icon {
+      background: #fff;
+      color: #000;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .cta-section {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  /* taller, the photo clear at the top and the copy and button stacked on
+     a dark fade at the bottom */
+  .cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 1.75rem;
+    min-height: 540px;
+    padding: 1.75rem 1.5rem;
+    border-radius: 16px;
+    background-position: center top;
+
+    &::before {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0) 75%);
+    }
+  }
+
+  /* the strips muddy a narrow photo, so phones go without */
+  .cta-flutes {
+    display: none;
+  }
+
+  .cta-title {
+    font-size: 2.25rem;
+  }
+
+  .cta-text {
+    margin-top: 0.85rem;
   }
 }
 
@@ -1791,7 +2218,7 @@ h4,
 .what-we-do-card .card-index {
   font-size: 0.8125rem;
   line-height: 1;
-  color: #9a9a9a;
+  color: rgba(16, 26, 37, 0.7);
 }
 
 .what-we-do-card .card-row {
@@ -2455,6 +2882,11 @@ body.menu-open {
   border-top: 1px solid var(--hairline);
 }
 
+/* no rule where it follows the values on the About page */
+.values-section + .team-section {
+  border-top: 0;
+}
+
 /* label column beside the cards, split by a full-height rule — the same
    layout as the About, offer and why-choose sections */
 .team-wrap {
@@ -2697,40 +3129,109 @@ html.is-preloading {
 
 /* ---------- Footer ---------- */
 
+/* black, in three bands split by hairlines: the logo large with the
+   socials beside it, then the form and the link columns, then the small
+   print */
 .site-footer {
   background: #0b0b0b;
   color: #fff;
-  padding: 0 var(--section-gutter) 2rem;
+  /* the same gutter as the top bar, so the columns line up with the logo
+     and the last nav link */
+  padding: 0 var(--page-gutter) 2rem;
   /* on the footer itself so it runs the full width of the page */
   border-top: 1px solid #2a2a2a;
 }
 
 .footer-inner {
-  max-width: var(--section-width);
   margin: 0 auto;
 }
 
-/* links in two narrow columns, the form on the right; the socials sit
-   under the links, on the same baseline as the form's button */
-.footer-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 3fr);
-  grid-template-rows: auto 1fr;
-  column-gap: 2rem;
-  padding: 3rem 0 2.75rem;
+/* ---- top band: the logo and the socials ---- */
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(3rem, 6vw, 6rem) 0 clamp(2rem, 3.5vw, 3.5rem);
+  border-bottom: 1px solid #2a2a2a;
 }
 
-.footer-col:nth-of-type(1) {
-  grid-column: 1;
-  grid-row: 1;
+/* the white logo, large */
+.footer-logo {
+  display: block;
+  line-height: 0;
 }
-.footer-col:nth-of-type(2) {
-  grid-column: 2;
-  grid-row: 1;
+.footer-logo img {
+  display: block;
+  width: auto;
+  /* 72px tall at 1440 */
+  height: clamp(44px, 5vw, 80px);
+}
+
+.footer-follow {
+  flex: 0 0 auto;
+}
+
+/* "Follow us" with a short rule running off to its right */
+.footer-follow-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1.25rem;
+  font-size: 1.125rem;
+
+  &::after {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
+  }
+}
+
+.footer-socials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 0.6rem;
+
+  a {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    color: #fff;
+    transition:
+      background 220ms ease,
+      color 220ms ease,
+      border-color 220ms ease;
+
+    &:hover,
+    &:focus-visible {
+      background: #fff;
+      border-color: #fff;
+      color: #0b0b0b;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #09ac66;
+      outline-offset: 3px;
+    }
+  }
+}
+
+/* ---- middle band: the form on the left, three link columns ---- */
+.footer-main {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 3fr);
+  column-gap: clamp(1.5rem, 3vw, 3rem);
+  padding: clamp(3rem, 5vw, 5rem) 0 clamp(3rem, 5vw, 5rem);
 }
 
 .footer-heading {
-  margin: 0 0 1rem;
+  margin: 0 0 1.5rem;
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.3;
@@ -2741,57 +3242,87 @@ html.is-preloading {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.4rem;
-  font-size: 1.25rem;
+  gap: 0.85rem;
+  font-size: 1rem;
 }
 
 .footer-col a {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
-  transition: opacity 200ms ease;
+  overflow-wrap: anywhere;
+  transition: color 200ms ease;
 
   &:hover,
   &:focus-visible {
-    opacity: 0.6;
-  }
-}
-
-.footer-socials {
-  grid-column: 1 / 3;
-  grid-row: 2;
-  align-self: end;
-  list-style: none;
-  margin: 3rem 0 0;
-  padding: 0;
-  display: flex;
-  gap: 1.75rem;
-
-  a {
-    display: inline-flex;
     color: #fff;
-    transition: opacity 200ms ease;
-
-    &:hover,
-    &:focus-visible {
-      opacity: 0.6;
-    }
   }
 }
 
-/* ---- contact form ---- */
+.footer-address {
+  margin: 1.5rem 0 0;
+  font-size: 1rem;
+  font-style: normal;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* each number with a round WhatsApp button beside it */
+.footer-phone {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+}
+
+.footer-phone-actions {
+  display: inline-flex;
+  gap: 0.4rem;
+}
+
+.footer-col .footer-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: #fff;
+  transition:
+    background 220ms ease,
+    color 220ms ease,
+    border-color 220ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--btn-bg);
+    border-color: var(--btn-bg);
+    color: var(--btn-ink);
+  }
+}
+
+/* ---- contact form: underlined fields, a round button on the last ---- */
 .footer-form {
-  grid-column: 3;
-  grid-row: 1 / 3;
+  max-width: 34rem;
   margin: 0;
 }
 
-.footer-fields {
-  display: grid;
-  gap: 1rem;
+.footer-form-title {
+  max-width: 14em;
+  margin: 0 0 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .footer-field {
+  position: relative;
   margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: border-color 200ms ease;
+
+  &:focus-within {
+    border-color: #fff;
+  }
 }
 
 .footer-field input,
@@ -2799,71 +3330,66 @@ html.is-preloading {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: 1.45rem 1.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
+  padding: 1.6rem 0.75rem;
+  border: 0;
   background: transparent;
   color: #fff;
   font: inherit;
-  font-size: 1rem;
-  line-height: 1.3;
-  transition: border-color 200ms ease;
+  font-size: 0.9375rem;
+  line-height: 1.4;
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.75);
   }
 
   &:focus {
     outline: none;
-    border-color: #67ff83;
   }
 }
 
-.footer-field textarea {
-  min-height: 150px;
-  resize: vertical;
+/* the message row leaves room on the right for the button */
+.footer-field--message textarea {
+  padding-right: 4.5rem;
+  resize: none;
 }
 
 .footer-submit {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 1rem;
-  padding: 1.1rem 1.7rem 1.1rem 1.9rem;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  padding: 0;
   border: 0;
-  border-radius: var(--btn-radius);
+  border-radius: 50%;
   background: var(--btn-bg);
   color: var(--btn-ink);
-  font: inherit;
-  font-size: 1.125rem;
-  font-weight: 500;
   cursor: pointer;
+  transform: translateY(-50%);
   transition: background 200ms ease;
+
+  svg {
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.3, 1);
+  }
 
   &:hover,
   &:focus-visible {
     background: var(--btn-bg-hover);
+
+    svg {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
   }
 }
 
-.footer-submit-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #0b0b0b;
-  color: #fff;
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.3, 1);
-}
-
-.footer-submit:hover .footer-submit-icon {
-  transform: translateX(4px);
-}
-
-/* ---- bottom row ---- */
+/* ---- bottom band ---- */
 .footer-bottom {
   display: flex;
   align-items: center;
@@ -2871,7 +3397,8 @@ html.is-preloading {
   gap: 1.5rem;
   padding: 1.5rem 0 0;
   border-top: 1px solid #2a2a2a;
-  font-size: 1rem;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .footer-copy,
@@ -2880,44 +3407,37 @@ html.is-preloading {
 }
 
 @media (max-width: 1000px) {
-  .footer-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: auto auto auto;
+  /* the form across the top, the three columns under it */
+  .footer-main {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 3rem;
   }
 
   .footer-form {
     grid-column: 1 / -1;
-    grid-row: 2;
-    margin-top: 2.5rem;
-  }
-
-  .footer-socials {
-    grid-column: 1 / -1;
-    grid-row: 3;
+    max-width: none;
   }
 }
 
-@media (max-width: 600px) {
-  .footer-grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: none;
+@media (max-width: 700px) {
+  .footer-top {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .footer-col:nth-of-type(1),
-  .footer-col:nth-of-type(2),
-  .footer-form,
-  .footer-socials {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  .footer-col:nth-of-type(2) {
-    margin-top: 2rem;
+  .footer-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media (max-width: 420px) {
+  .footer-main {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
