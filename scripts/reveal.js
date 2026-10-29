@@ -1,6 +1,12 @@
+/*
+ * Scroll reveal
+ * Pages: about (the values cards). Add data-reveal to an element.
+ *
+ * Gives the element reveal-pending, then is-in once it scrolls into view;
+ * the CSS decides what that looks like. Plays once.
+ */
+
 (function initReveal() {
-    // Anything marked data-reveal gets is-in once it scrolls into view; the
-    // CSS decides what that looks like. Plays once per element.
     const targets = Array.from(document.querySelectorAll('[data-reveal]'));
     if (!targets.length) return;
 

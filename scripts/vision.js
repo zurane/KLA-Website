@@ -1,7 +1,15 @@
+/*
+ * Vision and mission
+ * Pages: about. Needs .vision-section with .vision-tab and
+ * .vision-statement pairs.
+ *
+ * Shows one statement at a time and moves to the next every 7s while the
+ * section is on screen and not hovered or focused. The line under the
+ * active tab fills as the time runs (--p, 0 to 1). Tabs also work by click
+ * and the arrow keys.
+ */
+
 (function initVisionMission() {
-    // Two statements, vision and mission, shown one at a time. The pair
-    // cycles on its own while the section is on screen and nobody is
-    // hovering it; a thin line under the active tab fills as the time runs.
     const section = document.querySelector('.vision-section');
     if (!section) return;
 

@@ -22,93 +22,229 @@
 </head>
 
 <body>
-    <div class="container container--sub">
-        <div class="hero-visual">
-            <div class="hero-bg" aria-hidden="true"
-                style="background-image: url('../assets/images/Working%20%26%20Meeting.avif')"></div>
-            <header>
-                <nav class="nav-bar">
-                    <a class="brand-logo" href="../index.html" aria-label="Khuphuka Leadership Academy, home">
-                        <img src="../assets/icons/kla-logo-new.svg" alt="Khuphuka Leadership Academy">
-                    </a>
-                    <div class="nav-pill">
-                        <ul class="nav-links">
-                            <li><a href="../index.html">Home</a></li>
-                            <li><a href="../about.html">About</a></li>
-                            <li><a href="../index.html#programmes" aria-current="page">Programmes</a></li>
-                        </ul>
-                        <a class="nav-contact" href="#contact">Contact</a>
-                    </div>
-                    <div class="menu-buttons">
-                        <a class="btn-primary" href="#contact">Contact</a>
-                        <button class="btn-menu-toggle" type="button" aria-label="Open menu" aria-controls="site-menu"
-                            aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-                                <path d="M3 9h18" />
-                                <path d="M3 15h18" />
-                            </svg>
-                        </button>
-                    </div>
-                </nav>
-            </header>
-        </div>
+    <!-- a transparent bar over the hero photo, frosted once the page scrolls -->
+    <header class="topbar topbar--overlay">
+        <a class="brand-logo" href="../index.html" aria-label="Khuphuka Leadership Academy, home">
+            <img src="../assets/icons/kla-logo-new.svg" alt="Khuphuka Leadership Academy">
+        </a>
 
-        <div class="hero-band">
-            <div class="hero-content">
-                <h1 data-text-reveal="70">Short Courses and Workshops</h1>
-                <div class="hero-actions">
-                    <a class="hero-btn" href="#introduction">Learn more</a>
-                </div>
-            </div>
+        <nav class="topbar-nav" aria-label="Primary">
+            <ul class="topbar-links">
+                <li><a class="topbar-link" href="../index.html">Home</a></li>
+                <li><a class="topbar-link" href="../about.html">About</a></li>
+                <li class="has-menu">
+                    <button class="topbar-link topbar-trigger" type="button" aria-expanded="false"
+                        aria-controls="programmes-menu">
+                        Programmes
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </button>
+                    <ul class="topbar-menu" id="programmes-menu" aria-label="Programmes">
+                        <li>
+                            <a href="school-leadership.html">
+                                <img class="topbar-menu-thumb" src="../assets/images/Subtle-leadership-workshop-notes-on-whiteboard.avif" alt="" loading="lazy" decoding="async">
+                                <span class="topbar-menu-name">School Leadership &amp; Development</span>
+                                <svg class="topbar-menu-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="accredited-qualifications.html">
+                                <img class="topbar-menu-thumb" src="../assets/images/accredited-q.avif" alt="" loading="lazy" decoding="async">
+                                <span class="topbar-menu-name">Accredited Qualifications</span>
+                                <svg class="topbar-menu-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="short-courses.html" aria-current="page">
+                                <img class="topbar-menu-thumb" src="../assets/images/Working%20%26%20Meeting.avif" alt="" loading="lazy" decoding="async">
+                                <span class="topbar-menu-name">Short Courses &amp; Workshops</span>
+                                <svg class="topbar-menu-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="re5-preparation.html">
+                                <img class="topbar-menu-thumb" src="../assets/images/rep-5.avif" alt="" loading="lazy" decoding="async">
+                                <span class="topbar-menu-name">RE5 Preparation Workshops</span>
+                                <svg class="topbar-menu-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="corporate-training.html">
+                                <img class="topbar-menu-thumb" src="../assets/images/corporate.avif" alt="" loading="lazy" decoding="async">
+                                <span class="topbar-menu-name">Corporate Training</span>
+                                <svg class="topbar-menu-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../index.html#programmes">
+                                <img class="topbar-menu-thumb" src="../assets/images/youth.avif" alt="" loading="lazy" decoding="async">
+                                <span class="topbar-menu-name">Youth Development Initiatives</span>
+                                <svg class="topbar-menu-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="topbar-link" href="#contact">Contact us</a></li>
+            </ul>
+        </nav>
+
+        <button class="btn-menu-toggle topbar-toggle" type="button" aria-label="Open menu" aria-controls="site-menu"
+            aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                <path d="M3 9h18" />
+                <path d="M3 15h18" />
+            </svg>
+        </button>
+    </header>
+
+    <!-- the hero: the photo across the full width, shorter than the home
+         page's, with the title and button in white over it -->
+    <section class="hero-split hero-split--cover hero-split--programme" aria-label="Short Courses and Workshops">
+        <div class="hero-panel">
+            <h1 data-text-reveal="70">Short Courses and Workshops</h1>
+            <a class="hero-link btn-pill btn-pill--light" href="#introduction">
+                <span class="btn-pill-label">Learn more</span>
+                <span class="btn-pill-icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14" />
+                        <path d="m19 12-7 7-7-7" />
+                    </svg>
+                </span>
+            </a>
         </div>
-    </div>
+        <div class="hero-visual" aria-hidden="true">
+            <!-- a layer rather than an <img>, so hero-parallax.js can drift it -->
+            <div class="hero-bg" style="background-image: url('../assets/images/Working%20%26%20Meeting.avif')"></div>
+        </div>
+    </section>
 
     <main>
-        <section class="home-intro-section" id="introduction">
-            <div class="home-intro-aside">
-                <span class="eyebrow-title">Introduction</span>
-            </div>
+        <!-- one rule down the left of the intro and every camp; each camp
+             is a row: the title top left, the copy and button bottom left,
+             the photo on the right -->
+        <div class="programme-body">
+            <section class="programme-intro" id="introduction" aria-labelledby="introduction-title">
+                <h2 class="programme-intro-title" id="introduction-title" data-text-reveal="70">Programme Overview.</h2>
+                <p class="programme-lead" data-text-reveal="16">Focused, hands-on courses for people who want to build a specific skill in a short space of time.</p>
+                <p data-text-reveal="16">Each workshop is practical and interactive, giving participants tools they can put to use straight away at work, in business and in everyday life.</p>
+                <p class="programme-intro-note">*Minimum of 10 participants required.</p>
+            </section>
 
-            <div class="home-intro-content">
-                <p data-text-reveal="16">Focused, hands-on courses for people who want to build a specific skill in a
-                    short space of time.</p>
-                <p data-text-reveal="16">Each workshop is practical and interactive, giving participants tools they can
-                    put to use straight away at work, in business and in everyday life.</p>
-            </div>
-        </section>
+            <article class="camp" id="leadership-skills" aria-labelledby="leadership-skills-title">
+                <div class="camp-copy">
+                    <h2 class="camp-title" id="leadership-skills-title">Leadership Skills</h2>
+                    <div class="camp-foot">
+                        <p class="camp-text">The foundations of leading others: setting direction, motivating people and taking responsibility.</p>
+                        <a class="btn-pill" href="#contact">
+                            <span class="btn-pill-label">Enquire now</span>
+                            <span class="btn-pill-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="camp-media">
+                    <img src="../assets/images/Working%20%26%20Meeting.avif" alt="" loading="lazy" decoding="async">
+                </div>
+            </article>
 
-        <section class="programme-items" aria-labelledby="programme-items-title">
-            <h2 class="programme-label" id="programme-items-title">Courses</h2>
+            <article class="camp" id="public-speaking" aria-labelledby="public-speaking-title">
+                <div class="camp-copy">
+                    <h2 class="camp-title" id="public-speaking-title">Public Speaking</h2>
+                    <div class="camp-foot">
+                        <p class="camp-text">Speak to a room with confidence, from preparing your message to handling nerves on the day.</p>
+                        <a class="btn-pill" href="#contact">
+                            <span class="btn-pill-label">Enquire now</span>
+                            <span class="btn-pill-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="camp-media">
+                    <img src="../assets/images/join-khuphuka-cta.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+            </article>
 
-            <ol class="programme-grid">
-                <li class="programme-card">
-                    <span class="programme-num" aria-hidden="true">01</span>
-                    <span class="programme-name">Leadership Skills</span>
-                </li>
-                <li class="programme-card">
-                    <span class="programme-num" aria-hidden="true">02</span>
-                    <span class="programme-name">Public Speaking</span>
-                </li>
-                <li class="programme-card">
-                    <span class="programme-num" aria-hidden="true">03</span>
-                    <span class="programme-name">Personal Development</span>
-                </li>
-                <li class="programme-card">
-                    <span class="programme-num" aria-hidden="true">04</span>
-                    <span class="programme-name">Financial Literacy</span>
-                </li>
-                <li class="programme-card">
-                    <span class="programme-num" aria-hidden="true">05</span>
-                    <span class="programme-name">Workplace Readiness</span>
-                </li>
-            </ol>
-            <p class="programme-note">*Minimum of 10 participants required.</p>
-        </section>
+            <article class="camp" id="personal-development" aria-labelledby="personal-development-title">
+                <div class="camp-copy">
+                    <h2 class="camp-title" id="personal-development-title">Personal Development</h2>
+                    <div class="camp-foot">
+                        <p class="camp-text">Goal setting, self-awareness and the habits that help people grow at work and beyond.</p>
+                        <a class="btn-pill" href="#contact">
+                            <span class="btn-pill-label">Enquire now</span>
+                            <span class="btn-pill-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="camp-media">
+                    <img src="../assets/images/youth.avif" alt="" loading="lazy" decoding="async">
+                </div>
+            </article>
 
-        <section class="programme-cta">
-            <a class="programme-cta-btn" href="#contact">Enquire Now</a>
-        </section>
+            <article class="camp" id="financial-literacy" aria-labelledby="financial-literacy-title">
+                <div class="camp-copy">
+                    <h2 class="camp-title" id="financial-literacy-title">Financial Literacy</h2>
+                    <div class="camp-foot">
+                        <p class="camp-text">Budgeting, saving and managing debt, explained simply and put into practice.</p>
+                        <a class="btn-pill" href="#contact">
+                            <span class="btn-pill-label">Enquire now</span>
+                            <span class="btn-pill-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="camp-media">
+                    <img src="../assets/images/corporate.avif" alt="" loading="lazy" decoding="async">
+                </div>
+            </article>
+
+            <article class="camp" id="workplace-readiness" aria-labelledby="workplace-readiness-title">
+                <div class="camp-copy">
+                    <h2 class="camp-title" id="workplace-readiness-title">Workplace Readiness</h2>
+                    <div class="camp-foot">
+                        <p class="camp-text">CVs, interviews and what employers expect, for people getting ready to start work.</p>
+                        <a class="btn-pill" href="#contact">
+                            <span class="btn-pill-label">Enquire now</span>
+                            <span class="btn-pill-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="camp-media">
+                    <img src="../assets/images/Rectangle%2023.avif" alt="" loading="lazy" decoding="async">
+                </div>
+            </article>
+        </div>
     </main>
 
     <!-- the footer: the logo large across the top with the socials beside
@@ -133,10 +269,8 @@
             </div>
 
             <div class="footer-main">
-                <!-- submissions go to Static Forms, which emails them to the academy -->
-                <form class="footer-form" id="contact" action="https://api.staticforms.dev/submit" method="POST">
-                    <input type="hidden" name="apiKey" value="sf_18b9d464bd129f4f7c9a694e">
-                    <input type="hidden" name="subject" value="New enquiry from the KLA website">
+                <!-- api/contact.php emails each enquiry to the academy and keeps a copy -->
+                <form class="footer-form" id="contact" action="../api/contact.php" method="POST">
                     <!-- left empty by people; bots that fill it are treated as spam -->
                     <p class="footer-hp" aria-hidden="true">
                         <label>Leave this empty <input type="text" name="honeypot" tabindex="-1" autocomplete="off"></label>
@@ -212,24 +346,16 @@
         </div>
     </footer>
     <div class="menu-overlay" id="site-menu" aria-hidden="true" inert>
-        <svg class="menu-defs" aria-hidden="true" focusable="false" width="0" height="0">
-            <defs>
-                <!-- userSpaceOnUse: the arrow's shaft is a flat line, and a
-                     zero-height bounding box makes an objectBoundingBox
-                     gradient degenerate, so the shaft would not paint -->
-                <linearGradient id="menu-arrow-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="56" y2="0">
-                    <stop offset="0%" stop-color="#18aded" />
-                    <stop offset="100%" stop-color="#09ac66" />
-                </linearGradient>
-            </defs>
-        </svg>
-
         <div class="menu-panel" role="dialog" aria-modal="true" aria-label="Site menu" data-lenis-prevent>
+            <!-- the same row as the top bar, so the drawer reads as the bar opened up -->
             <div class="menu-top">
-                <a class="menu-contact" href="#contact">Contact us</a>
+                <a class="menu-brand" href="../index.html" aria-label="Khuphuka Leadership Academy, home">
+                    <img src="../assets/icons/kla-logo-new.svg" alt="Khuphuka Leadership Academy">
+                </a>
                 <button class="btn-menu-close" type="button" aria-label="Close menu">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true">
                         <path d="M18 6 6 18" />
                         <path d="m6 6 12 12" />
                     </svg>
@@ -241,11 +367,11 @@
                     <li class="menu-item" style="--i: 0">
                         <a class="menu-link" href="../index.html">
                             <span class="menu-label">Home</span>
-                            <svg class="menu-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 24" fill="none"
+                            <svg class="menu-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                                 aria-hidden="true">
-                                <path d="M2 12h48" />
-                                <path d="m40 2 10 10-10 10" />
+                                <path d="M5 12h14" />
+                                <path d="m12 5 7 7-7 7" />
                             </svg>
                         </a>
                     </li>
@@ -253,23 +379,52 @@
                     <li class="menu-item" style="--i: 1">
                         <a class="menu-link" href="../about.html">
                             <span class="menu-label">About</span>
-                            <svg class="menu-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 24" fill="none"
+                            <svg class="menu-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                                 aria-hidden="true">
-                                <path d="M2 12h48" />
-                                <path d="m40 2 10 10-10 10" />
+                                <path d="M5 12h14" />
+                                <path d="m12 5 7 7-7 7" />
                             </svg>
                         </a>
                     </li>
 
-                    <li class="menu-item" style="--i: 2">
-                        <a class="menu-link" href="../index.html#programmes" aria-current="page">
+                    <!-- the programmes fold out under their own row -->
+                    <li class="menu-item menu-group" style="--i: 2">
+                        <button class="menu-link menu-group-toggle" type="button" aria-expanded="false"
+                            aria-controls="menu-programmes">
                             <span class="menu-label">Programmes</span>
-                            <svg class="menu-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 24" fill="none"
+                            <svg class="menu-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                                 aria-hidden="true">
-                                <path d="M2 12h48" />
-                                <path d="m40 2 10 10-10 10" />
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="menu-sub" id="menu-programmes">
+                            <ul class="menu-sublist">
+                                <li><a class="menu-sublink" href="school-leadership.html">School Leadership
+                                        &amp; Development</a></li>
+                                <li><a class="menu-sublink" href="accredited-qualifications.html">Accredited
+                                        Qualifications</a></li>
+                                <li><a class="menu-sublink" href="short-courses.html" aria-current="page">Short Courses &amp;
+                                        Workshops</a></li>
+                                <li><a class="menu-sublink" href="re5-preparation.html">RE5 Preparation
+                                        Workshops</a></li>
+                                <li><a class="menu-sublink" href="corporate-training.html">Corporate
+                                        Training</a></li>
+                                <li><a class="menu-sublink" href="../index.html#programmes">Youth Development
+                                        Initiatives</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="menu-item" style="--i: 3">
+                        <a class="menu-link" href="#contact">
+                            <span class="menu-label">Contact us</span>
+                            <svg class="menu-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <path d="M5 12h14" />
+                                <path d="m12 5 7 7-7 7" />
                             </svg>
                         </a>
                     </li>
@@ -277,11 +432,13 @@
             </nav>
         </div>
     </div>
+
     <script src="../scripts/vendor/lenis.min.js" defer></script>
     <script src="../scripts/smooth-scroll.js" defer></script>
     <script src="../scripts/hero-parallax.js" defer></script>
     <script src="../scripts/text-reveal.js" defer></script>
     <script src="../scripts/menu.js" defer></script>
+    <script src="../scripts/topbar.js" defer></script>
     <script src="../scripts/contact-form.js" defer></script>
 </body>
 

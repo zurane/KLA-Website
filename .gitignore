@@ -1,0 +1,4 @@
+# the live mailbox password and the stored leads stay on the server
+api/config.php
+api/storage/*
+!api/storage/.htaccess

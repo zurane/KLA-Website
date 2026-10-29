@@ -1,3 +1,13 @@
+/*
+ * Top bar
+ * Pages: all. Needs .topbar.
+ *
+ * 1. Over the hero the bar is see-through; past 10px of scroll it gets
+ *    is-scrolled and turns into the frosted white bar.
+ * 2. The Programmes drop-down: hover opens it in CSS; this adds click,
+ *    keyboard and Escape, and closes it when a click lands elsewhere.
+ */
+
 (function initTopbarScroll() {
     // The homepage bar sits see-through over the hero photo; once the page
     // scrolls it turns into the usual white bar (see .topbar--overlay).

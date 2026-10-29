@@ -1,3 +1,13 @@
+/*
+ * Expanded menu
+ * Pages: all. Needs #site-menu, .btn-menu-toggle and .btn-menu-close.
+ *
+ * Opens and closes the full-screen menu from the menu button: sets
+ * is-open on the menu and menu-open on <body>, stops the page scrolling
+ * behind it, keeps Tab inside it, and closes on Escape, a click beside
+ * it or a link. Also folds the Programmes group open and shut.
+ */
+
 (function initSiteMenu() {
     const overlay = document.querySelector('#site-menu');
     const toggle = document.querySelector('.btn-menu-toggle');

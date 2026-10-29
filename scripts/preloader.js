@@ -1,3 +1,13 @@
+/*
+ * Preloader
+ * Pages: home. Needs .preloader with its .pl-strip digit columns.
+ *
+ * Shows a 000-100 counter until the page and font have loaded (6s at
+ * most, at least 1.2s), then lifts the curtain: <html> swaps is-preloading
+ * for is-loaded, and the site:revealed event tells text-reveal.js to
+ * start the hero headline.
+ */
+
 (function initPreloader() {
     const el = document.querySelector('.preloader');
     if (!el) return;

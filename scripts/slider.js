@@ -1,3 +1,13 @@
+/*
+ * What we do slider
+ * Pages: home. Needs .what-we-do-viewport, .what-we-do-cards and the
+ * .previous / .next buttons in .what-we-do-controls.
+ *
+ * Pages through the programme cards with the arrows, the arrow keys, or a
+ * drag or swipe. How many cards fit is set in the CSS (--cards-per-view).
+ * Cards off screen are hidden from screen readers and the Tab key.
+ */
+
 (function initWhatWeDoSlider() {
     const viewport = document.querySelector('.what-we-do-viewport');
     const track = document.querySelector('.what-we-do-cards');

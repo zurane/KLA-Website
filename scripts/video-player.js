@@ -1,7 +1,15 @@
+/*
+ * Video player
+ * Pages: about. Needs .video-player with a <video>, .video-play and the
+ * .video-controls buttons.
+ *
+ * Our own controls in place of the browser's: a "Play Video" pill on the
+ * poster, then a bar with play/pause, seek, time, mute and full screen that
+ * hides 2.2s after the pointer stops. State classes on .video-player:
+ * is-started, is-playing, is-muted, is-active (bar showing).
+ */
+
 (function initVideoPlayers() {
-    // Our own controls over a <video>: a large play button on the poster,
-    // then a slim bar (play/pause, seek, time, mute, full screen) that shows
-    // while the pointer is over the player or the video is paused.
     const players = Array.from(document.querySelectorAll('.video-player'));
 
     const format = (seconds) => {
@@ -63,7 +71,7 @@
             toggle.setAttribute('aria-label', 'Play');
         });
         video.addEventListener('ended', () => {
-            // back to the poster and the large button
+            // back to the poster and the Play Video pill
             player.classList.remove('is-started', 'is-playing');
             video.currentTime = 0;
         });

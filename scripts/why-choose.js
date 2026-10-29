@@ -1,6 +1,13 @@
+/*
+ * Why choose us
+ * Pages: home. Needs .why-choose-section with .why-choose-item rows and
+ * one .why-choose-media image per row.
+ *
+ * An accordion: one row open at a time; opening a row swaps the picture
+ * beside the list to match (is-active on both).
+ */
+
 (function initWhyChoose() {
-    // One item is open at a time; a click opens that one and swaps the
-    // picture beside the list to match.
     const section = document.querySelector('.why-choose-section');
     if (!section) return;
 

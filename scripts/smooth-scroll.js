@@ -1,8 +1,16 @@
+/*
+ * Smooth scroll
+ * Pages: all. Load it before the other scripts, which use window.siteLenis.
+ *
+ * Starts the Lenis library (scripts/vendor/lenis.min.js) for a gliding
+ * wheel scroll and shares it as window.siteLenis. Does nothing when the
+ * visitor prefers reduced motion or the library is missing.
+ */
+
 (function initSmoothScroll() {
-    // Lenis eases the real document scroll rather than transforming the page,
-    // so fixed elements, anchors, IntersectionObserver and the slider's drag
-    // all keep working. If the library is missing or the user prefers reduced
-    // motion, native scrolling is left exactly as it was.
+    // Lenis eases the real document scroll rather than moving the page, so
+    // fixed elements, anchors, IntersectionObserver and the slider's drag
+    // all keep working.
     if (typeof Lenis === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 

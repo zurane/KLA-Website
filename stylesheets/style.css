@@ -1,25 +1,43 @@
 @charset "UTF-8";
-/* The webfont is linked from each page's <head> (with a preconnect) rather
+/* Khuphuka Leadership Academy: the site's one stylesheet.
+
+   Edit this file, not style.css. The Live Sass Compiler extension in
+   VS Code ("Watch Sass" in the status bar) turns it into style.css and
+   style.css.map, adding the browser prefixes. See docs/front-end.md.
+
+   Contents, in file order:
+     Settings ........ colours, button look, gutters, fonts
+     Base ............ body, headings font
+     Top bar ......... the nav on every page, with the Programmes drop-down
+     Hero ............ the photo hero (every page; shorter on programmes)
+     Intro cards ..... photo or video beside a white copy card (home, about)
+     Video player .... our own controls over the About video
+     About page ...... vision and mission, values
+     CTA banner ...... the closing photo card (home, about)
+     Section headings  .section-title and .section-intro
+     What we do ...... the home page card slider
+     Expanded menu ... the full-screen menu behind the menu button
+     Why choose us ... the home page accordion
+     Team ............ the founders
+     Text reveal ..... words rising into view
+     Preloader ....... the home page loading counter
+     Footer .......... logo, socials, contact form, links
+     Programme pages . the short hero, the overview and the stacking rows
+     Mobile .......... small-screen overrides
+     Smooth scroll ... rules the Lenis library needs
+
+   The webfont is linked from each page's <head> (with a preconnect) rather
    than imported here, so the browser can fetch it alongside this file
    instead of only after it. */
+/* ---------- Settings ---------- */
 :root {
-  /* one content width shared by the video and the slider so their
-     left and right edges line up down the page */
-  --section-width: 1300px;
-  --section-gutter: 1.9rem;
-  --background-dark: #131516;
   --text-color-dark: #000000;
-  --background-ghost-white: #fffaff;
   /* the page colour behind every section between the hero and the footer */
   --background-page: #f8f8f8;
-  /* one button look for the whole site: mint, softly squared, dark label */
+  /* the mint button colours, with a dark label */
   --btn-bg: #7dffbe;
   --btn-bg-hover: #5ff0a8;
   --btn-ink: #131212;
-  --btn-radius: 10px;
-  --btn-pad: 0.8rem 1.6rem;
-  /* the black frame around the photo hero on the programme pages */
-  --hero-frame: 1.6rem;
   /* the home page: one left/right gutter for every section, and the
      hairline that separates them */
   --page-gutter: clamp(1.25rem, 4.6vw, 6.25rem);
@@ -33,10 +51,13 @@
    a web font, so visitors without it fall back to Archivo Narrow, a similar
    condensed grotesque served from Google */
 :root {
-  --font-heading: "Franklin Gothic Demi Cond", "Franklin Gothic Demi", "Archivo Narrow", "Arial Narrow", sans-serif;
+  --font-heading:
+    "Franklin Gothic Demi Cond", "Franklin Gothic Demi", "Archivo Narrow",
+    "Arial Narrow", sans-serif;
   --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* ---------- Base ---------- */
 body {
   padding: 0;
   margin: 0;
@@ -47,273 +68,10 @@ body {
   background-color: var(--background-page);
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  min-height: 100vh;
-  padding: var(--hero-frame);
-  background: #000;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  /* ---- the photo ---- */
-}
-.container .hero-visual {
-  --hero-side: 1.75rem;
-  border-radius: 5px;
-  position: relative;
-  flex: 1 1 auto;
-  overflow: hidden; /* keeps the drifting image inside the frame */
-  padding: 0 var(--hero-side);
-}
-.container {
-  /* The hero image lives on its own layer so it can drift slower than the
-     page (see scripts/hero-parallax.js). It starts 30% taller than its box,
-     hanging above the top edge, which is exactly the distance it travels
-     down by the time the photo has scrolled away. */
-}
-.container .hero-bg {
-  position: absolute;
-  /* a small overhang is all the drift needs; a large one hides the top
-     of the photo and cuts off heads */
-  inset: -16px 0 0 0;
-  z-index: -1;
-  background-image: url("../assets/images/Subtle-leadership-workshop-notes-on-whiteboard.avif");
-  background-size: cover;
-  background-position: center top;
-  will-change: transform;
-  pointer-events: none;
-  /* a dark wash, heaviest at the bottom where the copy sits; it rides
-     on the image's layer so it moves with the parallax */
-}
-.container .hero-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.42) 45%, rgba(0, 0, 0, 0.62) 100%);
-}
-.container {
-  /* a transparent bar over the photo: the green logo block on the left, a
-     floating white pill on the right holding the links and Contact */
-}
-.container .nav-bar {
-  --nav-height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin: 0;
-  padding: 1rem 0;
-  /* the logo's own green behind it: the png has a transparent corner */
-}
-.container .nav-bar .brand-logo {
-  display: flex;
-  align-items: center;
-  flex: 0 0 auto;
-  background: transparent;
-  line-height: 0;
-}
-.container .nav-bar .brand-logo img {
-  display: block;
-  width: auto;
-  height: var(--nav-height);
-}
-.container {
-  /* the pill: links on the left, Contact in its own cell behind a hairline */
-}
-.container .nav-pill {
-  display: flex;
-  align-items: stretch;
-  height: var(--nav-height);
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.container .nav-links {
-  display: flex;
-  align-items: stretch;
-  margin: 0;
-  padding: 0 1rem;
-  list-style: none;
-}
-.container .nav-links li {
-  display: flex;
-}
-.container .nav-links a {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 0 1.5rem;
-  color: #111;
-  font-size: 1rem;
-  font-weight: 500;
-  text-decoration: none;
-}
-.container .nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 1.5rem;
-  right: 1.5rem;
-  bottom: 1.1rem;
-  height: 2px;
-  background: #2bb673;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 320ms cubic-bezier(0.22, 1, 0.3, 1);
-}
-.container .nav-links a:hover::after, .container .nav-links a:focus-visible::after {
-  transform: scaleX(1);
-}
-.container .nav-contact {
-  display: flex;
-  align-items: center;
-  padding: 0 2.25rem;
-  border-left: 1px solid #e2e2e2;
-  color: #111;
-  font-size: 1rem;
-  font-weight: 500;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 220ms ease, color 220ms ease;
-}
-.container .nav-contact:hover, .container .nav-contact:focus-visible {
-  background: var(--btn-bg);
-  color: var(--btn-ink);
-}
-.container {
-  /* phones: the pill gives way to Contact and the menu button */
-}
-.container .menu-buttons {
-  display: none;
-  align-items: stretch;
-  gap: 0;
-  height: var(--nav-height);
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.container .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  padding: 0 1.5rem;
-  border: 0;
-  border-right: 1px solid #e2e2e2;
-  border-radius: 0;
-  background: transparent;
-  color: #111;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background 220ms ease, color 220ms ease;
-}
-.container .btn-primary:hover, .container .btn-primary:focus-visible {
-  background: var(--btn-bg);
-  color: var(--btn-ink);
-}
-.container .btn-menu-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--nav-height);
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: #111;
-  cursor: pointer;
-  transition: background 220ms ease;
-}
-.container .btn-menu-toggle svg {
-  display: block;
-}
-.container .btn-menu-toggle:hover, .container .btn-menu-toggle:focus-visible {
-  background: #f2f2f2;
-}
-.container .btn-simple {
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  text-decoration: none;
-  color: #fff;
-  border-bottom: 1px solid #fff;
-  padding: 0.35rem 0;
-  cursor: pointer;
-}
-.container {
-  /* ---- the band ---- */
-  /* the copy sits over the bottom of the photo */
-}
-.container .hero-band {
-  position: absolute;
-  left: var(--hero-frame);
-  right: var(--hero-frame);
-  bottom: var(--hero-frame);
-  /* the hairline that runs across the photo above the copy */
-  border-top: 1px solid rgba(255, 255, 255, 0.75);
-}
-.container .hero-content {
-  box-sizing: border-box;
-  padding: 2.5rem 3.5rem 5.5rem;
-  color: #fff;
-}
-.container .hero-content .hero-eyebrow {
-  margin: 0 0 0.9rem;
-  font-size: 0.9375rem;
-  font-weight: 400;
-  line-height: 1.4;
-}
-.container .hero-content h1 {
-  width: 100%;
-  max-width: 740px;
-  margin: 0;
-  padding: 0;
-  font-size: clamp(2.2rem, 2.35vw, 2.125rem);
-  font-weight: 600;
-  line-height: 1.27;
-  letter-spacing: -0.01em;
-  color: #fff;
-}
-.container .hero-content .hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 1.75rem;
-  margin-top: 1.75rem;
-}
-.container .hero-content .hero-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--btn-pad);
-  border-radius: var(--btn-radius);
-  background: var(--btn-bg);
-  color: var(--btn-ink);
-  font-weight: 500;
-  text-decoration: none;
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.3, 1), background 220ms ease;
-}
-.container .hero-content .hero-btn:hover, .container .hero-content .hero-btn:focus-visible {
-  background: var(--btn-bg-hover);
-  transform: translateY(-2px);
-}
-.container .hero-content {
-  /* the actions settle in after the headline's words, once the preloader
-     has lifted; without the js flag they simply show */
-}
-html.js .container .hero-content .hero-actions {
-  opacity: 0;
-  transform: translateY(12px);
-}
-html.is-loaded .container .hero-content .hero-actions {
-  animation: hero-settle 720ms cubic-bezier(0.22, 1, 0.3, 1) 950ms forwards;
-}
-
+/* ---------- Base: headings font ---------- */
 h1,
 h2,
 h3,
-h4,
 .section-title,
 .why-choose-toggle {
   font-family: var(--font-heading);
@@ -321,7 +79,7 @@ h4,
   font-synthesis: none;
 }
 
-/* ---------- Home: top bar ---------- */
+/* ---------- Top bar ---------- */
 /* a plain white bar: the logo on the left, the links sitting right of
    centre, a hairline underneath */
 .topbar {
@@ -338,6 +96,7 @@ h4,
   padding: 0;
   /* frosted glass: the page shows through, softened, as it scrolls under */
   background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
   backdrop-filter: blur(14px) saturate(160%);
   /* stays at the top of the screen as the page scrolls */
   position: sticky;
@@ -531,7 +290,7 @@ a:hover .topbar-menu-arrow, a:focus-visible .topbar-menu-arrow {
   color: #fff;
 }
 
-/* ---------- Home: hero ---------- */
+/* ---------- Hero ---------- */
 /* copy on a pale panel to the left, the photo filling the right */
 .hero-split {
   display: grid;
@@ -543,6 +302,11 @@ a:hover .topbar-menu-arrow, a:focus-visible .topbar-menu-arrow {
   padding-bottom: var(--page-gutter);
   /* the copy sits in the lower part of the panel: 41px above its bottom
      edge at 1440, with 90px between the headline and the link */
+  /* 30px on a 38px line at 1440, wrapping to three lines */
+  /* the hero's button: a white .btn-pill (see .btn-pill--light); the
+     panel's gap does the spacing */
+  /* the photo on its own layer so hero-parallax.js can drift it; the
+     small overhang above is what the drift uses up */
 }
 .hero-split .hero-panel {
   display: flex;
@@ -554,9 +318,6 @@ a:hover .topbar-menu-arrow, a:focus-visible .topbar-menu-arrow {
   /* a narrower right padding: the photo is the boundary on that side,
      and the headline needs the room on smaller desktops */
   padding: clamp(3rem, 6vw, 6rem) clamp(1.5rem, 3vw, 4rem) clamp(2rem, 2.85vw, 3rem) var(--page-gutter);
-}
-.hero-split {
-  /* 30px on a 38px line at 1440, wrapping to three lines */
 }
 .hero-split h1 {
   margin: 0;
@@ -575,35 +336,8 @@ a:hover .topbar-menu-arrow, a:focus-visible .topbar-menu-arrow {
   -webkit-text-stroke: 0.45px currentColor;
   paint-order: stroke fill;
 }
-.hero-split {
-  /* an underlined text link, 19px at 1440; the underline sweeps on hover */
-}
 .hero-split .hero-link {
-  position: relative;
-  padding: 0.1rem 0 0.45rem;
-  color: #000;
-  font-size: clamp(1rem, 1.32vw, 1.25rem);
-  line-height: 1.2;
-  text-decoration: none;
-}
-.hero-split .hero-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: currentColor;
-  transform-origin: left center;
-}
-.hero-split .hero-link:hover::after, .hero-split .hero-link:focus-visible::after {
-  animation: intro-underline-sweep 640ms cubic-bezier(0.65, 0, 0.35, 1);
-}
-.hero-split .hero-link:focus-visible {
-  outline: 2px solid #09ac66;
-  outline-offset: 6px;
-}
-.hero-split .hero-link {
+  margin-top: 0;
   /* settles in after the headline's words, once the preloader has lifted */
 }
 html.js .hero-split .hero-link {
@@ -617,10 +351,6 @@ html.is-loaded .hero-split .hero-link {
   position: relative;
   overflow: hidden;
   background: #e4e4e4;
-}
-.hero-split {
-  /* the photo on its own layer so hero-parallax.js can drift it; the
-     small overhang above is what the drift uses up */
 }
 .hero-split .hero-bg {
   position: absolute;
@@ -639,12 +369,15 @@ html.is-loaded .hero-split .hero-link {
   top: 0;
   left: 0;
   right: 0;
+  transition: background-color 280ms ease, border-color 280ms ease, -webkit-backdrop-filter 280ms ease;
   transition: background-color 280ms ease, border-color 280ms ease, backdrop-filter 280ms ease;
+  transition: background-color 280ms ease, border-color 280ms ease, backdrop-filter 280ms ease, -webkit-backdrop-filter 280ms ease;
   /* see-through over the photo until the page scrolls (topbar.js adds
      is-scrolled) or the Programmes menu opens, then the usual frosted bar */
 }
 .topbar.topbar--overlay:not(.is-scrolled):not(:has(.has-menu:hover, .has-menu.is-open)) {
   background: transparent;
+  -webkit-backdrop-filter: none;
   backdrop-filter: none;
   border-bottom-color: rgba(255, 255, 255, 0.25);
 }
@@ -674,8 +407,7 @@ html.is-loaded .hero-split .hero-link {
   padding-top: calc(clamp(64px, 6.53vw, 104px) + 3rem);
   padding-bottom: clamp(3rem, 6vw, 6rem);
 }
-.hero-split.hero-split--cover h1,
-.hero-split.hero-split--cover .hero-link {
+.hero-split.hero-split--cover h1 {
   color: #fff;
 }
 .hero-split.hero-split--cover .hero-visual {
@@ -691,8 +423,7 @@ html.is-loaded .hero-split .hero-link {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 55%, rgba(0, 0, 0, 0.45) 100%), linear-gradient(to right, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 60%);
 }
 
-/* ---------- Home: about ---------- */
-/* one large statement and an outlined button, full width */
+/* ---------- Intro cards (home, about) ---------- */
 /* the sections between the hero and the footer are transparent, so the
    body's page colour shows through all of them */
 /* a photo filling the 42% column on the left, with the title, copy and
@@ -708,6 +439,7 @@ html.is-loaded .hero-split .hero-link {
 /* the photo runs from the gutter to the column's edge */
 .about-media {
   padding: 0 0 0 var(--page-gutter);
+  /* the About page's video, a little taller than widescreen to suit the column */
 }
 .about-media img {
   display: block;
@@ -721,9 +453,6 @@ html.is-loaded .hero-split .hero-link {
      -moz-user-select: none;
           user-select: none;
   -webkit-user-drag: none;
-}
-.about-media {
-  /* the About page's video, a little taller than widescreen to suit the column */
 }
 .about-media video {
   display: block;
@@ -753,9 +482,8 @@ html.is-loaded .hero-split .hero-link {
   position: relative;
   min-height: clamp(320px, 35vw, 540px);
   padding: 0;
-}
-.about-statement--cards .about-media {
   /* the card sets the height; the video fills it rather than sizing it */
+  /* the home page's photo in place of the video: rounded, filling the card */
 }
 .about-statement--cards .about-media .video-player {
   height: 100%;
@@ -766,9 +494,6 @@ html.is-loaded .hero-split .hero-link {
   inset: 0;
   height: 100%;
   aspect-ratio: auto;
-}
-.about-statement--cards .about-media {
-  /* the home page's photo in place of the video: rounded, filling the card */
 }
 .about-statement--cards .about-media img {
   position: absolute;
@@ -795,16 +520,15 @@ html.is-loaded .hero-split .hero-link {
     padding-left: var(--page-gutter);
     padding-right: var(--page-gutter);
   }
-  .about-statement--cards .about-media,
-  .about-statement--cards .about-media .video-player {
+  .about-statement.about-statement--cards .about-media,
+  .about-statement.about-statement--cards .about-media .video-player {
     min-height: 0;
     aspect-ratio: 4/3;
   }
 }
-
 /* ---------- Video player ---------- */
-/* our own controls over the video (scripts/video-player.js): a frosted
-   play button on the poster, then a slim bar along the bottom
+/* our own controls over the video (scripts/video-player.js): a "Play Video"
+   pill on the poster, then a slim bar along the bottom
    while it plays */
 .video-player {
   position: relative;
@@ -812,13 +536,11 @@ html.is-loaded .hero-split .hero-link {
   border-radius: 8px;
   background: #000;
   box-shadow: 0 18px 50px rgba(8, 44, 36, 0.18);
+  /* a soft shade over the poster so the button reads; it lifts once the
+     video starts */
 }
 .video-player video {
   cursor: pointer;
-}
-.video-player {
-  /* a soft shade over the poster so the button reads; it lifts once the
-     video starts */
 }
 .video-player::before {
   content: "";
@@ -833,46 +555,39 @@ html.is-loaded .hero-split .hero-link {
   opacity: 0;
 }
 
-/* a frosted dark disc with a thin light ring and a white triangle */
+/* a white "Play Video" pill centred on the poster */
 .video-play {
   position: absolute;
-  top: 50%;
   left: 50%;
+  top: 50%;
   z-index: 2;
-  display: grid;
-  place-items: center;
-  width: clamp(56px, 4.4vw, 68px);
-  aspect-ratio: 1;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 50%;
-  background: rgba(20, 20, 20, 0.45);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  color: #fff;
+  padding: 0.6rem 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  color: #111;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
   cursor: pointer;
   transform: translate(-50%, -50%);
   transition: transform 320ms cubic-bezier(0.22, 1, 0.3, 1), background 220ms ease, opacity 300ms ease, visibility 0s linear 0s;
 }
-.video-play svg {
-  /* the triangle's visual centre sits a little right of its box */
-  margin-left: 3px;
-  width: 34%;
-  height: auto;
-}
 .video-play:hover, .video-play:focus-visible {
-  background: rgba(20, 20, 20, 0.65);
-  transform: translate(-50%, -50%) scale(1.06);
+  background: var(--btn-bg);
+  transform: translate(-50%, calc(-50% - 2px));
 }
 .video-play:focus-visible {
   outline: 2px solid #fff;
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 .is-started .video-play {
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -50%) scale(0.85);
+  transform: translate(-50%, calc(-50% + 6px));
   transition: transform 320ms cubic-bezier(0.22, 1, 0.3, 1), opacity 300ms ease, visibility 0s linear 300ms;
 }
 
@@ -995,8 +710,15 @@ html.is-loaded .hero-split .hero-link {
 }
 
 /* full screen: the video fits the screen rather than cropping */
+.video-player:-webkit-full-screen {
+  border-radius: 0;
+}
 .video-player:fullscreen {
   border-radius: 0;
+}
+.video-player:-webkit-full-screen video {
+  height: 100%;
+  object-fit: contain;
 }
 .video-player:fullscreen video {
   height: 100%;
@@ -1013,6 +735,7 @@ html.is-loaded .hero-split .hero-link {
     display: none;
   }
 }
+/* ---------- Intro cards: title, copy, pill button ---------- */
 /* a short title above the copy, smaller than the section titles */
 .about-title {
   margin: 0 0 1.25rem;
@@ -1085,26 +808,73 @@ html.is-loaded .hero-split .hero-link {
   border-radius: 999px;
 }
 
+/* solid white, for photos: the label and the round icon fill white with
+   dark text, and turn mint on hover. Used by the hero buttons, where the
+   icon is a down arrow that nudges down instead of across */
+.btn-pill--light {
+  color: #111;
+}
+.btn-pill--light .btn-pill-label,
+.btn-pill--light .btn-pill-icon {
+  border-color: #fff;
+  background: #fff;
+}
+.btn-pill--light:hover .btn-pill-label,
+.btn-pill--light:hover .btn-pill-icon, .btn-pill--light:focus-visible .btn-pill-label,
+.btn-pill--light:focus-visible .btn-pill-icon {
+  border-color: var(--btn-bg);
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+}
+.btn-pill--light:focus-visible {
+  outline-color: #fff;
+}
+
+.hero-link.btn-pill:hover .btn-pill-icon svg,
+.hero-link.btn-pill:focus-visible .btn-pill-icon svg {
+  transform: translateY(3px);
+}
+
 /* ---------- About page ---------- */
 /* the About hero keeps its link closer under a two-line headline */
 .hero-split--about .hero-panel {
   gap: clamp(1.25rem, 1.75vw, 1.75rem);
 }
 
-/* the vision and mission: a white band, a rule down the
-   left of the copy, two small uppercase tabs and one very large statement
-   in black */
+/* ---- vision and mission ---- */
+/* the vision and mission: a mint band, a photo on the left, then a rule
+   down the left of the copy, two small uppercase tabs and one very large
+   statement in black */
 .vision-section {
   position: relative;
   isolation: isolate;
+  display: grid;
+  /* the photo is 300px wide at 1440 */
+  grid-template-columns: clamp(180px, 20.8vw, 340px) minmax(0, 1fr);
+  -moz-column-gap: clamp(2rem, 4.4vw, 4.5rem);
+       column-gap: clamp(2rem, 4.4vw, 4.5rem);
+  align-items: start;
   padding: clamp(3.5rem, 5.3vw, 6rem) var(--page-gutter);
   color: #111;
-  background: #fff;
+  background: #91F3BA;
+}
+
+/* a rounded photo, top-aligned with the rule beside it */
+.vision-media {
+  aspect-ratio: 6/5;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #d9d9d9;
+}
+.vision-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .vision-inner {
-  /* the rule sits 82px in from the gutter at 1440 */
-  margin-left: clamp(0rem, 5.7vw, 6rem);
   padding: 1.25rem 0 1.25rem clamp(1.25rem, 1.7vw, 1.75rem);
   border-left: 1px solid rgba(0, 0, 0, 0.35);
 }
@@ -1199,20 +969,20 @@ html.is-loaded .hero-split .hero-link {
     display: none;
   }
 }
+/* ---- values ---- */
 /* the values: a white band, a title, then four coloured cards with the name
    at the top and the line at the foot */
 .values-section {
-  background: #fff;
+  background: #91F3BA;
   border-top: 1px solid var(--hairline);
   padding: clamp(3rem, 4.5vw, 5rem) var(--page-gutter) clamp(3.5rem, 5.5vw, 6rem);
 }
 
-/* scoped so it outranks the shared title rule's zero margin */
+/* on the gutter, in line with the first card; scoped so it outranks the
+   shared title rule */
 .values-section .values-title {
   display: block;
   margin: 0 0 clamp(1.5rem, 2.8vw, 3rem);
-  /* starts on the vision section's rule line, the same indent as .vision-inner */
-  margin-left: clamp(0rem, 5.7vw, 6rem);
 }
 
 .values-grid {
@@ -1225,21 +995,35 @@ html.is-loaded .hero-split .hero-link {
   gap: clamp(0.5rem, 0.7vw, 0.75rem);
 }
 
+/* the icon at the top; the name and its line together at the foot */
 .values-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
   min-height: clamp(260px, 24.3vw, 380px);
   padding: 1.5rem;
   /* rounded, each in its own colour (below) */
   border-radius: 12px;
 }
 .values-item p {
-  margin: 0;
+  margin: 0.6rem 0 0;
   font-size: 0.875rem;
   line-height: 1.5;
   color: #1a1a1a;
+}
+
+/* the value's line icon, above its name. The PNG (assets/icons) is used
+   as a mask and filled with --icon-ink, a deeper shade of the card's own
+   colour, so each icon reads as part of its card rather than plain black */
+.values-icon {
+  display: block;
+  align-self: start;
+  /* 80px at 1440 */
+  width: clamp(64px, 5.6vw, 88px);
+  aspect-ratio: 1;
+  margin: 0 0 1rem;
+  background-color: var(--icon-ink, #000);
+  -webkit-mask: var(--icon) center/contain no-repeat;
+  mask: var(--icon) center/contain no-repeat;
 }
 
 /* entrance: once the row scrolls into view each card rises and fades in a
@@ -1287,18 +1071,26 @@ html.is-loaded .hero-split .hero-link {
   }
 }
 .values-item--integrity {
+  --icon: url("../assets/icons/integrity.png");
+  --icon-ink: #2e7d32;
   background: #e4ffdb;
 }
 
 .values-item--excellence {
+  --icon: url("../assets/icons/excellence.png");
+  --icon-ink: #6f7a00;
   background: #f3ff94;
 }
 
 .values-item--growth {
+  --icon: url("../assets/icons/growth.png");
+  --icon-ink: #2f5fb3;
   background: #d4e5ff;
 }
 
 .values-item--innovation {
+  --icon: url("../assets/icons/innovation.png");
+  --icon-ink: #b5651d;
   background: #ffedcf;
 }
 
@@ -1312,11 +1104,13 @@ html.is-loaded .hero-split .hero-link {
 }
 
 @media (max-width: 900px) {
-  .vision-inner {
-    margin-left: 0;
+  /* the photo goes above the statement, full width */
+  .vision-section {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2rem;
   }
-  .values-section .values-title {
-    margin-left: 0;
+  .vision-media {
+    aspect-ratio: 16/9;
   }
   .values-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1327,9 +1121,10 @@ html.is-loaded .hero-split .hero-link {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+/* ---------- CTA banner (home, about) ---------- */
 /* the closing call to action: a rounded photo card inset from the page
-   edges, frosted fluted-glass strips over its left side, the copy in white
-   at the bottom left and the button at the bottom right */
+   edges, the copy in white at the bottom left and the button at the
+   bottom right */
 .cta-section {
   padding: clamp(2rem, 4vw, 4rem) var(--page-gutter);
 }
@@ -1348,29 +1143,15 @@ html.is-loaded .hero-split .hero-link {
   overflow: hidden;
   color: #fff;
   /* a stand-in photo until a dedicated one is chosen */
-  background: #1a1a1a url("../assets/images/Working%20%26%20Meeting.avif") center 30%/cover no-repeat;
+  background: #1a1a1a url("../assets/images/join-khuphuka-cta.jpg") center 30%/cover no-repeat;
   /* darker towards the bottom left, where the copy sits */
 }
 .cta-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -2;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 45%, rgba(0, 0, 0, 0) 75%), linear-gradient(0deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 55%);
-}
-
-/* reeded glass: the photo blurred behind vertical strips, each lit on one
-   edge and shaded on the other, fading out towards the middle */
-.cta-flutes {
-  position: absolute;
-  inset: 0 auto 0 0;
   z-index: -1;
-  width: 50%;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0, rgba(255, 255, 255, 0.02) 18px, rgba(0, 0, 0, 0.06) 42px, rgba(0, 0, 0, 0.16) 60px);
-  -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent);
-  mask-image: linear-gradient(90deg, #000 55%, transparent);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 45%, rgba(0, 0, 0, 0) 75%), linear-gradient(0deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 55%);
 }
 
 .cta-copy {
@@ -1432,10 +1213,6 @@ html.is-loaded .hero-split .hero-link {
   .cta-card::before {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0) 75%);
   }
-  /* the strips muddy a narrow photo, so phones go without */
-  .cta-flutes {
-    display: none;
-  }
   .cta-title {
     font-size: 2.25rem;
   }
@@ -1443,7 +1220,6 @@ html.is-loaded .hero-split .hero-link {
     margin-top: 0.85rem;
   }
 }
-
 /* ---------- Section headings ---------- */
 /* One title for the About, offer and founders columns: a bold sentence-case
    line with a short intro under it. */
@@ -1470,336 +1246,25 @@ html.is-loaded .hero-split .hero-link {
   color: #111;
 }
 
-.home-intro-section {
-  --intro-split: 36%;
-  display: grid;
-  grid-template-columns: minmax(0, var(--intro-split)) minmax(0, 1fr);
-  position: relative;
-  z-index: 2;
-  /* the full-height rule between the label and the copy */
-}
-.home-intro-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--intro-split);
-  width: 1px;
-  background: #ececec;
-  pointer-events: none;
-  z-index: 1;
-}
-.home-intro-section .home-intro-aside {
-  padding: 6.5rem 2rem 6.5rem 3.5rem;
-}
-.home-intro-section {
-  /* ---- reveal on scroll: the script sets reveal-pending as it starts and
-     swaps it for is-revealed once the section is on screen. With no script
-     (or reduced motion) neither class exists and everything just shows. ---- */
-}
-.home-intro-section.reveal-pending::before {
-  clip-path: inset(0 0 100% 0);
-}
-.home-intro-section.reveal-pending .home-intro-content .btn-green,
-.home-intro-section.reveal-pending .home-intro-content .btn-simple {
-  opacity: 0;
-  transform: translateY(18px);
-}
-.home-intro-section.is-revealed::before {
-  clip-path: inset(0);
-  transition: clip-path 1100ms cubic-bezier(0.22, 1, 0.3, 1);
-}
-.home-intro-section.is-revealed .home-intro-content .btn-green,
-.home-intro-section.is-revealed .home-intro-content .btn-simple {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  transition: opacity 640ms ease, transform 820ms cubic-bezier(0.22, 1, 0.3, 1);
-}
-.home-intro-section.is-revealed {
-  /* the buttons land once the paragraphs' words have mostly arrived */
-}
-.home-intro-section.is-revealed .home-intro-content .btn-green,
-.home-intro-section.is-revealed .home-intro-content .btn-simple {
-  transition-delay: 900ms;
-}
-.home-intro-section {
-  /* the title's look lives in .section-title; nothing to add here */
-}
-.home-intro-section .home-intro-content {
-  padding: 6.5rem 6rem 6.5rem 2.75rem;
-}
-.home-intro-section .home-intro-content p {
-  /* a measure of ~70 characters rather than the full column */
-  max-width: 620px;
-  margin: 0 0 1.25rem;
-  font-size: 1.2225rem;
-  padding: 0;
-  line-height: 1.65;
-  color: #5f5f5f;
-}
-.home-intro-section .home-intro-content p:last-of-type {
-  margin-bottom: 2.5rem;
-}
-.home-intro-section .home-intro-content .btn-green {
-  text-decoration: none;
-  background-color: var(--btn-bg);
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  color: var(--btn-ink);
-  font-weight: 500;
-  border: none;
-  margin-right: 1rem;
-  padding: var(--btn-pad);
-  border-radius: var(--btn-radius);
-  cursor: pointer;
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.3, 1), background 220ms ease;
-}
-.home-intro-section .home-intro-content .btn-green:hover, .home-intro-section .home-intro-content .btn-green:focus-visible {
-  background-color: var(--btn-bg-hover);
-  transform: translateY(-2px);
-}
-.home-intro-section .home-intro-content .btn-simple {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  text-decoration: none;
-  color: #000;
-  padding: 0.35rem 0;
-  cursor: pointer;
-  /* the underline is a pseudo so it can sweep rather than sit still */
-}
-.home-intro-section .home-intro-content .btn-simple::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: currentColor;
-  transform-origin: left center;
-}
-.home-intro-section .home-intro-content .btn-simple svg {
-  overflow: visible;
-}
-.home-intro-section .home-intro-content .btn-simple:hover::after, .home-intro-section .home-intro-content .btn-simple:focus-visible::after {
-  animation: intro-underline-sweep 640ms cubic-bezier(0.65, 0, 0.35, 1);
-}
-.home-intro-section .home-intro-content .btn-simple:hover svg, .home-intro-section .home-intro-content .btn-simple:focus-visible svg {
-  animation: intro-arrow-swap 640ms cubic-bezier(0.65, 0, 0.35, 1);
-}
-.home-intro-section .home-intro-content .btn-simple:focus-visible {
-  outline: 2px solid #09ac66;
-  outline-offset: 6px;
-}
-
-/* wipes off to the right, then redraws from the left */
-@keyframes intro-underline-sweep {
-  0% {
-    transform: scaleX(1);
-    transform-origin: right center;
-  }
-  49% {
-    transform: scaleX(0);
-    transform-origin: right center;
-  }
-  50% {
-    transform: scaleX(0);
-    transform-origin: left center;
-  }
-  100% {
-    transform: scaleX(1);
-    transform-origin: left center;
-  }
-}
 @keyframes hero-settle {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-/* leaves to the right, comes back in from the left */
-@keyframes intro-arrow-swap {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  45% {
-    transform: translateX(140%);
-    opacity: 0;
-  }
-  50% {
-    transform: translateX(-140%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  .container .hero-content .hero-actions,
   .hero-split .hero-link {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
   }
-  .hero-split .hero-link:hover::after {
-    animation: none;
-  }
-  .home-intro-section .home-intro-content .btn-simple:hover::after,
-  .home-intro-section .home-intro-content .btn-simple:hover svg {
-    animation: none;
-  }
 }
+/* ---------- What we do (home) ---------- */
+/* the section clips sideways so the card row can run past the right edge
+   without giving the page a horizontal scrollbar */
 .home-slider-section {
   position: relative;
   border-top: 1px solid var(--hairline);
-}
-
-.home-slider-section .eyebrow-title {
-  display: block;
-  font-size: 1.0625rem;
-  font-weight: 400;
-  color: var(--text-color-dark);
-  letter-spacing: 0;
-  line-height: 1.4;
-}
-
-.slider-container {
-  position: relative;
-  overflow: hidden;
-  max-width: 2280px;
-  margin: 0 auto;
-}
-
-.slider {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  min-height: 500px;
-  width: -moz-max-content;
-  width: max-content;
-  transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.slide-link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-  width: 600px;
-  height: 500px;
-  flex: 0 0 500px;
-}
-
-.slide {
-  width: 700px;
-  height: 500px;
-  position: relative;
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 420ms ease, transform 420ms ease, box-shadow 420ms ease;
-  display: block;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.slide-image-wrap {
-  position: relative;
-  min-height: 720px;
-  width: 100%;
-  height: 500px;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.slide-image-wrap img {
-  width: 100%;
-  height: 720px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  display: block;
-  border-radius: 8px;
-}
-
-.slide-content {
-  position: absolute;
-  left: 32px;
-  bottom: 30px;
-  color: #fff;
-  z-index: 3;
-  background: rgba(0, 0, 0, 0.45);
-  padding: 14px 18px;
-  border-radius: 8px;
-}
-
-.slide-title {
-  display: block;
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.slide-meta {
-  display: block;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.image-skeleton {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(90deg, #d9d2c8 10%, #f5f0e9 40%, #d9d2c8 80%);
-  background-size: 200% 100%;
-  animation: skeleton-pulse 1.2s ease-in-out infinite;
-  border-radius: 8px;
-  z-index: 2;
-}
-
-.image-skeleton.loaded {
-  display: none;
-}
-
-@keyframes skeleton-pulse {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-.slider-controls {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.slider-controls button {
-  border: none;
-  background: #1e4d3a;
-  color: #fff;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 22px;
-}
-
-.slider-controls .prev::before {
-  content: "←";
-}
-
-.slider-controls .next::before {
-  content: "→";
-}
-
-/* One centred content column, the same width as the video above. The
-   section clips sideways so the card row can run past the right edge of
-   the column without giving the page a horizontal scrollbar. */
-.home-slider-section {
   overflow-x: clip;
 }
 
@@ -1821,25 +1286,11 @@ html.is-loaded .hero-split .hero-link {
   min-width: 0;
 }
 
-.what-we-do-eyebrow {
-  display: inline-block;
-  margin-bottom: 1rem;
-  padding: 0.3rem 0.65rem;
-  border-radius: 6px;
-  background: var(--btn-bg);
-  color: var(--btn-ink);
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .what-we-do-wrap .what-we-do-label {
   display: block;
 }
 
-/* ---------- What we do / slider ---------- */
+/* ---- the sliding row (scripts/slider.js) ---- */
 .what-we-do-viewport {
   /* how many cards make a page (the script reads this) ... */
   --cards-per-view: 2;
@@ -1994,14 +1445,6 @@ html.is-loaded .hero-split .hero-link {
   line-height: 1.35;
 }
 
-.what-we-do-card .card-note {
-  /* opts back out of the gradient fill it would otherwise inherit */
-  font-size: 1rem;
-  color: #8a93a0;
-  -webkit-text-fill-color: #8a93a0;
-  white-space: nowrap;
-}
-
 .what-we-do-card .card-icon {
   flex: 0 0 auto;
   display: inline-flex;
@@ -2039,6 +1482,8 @@ html.is-loaded .hero-split .hero-link {
   justify-content: center;
   cursor: pointer;
   transition: background 220ms ease, color 220ms ease, border-color 220ms ease, transform 120ms ease;
+  /* faded from the ink colour rather than a flat grey, so it still reads
+     against the pale page colour */
 }
 .what-we-do-controls button svg {
   display: block;
@@ -2053,10 +1498,6 @@ html.is-loaded .hero-split .hero-link {
 .what-we-do-controls button:focus-visible {
   outline: 2px solid #09ac66;
   outline-offset: 3px;
-}
-.what-we-do-controls button {
-  /* faded from the ink colour rather than a flat grey, so it still reads
-     against the pale page colour */
 }
 .what-we-do-controls button:disabled {
   border-color: rgba(16, 26, 37, 0.4);
@@ -2138,13 +1579,6 @@ html.is-loaded .hero-split .hero-link {
   transition: opacity var(--menu-speed) var(--menu-ease);
 }
 
-.menu-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
 .menu-panel {
   box-sizing: border-box;
   width: var(--menu-width);
@@ -2183,23 +1617,6 @@ html.is-loaded .hero-split .hero-link {
   display: block;
   width: auto;
   height: 44px;
-}
-
-/* the inner pages still carry a Contact link in this row */
-.menu-contact {
-  margin-left: auto;
-  margin-right: 0.75rem;
-  padding: 0.6rem 1rem;
-  border: 1px solid #000;
-  color: #000;
-  font-size: 0.9375rem;
-  line-height: 1;
-  text-decoration: none;
-  transition: background 220ms ease, color 220ms ease;
-}
-.menu-contact:hover, .menu-contact:focus-visible {
-  background: #000;
-  color: #fff;
 }
 
 .btn-menu-close {
@@ -2367,7 +1784,8 @@ body.menu-open {
     transition-delay: 0ms;
   }
 }
-/* ---------- Why choose us ---------- */
+/* ---------- Utility ---------- */
+/* hidden on screen, still read by screen readers */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2381,6 +1799,7 @@ body.menu-open {
   border: 0;
 }
 
+/* ---------- Why choose us (home) ---------- */
 .why-choose-section {
   --why-split: 37%;
   color: #131212;
@@ -2607,7 +2026,6 @@ body.menu-open {
 
 /* portrait cards, kept together in the middle */
 .team-grid {
-  --team-card-w: 440px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -2854,6 +2272,7 @@ html.is-preloading {
   display: block;
   line-height: 0;
 }
+
 .footer-logo img {
   display: block;
   width: auto;
@@ -3140,236 +2559,148 @@ html.is-preloading {
   }
 }
 /* ---------- Programme pages ---------- */
-/* a shorter hero than the homepage's full screen */
-.container.container--sub {
-  min-height: 74vh;
+/* ---- the photo hero, shorter than the home page's full screen ---- */
+.hero-split.hero-split--programme {
+  /* 520px at 1440 x 900 */
+  min-height: clamp(440px, 58vh, 640px);
+  min-height: clamp(440px, 58svh, 640px);
 }
 
-.programme-items {
-  padding: 3.5rem 3.5rem 5.5rem;
-  border-top: 1px solid #ececec;
-  background: #f4fbff;
+/* ---- the intro and the camps ---- */
+/* one hairline runs down the left, on the page gutter, past the intro and
+   every row; the content sits a little in from it */
+.programme-body {
+  --body-inset: clamp(1.25rem, 2.1vw, 2rem);
+  /* white to the left edge too: the rule is drawn as a background line at
+     the gutter rather than a border, so nothing grey shows beside it */
+  padding-left: var(--page-gutter);
+  background: linear-gradient(var(--hairline), var(--hairline)) var(--page-gutter) 0/1px 100% no-repeat, #fff;
 }
 
-/* the same plain label as "Introduction" above it */
-.programme-label {
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 400;
+/* a heading, then two paragraphs over half the width: the first bold */
+.programme-intro {
+  max-width: 40rem;
+  padding: clamp(4rem, 8vw, 8rem) var(--page-gutter) clamp(4rem, 8vw, 8rem) var(--body-inset);
+}
+.programme-intro p {
+  margin: 0 0 1.25rem;
+  /* 20px at 1440 */
+  font-size: clamp(1.0625rem, 1.4vw, 1.375rem);
   line-height: 1.4;
-  letter-spacing: 0;
-  color: #333;
+  color: #000;
+}
+.programme-intro p:last-child {
+  margin-bottom: 0;
+}
+.programme-intro .programme-lead {
+  font-weight: 700;
 }
 
-/* ruled tiles, as many to a row as fit */
-.programme-grid {
-  --rule: #1c2b24;
-  list-style: none;
-  margin: 2rem 0 0;
-  padding: 0;
+/* small print under the intro, such as a minimum group size */
+.programme-intro .programme-intro-note {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+/* the intro's heading, the same size as the camp titles */
+.programme-intro-title {
+  margin: 0 0 clamp(1.25rem, 2vw, 2rem);
+  font-size: clamp(1.75rem, 2.5vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: #000;
+}
+
+/* a camp: the copy on the left, the photo on the right, a hairline above
+   that runs from the rule to the right edge.
+
+   The camps stack as the page scrolls: each one sticks just under the top
+   bar and the next slides up over it. Each card is white with its own
+   copy of the rule, so it fully covers the one beneath; the hairline on
+   its top edge marks the overlap. */
+.camp {
+  position: sticky;
+  /* the top bar's height (see .topbar) */
+  top: clamp(64px, 6.53vw, 104px);
+  border-left: 1px solid var(--hairline);
+  margin-left: -1px;
+  background: #fff;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  row-gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  -moz-column-gap: clamp(1.5rem, 4vw, 4rem);
+       column-gap: clamp(1.5rem, 4vw, 4rem);
+  padding: clamp(0.5rem, 0.8vw, 0.75rem) var(--page-gutter) clamp(0.5rem, 0.8vw, 0.75rem) var(--body-inset);
+  border-top: 1px solid var(--hairline);
+}
+.camp:last-child {
+  border-bottom: 1px solid var(--hairline);
 }
 
-.programme-card {
-  position: relative;
+/* the title at the top, the line and button at the foot */
+.camp-copy {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-  min-height: 390px;
-  box-sizing: border-box;
-  padding: 4.5rem 1rem 4rem;
-  text-align: center;
-  transition: background 260ms ease;
+  gap: 2rem;
+  padding: clamp(0.75rem, 1.2vw, 1.25rem) 0;
 }
 
-.programme-card:hover {
-  background: rgba(28, 43, 36, 0.04);
-}
-
-/* the rules above and below each tile stop short of its neighbours, leaving
-   a small break where the dividers pass */
-.programme-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 6px;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  pointer-events: none;
-}
-
-.programme-card:first-child::before {
-  left: 0;
-}
-
-.programme-card:last-child::before {
-  right: 0;
-}
-
-/* the divider between tiles: a full-height line with a short stub poking
-   out past the rules at each end */
-.programme-card + .programme-card::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: -12px;
-  bottom: -12px;
-  width: 1px;
-  background: linear-gradient(to bottom, var(--rule) 0 8px, transparent 8px 18px, var(--rule) 18px calc(100% - 18px), transparent calc(100% - 18px) calc(100% - 8px), var(--rule) calc(100% - 8px) 100%);
-  pointer-events: none;
-}
-
-/* the number, framed by two small corner ticks */
-.programme-num {
-  position: relative;
-  padding: 0.75rem 0.9rem;
-  font-size: clamp(2.75rem, 4.4vw, 4rem);
+.camp-title {
+  max-width: 12em;
+  margin: 0;
+  /* 36px at 1440 */
+  font-size: clamp(1.75rem, 2.5vw, 2.5rem);
   font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: #1c2b24;
-}
-.programme-num::before, .programme-num::after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border: 0 solid var(--rule);
-}
-.programme-num::before {
-  top: 0;
-  right: 0;
-  border-top-width: 1.5px;
-  border-right-width: 1.5px;
-}
-.programme-num::after {
-  bottom: 0;
-  left: 0;
-  border-bottom-width: 1.5px;
-  border-left-width: 1.5px;
-}
-
-.programme-name {
-  font-size: clamp(1.05rem, 1.55vw, 1.5rem);
-  font-weight: 500;
-  line-height: 1.3;
+  line-height: 1.05;
   letter-spacing: -0.01em;
-  color: #1c2b24;
+  color: #000;
 }
 
-.programme-note {
-  margin: 1.5rem 0 0;
-  font-size: 0.875rem;
-  color: #686868;
+.camp-text {
+  max-width: 26rem;
+  margin: 0;
+  font-size: clamp(1rem, 1.15vw, 1.0625rem);
+  line-height: 1.45;
+  color: #111;
 }
 
-/* the closing band with the single call to action */
-.programme-cta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 46vh;
-  padding: 5rem var(--section-gutter);
-  background: #c4e4ff;
+.camp-foot .btn-pill {
+  margin-top: 1.5rem;
 }
 
-.programme-cta-btn {
-  padding: 0.85rem 2rem;
-  border-radius: var(--btn-radius);
-  background: #000;
-  color: #fff;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background 220ms ease, color 220ms ease, transform 260ms cubic-bezier(0.22, 1, 0.3, 1);
+/* the photo sets the row's height: 5:4, rounded */
+.camp-media {
+  aspect-ratio: 5/4;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #d9d9d9;
 }
-.programme-cta-btn:hover, .programme-cta-btn:focus-visible {
-  background: var(--btn-bg);
-  color: var(--btn-ink);
-  transform: translateY(-2px);
+.camp-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
+/* tablets and phones: the photo goes under the copy */
 @media (max-width: 900px) {
-  .programme-items {
-    padding: 2.5rem var(--section-gutter) 3.5rem;
+  .camp {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.25rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
-  .programme-card {
-    min-height: 260px;
-    padding: 3rem 1rem 2.5rem;
+  .camp-copy {
+    padding: 0;
   }
-  .programme-cta {
-    min-height: 34vh;
-  }
-}
-/* stacked tiles have nothing beside them to divide from */
-@media (max-width: 520px) {
-  .programme-card + .programme-card::after {
-    display: none;
-  }
-  .programme-card::before {
-    inset: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .programme-card,
-  .programme-cta-btn {
-    transition: none;
+  .camp-media {
+    aspect-ratio: 4/3;
   }
 }
 /* ---------- Mobile ---------- */
-@media (max-width: 900px) {
-  /* hero: the nav loses the desktop-scale padding */
-  .container .nav-bar {
-    --nav-height: 52px;
-    padding: 0.5rem 0;
-  }
-  .container .nav-pill {
-    display: none;
-  }
-  .container .menu-buttons {
-    display: inline-flex;
-  }
-  .container .btn-primary {
-    padding: 0 1.25rem;
-  }
-  :root {
-    --hero-frame: 0.6rem;
-  }
-  .container .hero-visual {
-    --hero-side: 0.5rem;
-  }
-  .container .hero-content {
-    padding: 1.5rem 1.25rem 2.5rem;
-  }
-  .container .hero-content h1 {
-    font-size: clamp(1.9rem, 8vw, 2.5rem);
-    line-height: 1.15;
-  }
-  .container .hero-content h1 {
-    width: 100%;
-    font-size: clamp(1.9rem, 8vw, 2.5rem);
-    line-height: 1.15;
-  }
-  /* intro: a single column with phone padding, no divider */
-  .home-intro-section {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .home-intro-section::before {
-    display: none;
-  }
-  .home-intro-section .home-intro-aside {
-    padding: 3.5rem var(--section-gutter) 1.25rem;
-  }
-  .home-intro-section .home-intro-content {
-    padding: 0 var(--section-gutter) 4rem;
-  }
-  .home-intro-section .home-intro-content p {
-    width: 100%;
-    font-size: 1.125rem;
-    line-height: 1.6;
-  }
-}
 @media (max-width: 900px) {
   /* top bar: the links give way to the menu button */
   .topbar {
@@ -3413,12 +2744,6 @@ html.is-preloading {
     max-width: none;
   }
 }
-@media (max-width: 600px) {
-  /* the drawer already has Contact us; the nav only needs the logo and menu */
-  .container .menu-buttons .btn-primary {
-    display: none;
-  }
-}
 /* ---------- Smooth scroll (Lenis) ---------- */
 /* the classes Lenis puts on <html>; this is the library's recommended CSS */
 html.lenis,
@@ -3441,4 +2766,5 @@ html.lenis body {
 
 .lenis.lenis-smooth iframe {
   pointer-events: none;
-}/*# sourceMappingURL=style.css.map */
+}
+/*# sourceMappingURL=style.css.map */

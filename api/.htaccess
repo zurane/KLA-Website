@@ -1,0 +1,7 @@
+# Only contact.php is reachable from the web; the config (password), the
+# mail library and the stored leads are not.
+Options -Indexes
+
+<FilesMatch "^(?!contact\.php$).*$">
+    Require all denied
+</FilesMatch>

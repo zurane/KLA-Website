@@ -1,3 +1,11 @@
+/*
+ * Hero parallax
+ * Pages: all. Needs .hero-visual > .hero-bg, and smooth-scroll.js first.
+ *
+ * Moves the hero photo down at 30% of the scroll speed, so it drifts
+ * behind the page. Off when Lenis isn't running (reduced motion).
+ */
+
 (function initHeroParallax() {
     const hero = document.querySelector('.hero-visual');
     const layer = hero && hero.querySelector('.hero-bg');
